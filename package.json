@@ -1,0 +1,10 @@
+{
+  "name": "caspianobesity-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CASPIAN Certificate in Obesity Medicine — course site with Razorpay Standard Checkout (Vercel serverless).",
+  "dependencies": {
+    "razorpay": "^2.9.4"
+  }
+}
