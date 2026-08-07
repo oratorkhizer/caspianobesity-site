@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
 <title>Verify a Certificate, CASPIAN Certificate in Obesity Medicine</title>
 <!-- Open Graph / link preview -->
 <meta property="og:type" content="website"/>
@@ -81,7 +82,7 @@
  </div>
  <div class="foot">
   Issued by <b>Caspian Healthcare Foundation</b>, Hyderabad · <a href="/">caspianobesity.com</a><br/>
-  Questions about a credential? <a href="/contact.html">Contact us</a>.
+  Questions about a credential? <a href="/contact">Contact us</a>.
  </div>
 </div>
 <script>
@@ -99,7 +100,7 @@
  }
  function renderNotFound(id){
   resultEl.innerHTML='<div class="status"><span class="badge bad">✕ Not found</span></div>'+
-   '<p class="muted" style="margin-top:12px">No certificate matches <b class="cid">'+esc(id)+'</b>. Please check the Credential ID exactly as printed on the certificate. If you believe this is an error, <a href="/contact.html">contact us</a>.</p>';
+   '<p class="muted" style="margin-top:12px">No certificate matches <b class="cid">'+esc(id)+'</b>. Please check the Credential ID exactly as printed on the certificate. If you believe this is an error, <a href="/contact">contact us</a>.</p>';
   showLookup(id);
  }
  function fmtDate(d){
@@ -140,5 +141,6 @@
  var initial=getParam('id');
  if(initial){ lookup(initial); } else { showLookup(''); resultEl.innerHTML='<p class="muted">Enter a Credential ID below to verify a certificate, or scan the QR code on a certificate.</p>'; }
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
