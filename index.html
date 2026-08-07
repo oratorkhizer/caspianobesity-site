@@ -8,6 +8,7 @@
 <meta name="description" content="A 12-module, India-first certificate course that teaches physicians to treat obesity in the GLP-1 era, case-based, clinic-ready, in Hyderabad. Reserve your seat for the next cohort."/>
 <link rel="canonical" href="https://caspianobesity.com/"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <!-- Open Graph / link preview (WhatsApp, Facebook, LinkedIn) -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="CASPIAN Certificate in Obesity Medicine"/>
@@ -74,7 +75,7 @@
     <span class="pill">Case-based</span>
     <span class="pill">Certificate + textbook</span>
     <span class="pill">Founding batch · 30 Aug 2026</span>
-    <span class="pill">Only 40 seats</span>
+    <span class="pill" id="pillSeats">Only 40 seats</span>
     <span class="pill" id="pillDays" hidden></span>
    </div>
    <div class="cta-row">
@@ -233,6 +234,22 @@
  </div>
 </section>
 
+<!-- INSIDE A SESSION -->
+<section class="why" style="background:#fff;padding:60px 0">
+ <div class="wrap">
+  <div class="sec-head reveal" style="margin-bottom:36px">
+   <span class="eyebrow">Inside a session</span>
+   <h2 style="font-size:1.9rem">Three hours, none of them wasted.</h2>
+  </div>
+  <div class="grid">
+   <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.1rem;color:var(--gold-l)">10:00</div><h3>Live pre-test</h3><p>Phones out, five quick questions — a live quiz benchmarks where the room starts on the month's module.</p></div>
+   <div class="card reveal"><div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5h16v12H4z M9 9l3 2.5L9 14" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Case-based teaching</h3><p>The module taught through real Indian-practice cases, run on the CASPIAN framework — not read off slides.</p></div>
+   <div class="card reveal"><div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9 M14 6h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Post-test + feedback</h3><p>The quiz again — you watch your own score move. Your feedback shapes the next session.</p></div>
+   <div class="card reveal"><div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M8 21v-2a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v2 M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z M3 21v-1a3 3 0 0 1 3-3 M21 21v-1a3 3 0 0 0-3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Lunch with the cohort</h3><p>Every session ends with lunch — the colleagues you'll practise alongside, and refer to, for years.</p></div>
+  </div>
+ </div>
+</section>
+
 <!-- INDEPENDENCE / TRUST -->
 <section style="padding:52px 0;background:var(--navy)">
  <div class="wrap" style="max-width:840px;text-align:center">
@@ -273,7 +290,7 @@
     <h3>Founding batch, at a glance</h3>
     <dl>
      <dt>Starts</dt><dd>Sunday, 30 August 2026</dd>
-     <dt>Seats</dt><dd>Capped at 40, founding cohort only</dd>
+     <dt>Seats</dt><dd id="seatsGlance">Capped at 40, founding cohort only</dd>
      <dt>Schedule</dt><dd>One Sunday a month, 10:00 am – 1:00 pm, followed by lunch</dd>
      <dt>Duration</dt><dd>12 monthly modules + a convocation session</dd>
      <dt>Venue</dt><dd><a href="https://share.google/12DMEZHtgBXY0WuF4" target="_blank" rel="noopener" style="color:var(--gold-d);text-decoration:underline">API Hall</a>, Oasis Plaza, Tilak Road, Abids, Hyderabad</dd>
@@ -318,6 +335,7 @@
    <div class="item"><details><summary>What are the assessments and feedback forms?</summary><p>Each module has a short <b>pre-session and post-session assessment</b>, and a <b>feedback form after every module</b> so we can keep the teaching sharp. After Module 12 there's a 60-question final exam. To be certified you need ≥80% attendance, all twelve module assessments and feedback forms completed, and a pass (60%; 75% for distinction) on the final exam.</p></details></div>
    <div class="item"><details><summary>What if I attend but skip an assessment or feedback form?</summary><p>That module is marked incomplete until the assessment and feedback are submitted. You can complete any outstanding ones before you sit the final exam. The certificate is issued once attendance, all assessments and feedback, and the final exam are complete, so nothing is left hanging.</p></details></div>
    <div class="item"><details><summary>Is the certificate verifiable?</summary><p>Yes. Every CASPIAN certificate carries a <b>unique Credential ID</b> and a <b>QR code</b>. Anyone can confirm it's genuine at <a href="/verify">caspianobesity.com/verify</a>, scan the QR or enter the ID to see the holder's name, the credential and the issue date.</p></details></div>
+   <div style="margin-top:24px;text-align:center"><button type="button" class="btn btn-outline" style="font-size:.92rem;padding:12px 24px" onclick="window.caspianAssist&&window.caspianAssist.open()">Have a different question? Ask the course assistant</button></div>
   </div>
  </div>
 </section>
