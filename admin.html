@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Applications, CASPIAN Certificate in Obesity Medicine</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e2643;--navy2:#14375d;--gold:#c9a227;--gold-l:#e7c65a;--gold-d:#8a6d12;--cream:#f7f4ec;--line:#e2ddce;--muted:#5b6b7a;--bad:#c0554f;--ok:#1f7a4d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:#12283f;line-height:1.5;-webkit-font-smoothing:antialiased}
+.top{background:radial-gradient(120% 160% at 50% 0%,var(--navy2),var(--navy));color:#fff;padding:20px;text-align:center}
+.top h1{font-size:1.2rem;font-weight:700}
+.top p{color:#9fb3cc;font-size:.82rem;margin-top:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(14,38,67,.08);padding:20px}
+.gate{max-width:400px;margin:30px auto}
+.gate label{font-size:.82rem;font-weight:600;color:#33475c;display:block;margin-bottom:6px}
+.gate input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit}
+.btn{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);font-weight:700;border:0;border-radius:10px;padding:12px 22px;cursor:pointer;font-size:.95rem;font-family:inherit;margin-top:12px}
+.err{color:var(--bad);font-size:.85rem;margin-top:10px;min-height:1em}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.stat .n{font-size:1.7rem;font-weight:700;color:var(--navy)}
+.stat .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+h2{font-size:1rem;color:var(--navy);margin:20px 0 8px}
+table{width:100%;border-collapse:collapse;font-size:.82rem;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #f0ece1;vertical-align:top}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:10px;padding:2px 9px;font-size:.72rem;font-weight:700}
+.pill.paid{background:rgba(31,122,77,.14);color:var(--ok)}
+.pill.submitted{background:rgba(201,162,39,.16);color:var(--gold-d)}
+.pill.used{background:rgba(178,59,59,.12);color:var(--bad)}
+.pill.unused{background:rgba(31,122,77,.14);color:var(--ok)}
+.muted{color:var(--muted)}
+.scroll{overflow-x:auto}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.bar .r{font-size:.8rem;color:var(--muted)}
+.linkbtn{background:none;border:1px solid var(--line);border-radius:8px;padding:7px 14px;font-size:.8rem;cursor:pointer;font-family:inherit;color:#33475c}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<div class="top"><h1>CASPIAN · Applications</h1><p>Private dashboard · Caspian Healthcare Foundation</p></div>
+<div class="wrap">
+
+<div class="card gate" id="gate">
+ <label for="key">Passcode</label>
+ <input id="key" type="password" autocomplete="current-password" placeholder="Enter the admin passcode"/>
+ <button class="btn" id="go">View applications</button>
+ <div class="err" id="gerr"></div>
+ <p class="muted" style="font-size:.75rem;margin-top:10px">The passcode is the ADMIN_KEY set in Vercel. Data is fetched only after the server verifies it; nothing is stored in this browser.</p>
+</div>
+
+<div id="dash" hidden>
+ <div class="bar">
+  <div class="stats" style="flex:1;margin-bottom:0">
+   <div class="stat"><div class="n" id="cPaid">–</div><div class="l">Paid seats</div></div>
+   <div class="stat"><div class="n" id="cSub">–</div><div class="l">Applied, unpaid</div></div>
+   <div class="stat"><div class="n" id="cTotal">–</div><div class="l">Total applications</div></div>
+   <div class="stat"><div class="n" id="cLeft">–</div><div class="l">Of 40 seats left</div></div>
+  </div>
+ </div>
+ <div class="bar"><h2 style="margin:0">Applications (newest first)</h2><div class="r"><button class="linkbtn" id="csv">Download CSV</button></div></div>
+ <div class="scroll"><table id="tApps"><thead><tr><th>When</th><th>Name</th><th>Status</th><th>City</th><th>Specialty</th><th>Qualification</th><th>Phone</th><th>Email</th><th>Meal</th><th>Promo</th><th>Heard via</th></tr></thead><tbody></tbody></table></div>
+ <h2>Promo codes</h2>
+ <div class="scroll"><table id="tPromos"><thead><tr><th>Code</th><th>Type</th><th>Label</th><th>State</th><th>Used at</th><th>Used by</th></tr></thead><tbody></tbody></table></div>
+ <p class="muted" style="font-size:.75rem;margin-top:14px">Shows an operational subset only — full records (addresses, DOB, registration numbers, photos) stay in Supabase. Payments reconcile in the Razorpay dashboard.</p>
+</div>
+
+</div>
+<script>
+var DATA=null;
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmt(d){ if(!d) return ''; var t=new Date(d); if(isNaN(t)) return d;
+  return t.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+t.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); }
+function load(){
+  var key=document.getElementById('key').value, err=document.getElementById('gerr');
+  if(!key){err.textContent='Enter the passcode.';return;}
+  err.textContent=''; document.getElementById('go').disabled=true; document.getElementById('go').textContent='Checking…';
+  fetch('/api/admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:key})})
+   .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+   .then(function(x){
+     document.getElementById('go').disabled=false; document.getElementById('go').textContent='View applications';
+     if(!x.ok||!x.j||x.j.error){err.textContent=(x.j&&x.j.error)||'Could not load.';return;}
+     DATA=x.j; render(x.j);
+   })
+   .catch(function(){document.getElementById('go').disabled=false;document.getElementById('go').textContent='View applications';err.textContent='Network error.';});
+}
+function render(d){
+  document.getElementById('gate').hidden=true; document.getElementById('dash').hidden=false;
+  document.getElementById('cPaid').textContent=d.counts.paid;
+  document.getElementById('cSub').textContent=d.counts.submitted;
+  document.getElementById('cTotal').textContent=d.counts.total;
+  document.getElementById('cLeft').textContent=Math.max(0,40-d.counts.paid);
+  var tb=document.querySelector('#tApps tbody'); tb.innerHTML='';
+  d.apps.forEach(function(a){
+    var name=((a.salutation?a.salutation+' ':'')+(a.full_name||'')).trim();
+    var st=a.status==='paid'?'<span class="pill paid">PAID'+(a.payment_id==='free'?' · FREE':'')+'</span>':'<span class="pill submitted">'+esc(a.status||'')+'</span>';
+    tb.insertAdjacentHTML('beforeend','<tr><td class="muted">'+fmt(a.created_at)+'</td><td><b>'+esc(name)+'</b></td><td>'+st+'</td><td>'+esc(a.city)+'</td><td>'+esc(a.specialty)+'</td><td>'+esc(a.qualification)+'</td><td>'+esc(a.phone)+'</td><td>'+esc(a.email)+'</td><td>'+esc(a.dietary)+'</td><td>'+esc(a.promo_code||'')+'</td><td class="muted">'+esc(a.hear_about||'')+'</td></tr>');
+  });
+  var pb=document.querySelector('#tPromos tbody'); pb.innerHTML='';
+  d.promos.forEach(function(p){
+    pb.insertAdjacentHTML('beforeend','<tr><td><b>'+esc(p.code)+'</b></td><td>'+esc(p.type)+(p.value!=null?' '+esc(p.value):'')+'</td><td>'+esc(p.label||'')+'</td><td>'+(p.used?'<span class="pill used">USED</span>':'<span class="pill unused">AVAILABLE</span>')+'</td><td class="muted">'+fmt(p.used_at)+'</td><td class="muted">'+esc(p.used_by_email||'')+'</td></tr>');
+  });
+}
+document.getElementById('go').addEventListener('click',load);
+document.getElementById('key').addEventListener('keydown',function(e){if(e.key==='Enter')load();});
+document.getElementById('csv').addEventListener('click',function(){
+  if(!DATA) return;
+  var cols=['created_at','salutation','full_name','status','city','specialty','qualification','years_practice','phone','email','dietary','promo_code','payment_id','hear_about'];
+  var lines=[cols.join(',')];
+  DATA.apps.forEach(function(a){lines.push(cols.map(function(c){var v=a[c]==null?'':String(a[c]);return '"'+v.replace(/"/g,'""')+'"';}).join(','));});
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});
+  var u=URL.createObjectURL(blob), l=document.createElement('a');
+  l.href=u; l.download='caspian-applications.csv'; document.body.appendChild(l); l.click(); l.remove(); URL.revokeObjectURL(u);
+});
+</script>
+</body></html>

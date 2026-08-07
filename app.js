@@ -36,6 +36,17 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   var m=document.getElementById('mbarDays'); if(m){m.textContent=d===1?'starts tomorrow':'starts in '+d+' days';}
 })();
 
+// live seat counter — shows real numbers only once enough founding seats are taken
+(function(){
+  var SHOW_AT=10;
+  fetch('/api/seats').then(function(r){return r.json();}).then(function(s){
+    if(!s || !s.cap || typeof s.taken!=='number' || s.taken<SHOW_AT) return;
+    var left=Math.max(0,s.cap-s.taken);
+    var p=document.getElementById('pillSeats'); if(p){p.textContent=s.taken+' of '+s.cap+' seats taken';}
+    var g=document.getElementById('seatsGlance'); if(g){g.textContent='Capped at '+s.cap+' — '+s.taken+' taken, '+left+' left';}
+  }).catch(function(){});
+})();
+
 // sticky mobile CTA bar — appears once the hero CTA has scrolled away
 (function(){
   var bar=document.getElementById('mbar'); if(!bar) return;
