@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
 <title>Apply, CASPIAN Certificate in Obesity Medicine</title>
 <meta name="robots" content="noindex"/>
 <meta name="description" content="Apply for the CASPIAN Certificate in Obesity Medicine, founding batch begins 30 August 2026, Hyderabad."/>
@@ -207,7 +208,7 @@
     <h2 class="st">Review &amp; confirm</h2>
     <div class="rev" id="review"></div>
     <div style="margin-top:16px">
-     <label class="check"><input type="checkbox" id="consent_data"/> <span>I consent to Caspian Healthcare Foundation processing my details for this course, per the <a href="/privacy.html" target="_blank">Privacy Policy</a>. <span class="req">*</span></span></label>
+     <label class="check"><input type="checkbox" id="consent_data"/> <span>I consent to Caspian Healthcare Foundation processing my details for this course, per the <a href="/privacy" target="_blank">Privacy Policy</a>. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="attendance_ack"/> <span>I understand the attendance (≥80%), assessment and feedback requirements for certification. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="consent_photo"/> <span>I consent to my photo being used for my course records and certificate.</span></label>
      <label class="check"><input type="checkbox" id="consent_comms"/> <span>I'm happy to receive course updates and alumni communications.</span></label>
@@ -335,7 +336,7 @@ function startPayment(){
    if(o.free){ // complimentary seat
     fetch('/api/redeem-free',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({promo:code,appId:appId,email:val('email')})})
      .then(function(r){return r.json();})
-     .then(function(v){ if(v&&v.ok){ window.location.href='/thanks.html?free=1'; } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
+     .then(function(v){ if(v&&v.ok){ window.location.href='/thanks?free=1'; } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
      .catch(function(){ busy(false); setMsg('Could not confirm the complimentary seat.','bad'); });
     return;
    }
@@ -349,7 +350,7 @@ function startPayment(){
      setMsg('Verifying payment…','ok');
      fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
       .then(function(r){return r.json();})
-      .then(function(v){ if(v&&v.verified){ window.location.href='/thanks.html?paid=1'; } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
+      .then(function(v){ if(v&&v.verified){ window.location.href='/thanks?paid=1'; } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
       .catch(function(){ busy(false); setMsg('Payment made but verification failed. WhatsApp +91 89784 54547.','bad'); });
     },
     modal:{ ondismiss:function(){ busy(false); setMsg('Checkout closed. Your application is saved, you can pay again.','bad'); } }
@@ -361,5 +362,6 @@ function startPayment(){
 }
 preview(); showStep();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
