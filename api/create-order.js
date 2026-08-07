@@ -90,10 +90,11 @@ export default async function handler(req, res) {
       return res.status(200).json({ free: true, base: basePaise, amount: 0, currency, promo: promoInfo });
     }
 
+    const appId = (body.appId || "").toString().slice(0, 60);
     const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
     const order = await razorpay.orders.create({
       amount, currency, receipt,
-      notes: { promo: promoInfo.applied ? promoInfo.code : "" },
+      notes: { promo: promoInfo.applied ? promoInfo.code : "", appId },
     });
 
     return res.status(200).json({

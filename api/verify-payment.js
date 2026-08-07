@@ -7,16 +7,16 @@ import Razorpay from "razorpay";
 const SB_URL = process.env.SUPABASE_URL;
 const SB_KEY = process.env.SUPABASE_SERVICE_KEY;
 
+function sbHeaders() {
+  return { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY, "Content-Type": "application/json" };
+}
 async function claimPromo(code, order, email) {
   if (!SB_URL || !SB_KEY || !code) return;
   try {
     const url = `${SB_URL}/rest/v1/promo_codes?code=eq.${encodeURIComponent(code)}&used=is.false`;
     await fetch(url, {
       method: "PATCH",
-      headers: {
-        apikey: SB_KEY, Authorization: "Bearer " + SB_KEY,
-        "Content-Type": "application/json", Prefer: "return=representation",
-      },
+      headers: Object.assign(sbHeaders(), { Prefer: "return=representation" }),
       body: JSON.stringify({
         used: true, used_at: new Date().toISOString(),
         used_by_order: order || null, used_by_email: email || null,
@@ -24,6 +24,18 @@ async function claimPromo(code, order, email) {
     });
   } catch {
     /* best-effort; never block a genuine payment on this */
+  }
+}
+async function markApplicationPaid(appId, paymentId, code) {
+  if (!SB_URL || !SB_KEY || !appId) return;
+  try {
+    await fetch(`${SB_URL}/rest/v1/applications?id=eq.${encodeURIComponent(appId)}`, {
+      method: "PATCH",
+      headers: sbHeaders(),
+      body: JSON.stringify({ status: "paid", payment_id: paymentId || null, promo_code: code || null }),
+    });
+  } catch {
+    /* best-effort */
   }
 }
 
@@ -59,7 +71,9 @@ export default async function handler(req, res) {
       const rz = new Razorpay({ key_id: keyId, key_secret: keySecret });
       const order = await rz.orders.fetch(razorpay_order_id);
       const code = order && order.notes && order.notes.promo;
+      const appId = order && order.notes && order.notes.appId;
       if (code) await claimPromo(String(code), razorpay_payment_id, null);
+      if (appId) await markApplicationPaid(String(appId), razorpay_payment_id, code ? String(code) : null);
     }
   } catch {
     /* never fail verification because of promo bookkeeping */

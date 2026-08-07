@@ -41,6 +41,7 @@ export default async function handler(req, res) {
   const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
   const code = (body.promo || "").toString().trim().toUpperCase();
   const email = (body.email || "").toString().trim() || null;
+  const appId = (body.appId || "").toString().trim() || null;
   if (!code) return res.status(400).json({ ok: false, error: "No code provided" });
 
   const row = await sbLookup(code);
@@ -51,6 +52,16 @@ export default async function handler(req, res) {
 
   const claimed = await sbClaim(code, email);
   if (!claimed) return res.status(200).json({ ok: false, error: "This code has already been used" });
+
+  // Mark the linked application as enrolled via a complimentary seat.
+  if (appId) {
+    try {
+      await fetch(`${SB_URL}/rest/v1/applications?id=eq.${encodeURIComponent(appId)}`, {
+        method: "PATCH", headers: sbHeaders(),
+        body: JSON.stringify({ status: "paid", payment_id: "free", promo_code: code }),
+      });
+    } catch { /* best-effort */ }
+  }
 
   return res.status(200).json({ ok: true, label: row.label || "Complimentary seat" });
 }
