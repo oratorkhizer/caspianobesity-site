@@ -39,6 +39,57 @@ async function markApplicationPaid(appId, paymentId, code) {
   }
 }
 
+async function notifySeat(appId, paymentId, promo, order) {
+  // Email the course team for every confirmed seat. Best-effort: never throws,
+  // never blocks payment verification.
+  try {
+    let app = null;
+    if (SB_URL && SB_KEY && appId) {
+      const r = await fetch(
+        `${SB_URL}/rest/v1/applications?id=eq.${encodeURIComponent(appId)}&select=salutation,full_name,email,phone,city,specialty,qualification,dietary`,
+        { headers: sbHeaders() }
+      );
+      if (r.ok) {
+        const rows = await r.json();
+        app = Array.isArray(rows) && rows[0] ? rows[0] : null;
+      }
+    }
+    let paid = null;
+    if (SB_URL && SB_KEY) {
+      const r = await fetch(`${SB_URL}/rest/v1/applications?select=id&status=eq.paid`, {
+        headers: Object.assign(sbHeaders(), { Prefer: "count=exact", Range: "0-0" }),
+      });
+      const cr = r.headers.get("content-range");
+      const n = cr && cr.includes("/") ? parseInt(cr.split("/")[1], 10) : NaN;
+      if (Number.isFinite(n)) paid = n;
+    }
+    const name = app ? ((app.salutation ? app.salutation + " " : "") + (app.full_name || "")).trim() : "(details not on file)";
+    const amount = order && order.amount ? "Rs " + (order.amount / 100).toLocaleString("en-IN") : "";
+    await fetch("https://formsubmit.co/ajax/drkhizer@caspianobesity.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: "PAID seat" + (paid ? " #" + paid : "") + " — " + name + " — CASPIAN founding batch",
+        _template: "table",
+        seats: paid ? paid + " of 40 founding seats now paid" : "(count unavailable)",
+        name: name,
+        city: (app && app.city) || "",
+        specialty: (app && app.specialty) || "",
+        qualification: (app && app.qualification) || "",
+        phone: (app && app.phone) || "",
+        email: (app && app.email) || "",
+        meal: (app && app.dietary) || "",
+        amount_paid: amount,
+        promo_code: promo || "none",
+        payment_id: paymentId || "",
+        where_next: "Full record: caspianobesity.com/admin · Payment: Razorpay dashboard",
+      }),
+    });
+  } catch {
+    /* best-effort */
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -74,6 +125,7 @@ export default async function handler(req, res) {
       const appId = order && order.notes && order.notes.appId;
       if (code) await claimPromo(String(code), razorpay_payment_id, null);
       if (appId) await markApplicationPaid(String(appId), razorpay_payment_id, code ? String(code) : null);
+      await notifySeat(appId ? String(appId) : null, razorpay_payment_id, code ? String(code) : null, order);
     }
   } catch {
     /* never fail verification because of promo bookkeeping */

@@ -22,6 +22,7 @@ Key facts:
 - [Home](https://caspianobesity.com/): full programme, curriculum, fees, FAQ and enquiry form
 - [Apply](https://caspianobesity.com/apply): the application and secure payment (Razorpay)
 - [Prospectus (PDF)](https://caspianobesity.com/CASPIAN-Prospectus.pdf): downloadable course prospectus
+- [Sample chapter (PDF)](https://caspianobesity.com/sample-chapter.pdf): Module 1 of the course textbook, free to read and share
 - [Verify a certificate](https://caspianobesity.com/verify): confirm a Credential ID is genuine
 - [About](https://caspianobesity.com/about): who operates the course
 - [Contact](https://caspianobesity.com/contact): how to reach the team

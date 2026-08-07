@@ -63,5 +63,47 @@ export default async function handler(req, res) {
     } catch { /* best-effort */ }
   }
 
+  // Email the course team (best-effort; never blocks the confirmation).
+  try {
+    let app = null;
+    if (appId) {
+      const r = await fetch(
+        `${SB_URL}/rest/v1/applications?id=eq.${encodeURIComponent(appId)}&select=salutation,full_name,email,phone,city,specialty,qualification,dietary`,
+        { headers: sbHeaders() }
+      );
+      if (r.ok) {
+        const rows = await r.json();
+        app = Array.isArray(rows) && rows[0] ? rows[0] : null;
+      }
+    }
+    let paid = null;
+    const cr0 = await fetch(`${SB_URL}/rest/v1/applications?select=id&status=eq.paid`, {
+      headers: sbHeaders({ Prefer: "count=exact", Range: "0-0" }),
+    });
+    const cr = cr0.headers.get("content-range");
+    const n = cr && cr.includes("/") ? parseInt(cr.split("/")[1], 10) : NaN;
+    if (Number.isFinite(n)) paid = n;
+    const name = app ? ((app.salutation ? app.salutation + " " : "") + (app.full_name || "")).trim() : email || "(details not on file)";
+    await fetch("https://formsubmit.co/ajax/drkhizer@caspianobesity.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: "COMPLIMENTARY seat" + (paid ? " #" + paid : "") + " — " + name + " — code " + code,
+        _template: "table",
+        seats: paid ? paid + " of 40 founding seats now confirmed" : "(count unavailable)",
+        name: name,
+        city: (app && app.city) || "",
+        specialty: (app && app.specialty) || "",
+        phone: (app && app.phone) || "",
+        email: (app && app.email) || email || "",
+        meal: (app && app.dietary) || "",
+        promo_code: code,
+        where_next: "Full record: caspianobesity.com/admin",
+      }),
+    });
+  } catch {
+    /* best-effort */
+  }
+
   return res.status(200).json({ ok: true, label: row.label || "Complimentary seat" });
 }
