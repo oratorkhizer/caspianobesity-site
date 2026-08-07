@@ -48,7 +48,7 @@
         <a href="#included">What you get</a>
         <a href="#fees">Fees</a>
         <a href="#faq">FAQ</a>
-        <a class="btn btn-gold nav-cta" href="#register">Reserve your seat</a>
+        <a class="btn btn-gold nav-cta" href="/apply">Reserve your seat</a>
       </div>
       <button class="burger" id="burger" aria-label="Menu">☰</button>
     </nav>
@@ -76,7 +76,7 @@
         <span class="pill">Only 40 seats</span>
       </div>
       <div class="cta-row">
-        <a class="btn btn-gold" href="#register">Reserve your seat</a>
+        <a class="btn btn-gold" href="/apply">Reserve your seat</a>
         <a class="btn btn-ghost" href="#fees">Founding-batch fee</a>
       </div>
       <div style="margin-top:14px"><a href="/CASPIAN-Prospectus.pdf" target="_blank" rel="noopener" style="color:#e7c65a;font-size:.9rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,162,39,.5);padding-bottom:2px">Download the prospectus (PDF) &rarr;</a></div>
@@ -262,11 +262,8 @@
           <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--gold);font-weight:700">✓</span><span style="font-size:.95rem;color:#33475c">Assessment + CASPIAN Certificate in Obesity Medicine</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--gold);font-weight:700">✓</span><span style="font-size:.95rem;color:#33475c">Dosing quick-reference &amp; Indian-brand formulary</span></div>
         </div>
-        <div style="display:flex;gap:8px;margin-bottom:10px">
-          <input class="promo-input" type="text" placeholder="Promo code (optional)" autocomplete="off" spellcheck="false" style="flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:.92rem;font-family:inherit;text-transform:uppercase"/>
-        </div>
-        <button type="button" onclick="payCaspian(this)" class="btn btn-gold" style="width:100%;text-align:center;border:0;cursor:pointer">Pay ₹2,999 &amp; reserve</button>
-        <div class="promo-msg" style="display:none;margin-top:10px;font-size:.85rem;font-weight:600"></div>
+        <a href="/apply" class="btn btn-gold" style="display:block;width:100%;text-align:center;border:0;cursor:pointer;text-decoration:none">Apply &amp; reserve your seat</a>
+        <div style="margin-top:10px;font-size:.82rem;color:var(--muted);text-align:center">Complete a short application, then pay securely. Promo codes are applied at checkout.</div>
         <div style="margin-top:14px;padding:12px 14px;background:rgba(201,162,39,.1);border-radius:10px;font-size:.86rem;color:var(--gold-d)"><b>Money-back guarantee:</b> full refund any time before Session 1, and if the first session isn't value for money, a full refund within 7 days of it.</div>
       </div>
       <div class="logistics reveal" style="align-self:stretch">
@@ -334,12 +331,8 @@
         <div><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg> Certificate on completion</div>
         <div><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg> India-first, clinic-ready, no fluff</div>
       </div>
-      <div style="display:flex;gap:8px;margin-top:24px;max-width:340px">
-        <input class="promo-input" type="text" placeholder="Promo code (optional)" autocomplete="off" spellcheck="false" style="flex:1;min-width:0;padding:11px 13px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;border-radius:10px;font-size:.92rem;font-family:inherit;text-transform:uppercase"/>
-      </div>
-      <button type="button" onclick="payCaspian(this)" class="btn btn-gold" style="margin-top:12px;border:0;cursor:pointer">Pay ₹2,999 &amp; reserve your seat</button>
-      <div class="promo-msg" style="display:none;margin-top:10px;font-size:.85rem;font-weight:600;color:#e7c65a"></div>
-      <div style="color:#9fb3cc;font-size:.82rem;margin-top:10px">Secure payment via Razorpay. Prefer to ask first? Use the form &rarr;</div>
+      <a href="/apply" class="btn btn-gold" style="margin-top:24px;border:0;cursor:pointer;display:inline-block;text-decoration:none">Apply &amp; reserve your seat</a>
+      <div style="color:#9fb3cc;font-size:.82rem;margin-top:10px">A short application, then secure payment via Razorpay. Prefer to ask first? Use the form &rarr;</div>
     </div>
     <form id="regform" onsubmit="return submitForm(event)">
       <h3>Register your interest</h3>
