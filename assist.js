@@ -70,7 +70,13 @@ var KB=[
   c:[['Verify a certificate','/verify']]},
  {t:'Contact a human', k:'contact talk speak human person call phone whatsapp email reach help support team question',
   a:'<p>WhatsApp <b>+91 89784 54547</b> or email <b>drkhizer@caspianobesity.com</b> — we usually reply within a working day.</p>',
-  c:[['WhatsApp us','WA:'],['Contact page','/contact']]}
+  c:[['WhatsApp us','WA:'],['Contact page','/contact']]},
+ {t:'Do I need prior training?', k:'prior training experience beginner new start background prerequisite needed require first fresher',
+  a:'<p>No. The course starts from the science and builds up to prescribing and running a practice — no prior obesity-medicine training is expected. If you already treat diabetes, you’ll move quickly.</p>'},
+ {t:'What do I walk away with?', k:'walk away takeaway gain outcome outcomes skills value benefit result learn confident confidence end',
+  a:'<p>The full skill set of the CASPIAN framework — one system you run for every patient — plus the course textbook and reference tools, yours to keep, and the CASPIAN Certificate in Obesity Medicine on passing the final exam. The goal: you practise obesity medicine confidently from the very next clinic day.</p>'},
+ {t:'What if I skip an assessment or feedback form?', k:'skip skipped forgot incomplete pending outstanding submit late feedback form assessment',
+  a:'<p>That module is marked incomplete until its assessment and feedback form are submitted — you can clear any outstanding ones before the final exam. The certificate is issued once attendance (≥80%), all twelve module assessments and feedback forms, and the final exam are complete, so nothing is left hanging.</p>'}
 ];
 var CHIPS=[0,1,3,4,6,8]; // fees, dates, who can join, enrol, refunds, accreditation
 
@@ -148,6 +154,7 @@ function build(){
     push(m?answerBlock(m.e,q):noMatch(q));
   });
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&openState)toggle();});
+  window.caspianAssist={open:function(){if(!openState)toggle();},toggle:toggle};
 }
 function hello(){
   var w=h('div','cx-a');
