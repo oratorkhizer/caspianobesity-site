@@ -46,8 +46,9 @@ footer a{color:#9fb3cc}
 // Tailor the confirmation to how the seat was secured.
 (function(){
   var m=document.getElementById('msg'), q=location.search;
-  if(q.indexOf('paid=1')>-1){m.innerHTML='<b>Payment received &amp; verified ✅</b> Your founding-batch seat is reserved. A receipt will follow by email. Welcome to the CASPIAN Certificate in Obesity Medicine!';}
-  else if(q.indexOf('free=1')>-1){m.innerHTML='<b>Complimentary seat confirmed ✅</b> Your code has been accepted and your founding-batch seat is reserved. Welcome to the CASPIAN Certificate in Obesity Medicine!';}
+  var wab='<div style="margin-top:14px"><a href="https://chat.whatsapp.com/H3XmvEyB49N081olfP2fg0" target="_blank" rel="noopener" style="display:inline-block;background:#1daa61;color:#fff;font-weight:700;border-radius:9px;padding:12px 22px;text-decoration:none">Join your cohort\'s WhatsApp group &rarr;</a><div style="font-size:.82rem;color:#5a6b7a;margin-top:8px">“CASPIAN Obesity Medicine Founding Batch” — say hello when you join.</div></div>';
+  if(q.indexOf('paid=1')>-1){m.innerHTML='<b>Payment received &amp; verified ✅</b> Your founding-batch seat is reserved. A receipt will follow by email. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
+  else if(q.indexOf('free=1')>-1){m.innerHTML='<b>Complimentary seat confirmed ✅</b> Your code has been accepted and your founding-batch seat is reserved. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
 })();
 </script>
 
