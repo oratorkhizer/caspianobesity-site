@@ -48,24 +48,31 @@ function _setPromoMsg(el,text,kind){
   el.style.color = kind==='ok' ? '#2e7d52' : (kind==='bad' ? '#c0554f' : '');
 }
 
-// Free seat (100%-off code): no payment — capture enrolment details and confirm.
+// Free seat (100%-off code): no payment — claim the code server-side (single-use), then confirm.
 function _freeSeat(o, f, btn){
   var msg=_promoMsgFor(btn);
   var label=(o.promo&&o.promo.label)||'Complimentary seat';
-  if(f && f.name && f.email && f.phone && f.name.value && f.email.value && f.phone.value){
-    _setPromoMsg(msg,'Confirming your complimentary seat…','ok');
-    var data={name:f.name.value,email:f.email.value,phone:f.phone.value,city:(f.city&&f.city.value)||'',role:(f.role&&f.role.value)||'',
-      question:'COMPLIMENTARY SEAT via code '+((o.promo&&o.promo.code)||''),
-      _subject:'Complimentary seat — CASPIAN Obesity Medicine ('+((o.promo&&o.promo.code)||'')+')',_template:'table'};
-    fetch('https://formsubmit.co/ajax/drkhizer@caspianobesity.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-      .then(function(r){return r.json();})
-      .then(function(){ window.location.href='/thanks.html?free=1'; })
-      .catch(function(){ _setPromoMsg(msg,'Your code is valid (‘'+label+'’). Please WhatsApp +91 89784 54547 with your name to confirm your seat.','ok'); });
-  } else {
-    _setPromoMsg(msg,'Your code is valid — ‘'+label+'’. Fill in your name, email and phone in the form below, then click again to confirm your complimentary seat.','ok');
+  var code=(o.promo&&o.promo.code)||'';
+  function done(){ if(btn){ btn.disabled=false; btn.textContent=btn.dataset.label||'Reserve your seat'; } }
+  if(!(f && f.name && f.email && f.phone && f.name.value && f.email.value && f.phone.value)){
+    _setPromoMsg(msg,'Your code is valid — ‘'+label+'’. Please fill in your name, email and phone in the form below, then click again to confirm your complimentary seat.','ok');
     var reg=document.getElementById('register'); if(reg&&reg.scrollIntoView) reg.scrollIntoView({behavior:'smooth'});
+    done(); return;
   }
-  if(btn){ btn.disabled=false; btn.textContent=btn.dataset.label||'Reserve your seat'; }
+  _setPromoMsg(msg,'Confirming your complimentary seat…','ok');
+  fetch('/api/redeem-free',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({promo:code,name:f.name.value,email:f.email.value,phone:f.phone.value})})
+    .then(function(r){return r.json();})
+    .then(function(res){
+      if(!res||!res.ok){ _setPromoMsg(msg,(res&&res.error)||'That code could not be used.','bad'); done(); return; }
+      // code claimed — record enrolment (best-effort), then confirm
+      var data={name:f.name.value,email:f.email.value,phone:f.phone.value,city:(f.city&&f.city.value)||'',role:(f.role&&f.role.value)||'',
+        question:'COMPLIMENTARY SEAT via code '+code,
+        _subject:'Complimentary seat — CASPIAN Obesity Medicine ('+code+')',_template:'table'};
+      fetch('https://formsubmit.co/ajax/drkhizer@caspianobesity.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+        .then(function(){ window.location.href='/thanks.html?free=1'; })
+        .catch(function(){ window.location.href='/thanks.html?free=1'; });
+    })
+    .catch(function(){ _setPromoMsg(msg,'Could not confirm the seat — please WhatsApp +91 89784 54547.','bad'); done(); });
 }
 
 function payCaspian(btn){
