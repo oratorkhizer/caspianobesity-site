@@ -86,14 +86,17 @@ export default async function handler(req, res) {
 
     // Signed upload URL for the photo (optional client-side use)
     let uploadUrl = null;
+    let photoDebug = null;
     const photoPath = `${id}.jpg`;
     try {
       const sign = await fetch(
         `${SB_URL}/storage/v1/object/upload/sign/applicant-photos/${photoPath}`,
-        { method: "POST", headers: sbHeaders() }
+        { method: "POST", headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } }
       );
+      const txt = await sign.text();
+      photoDebug = { status: sign.status, body: txt.slice(0, 220) };
       if (sign.ok) {
-        const j = await sign.json();
+        const j = JSON.parse(txt);
         if (j && j.url) {
           uploadUrl = `${SB_URL}/storage/v1${j.url}`;
           await fetch(`${SB_URL}/rest/v1/applications?id=eq.${id}`, {
@@ -103,11 +106,11 @@ export default async function handler(req, res) {
           });
         }
       }
-    } catch {
-      /* photo is optional; never block the application on it */
+    } catch (e) {
+      photoDebug = { err: String(e && e.message) };
     }
 
-    return res.status(200).json({ id, uploadUrl });
+    return res.status(200).json({ id, uploadUrl, photoDebug });
   } catch (err) {
     return res.status(500).json({ error: "Could not save the application." });
   }
