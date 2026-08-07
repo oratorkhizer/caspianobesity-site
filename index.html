@@ -210,7 +210,7 @@
     <h2 style="font-size:2rem;margin:12px 0 8px">A credential worth displaying.</h2>
     <p style="color:var(--muted);max-width:640px;margin:0 auto 28px">Pass the final exam and receive the CASPIAN Certificate in Obesity Medicine, issued by Caspian Healthcare Foundation, Hyderabad.</p>
     <a class="reveal" href="/certificate.jpg" target="_blank" rel="noopener" style="display:inline-block;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(14,38,67,.28);border:1px solid rgba(201,162,39,.3);line-height:0"><img src="/certificate.jpg" alt="Sample CASPIAN Certificate in Obesity Medicine" loading="lazy" style="display:block;width:100%;max-width:820px;height:auto"/></a>
-    <div style="color:#9aa7b4;font-size:.8rem;margin-top:12px">Specimen certificate</div>
+    <div style="color:#9aa7b4;font-size:.8rem;margin-top:12px">Specimen certificate — each one carries a unique Credential ID and QR code, <a href="/verify" style="color:var(--gold-d)">verifiable online</a>.</div>
   </div>
 </section>
 
@@ -223,7 +223,7 @@
       <p>A clear path, built around a practising clinician's schedule.</p>
     </div>
     <div class="grid">
-      <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.5rem;color:var(--gold-l)">1</div><h3>Reserve your seat</h3><p>Pay the &#8377;2,999 founding fee online to lock one of just <b>40 founding seats</b> &mdash; or reserve now and pay later.</p></div>
+      <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.5rem;color:var(--gold-l)">1</div><h3>Reserve your seat</h3><p>Pay the &#8377;2,999 founding fee online &mdash; your seat is reserved the moment payment is received, from just <b>40 founding seats</b>.</p></div>
       <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.5rem;color:var(--gold-l)">2</div><h3>Attend 12 modules</h3><p>One 3-hour in-person session a month in Hyderabad, taught case-by-case around the CASPIAN framework.</p></div>
       <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.5rem;color:var(--gold-l)">3</div><h3>Learn &amp; get assessed</h3><p>Live pre- and post-session quizzes throughout, then a 60-question final exam after Module 12.</p></div>
       <div class="card reveal"><div class="ico" style="font-family:'Playfair Display';font-weight:800;font-size:1.5rem;color:var(--gold-l)">4</div><h3>Earn your certificate</h3><p>Pass at 60% (distinction at 75%) and receive the CASPIAN Certificate in Obesity Medicine.</p></div>
@@ -262,7 +262,11 @@
           <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--gold);font-weight:700">✓</span><span style="font-size:.95rem;color:#33475c">Assessment + CASPIAN Certificate in Obesity Medicine</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--gold);font-weight:700">✓</span><span style="font-size:.95rem;color:#33475c">Dosing quick-reference &amp; Indian-brand formulary</span></div>
         </div>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input class="promo-input" type="text" placeholder="Promo code (optional)" autocomplete="off" spellcheck="false" style="flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:.92rem;font-family:inherit;text-transform:uppercase"/>
+        </div>
         <button type="button" onclick="payCaspian(this)" class="btn btn-gold" style="width:100%;text-align:center;border:0;cursor:pointer">Pay ₹2,999 &amp; reserve</button>
+        <div class="promo-msg" style="display:none;margin-top:10px;font-size:.85rem;font-weight:600"></div>
         <div style="margin-top:14px;padding:12px 14px;background:rgba(201,162,39,.1);border-radius:10px;font-size:.86rem;color:var(--gold-d)"><b>Money-back guarantee:</b> full refund any time before Session 1, and if the first session isn't value for money, a full refund within 7 days of it.</div>
       </div>
       <div class="logistics reveal" style="align-self:stretch">
@@ -275,7 +279,8 @@
           <dt>Venue</dt><dd>API Hall, Oasis Plaza, Tilak Road, Abids, Hyderabad</dd>
           <dt>Who</dt><dd>Registered physicians, MBBS and above</dd>
           <dt>Certificate</dt><dd>CASPIAN Certificate in Obesity Medicine (60% to pass; 75% for distinction)</dd>
-          <dt>Reserve by</dt><dd><a href="https://wa.me/918978454547" style="color:var(--gold-l);text-decoration:underline">WhatsApp +91 89784 54547</a>, paying online, or the form below</dd>
+          <dt>Reserve by</dt><dd>Secure online payment &mdash; your seat is confirmed the moment payment is received</dd>
+          <dt>Questions?</dt><dd><a href="https://wa.me/918978454547" style="color:var(--gold-l);text-decoration:underline">WhatsApp +91 89784 54547</a> or the enquiry form below</dd>
         </dl>
       </div>
     </div>
@@ -305,10 +310,14 @@
       <div class="item"><details><summary>Do I need prior training in obesity medicine?</summary><p>No. The course starts from the science and builds to prescribing and practice. If you already treat diabetes, you'll move quickly.</p></details></div>
       <div class="item"><details><summary>How much time does it take?</summary><p>One 3-hour in-person session a month for 12 months, in Hyderabad, plus short pre/post quizzes. It's designed around a practising clinician's schedule.</p></details></div>
       <div class="item"><details><summary>What do I walk away with?</summary><p>The full skill set of the CASPIAN framework, the course textbook and reference tools, and a certificate on passing the final exam.</p></details></div>
-      <div class="item"><details><summary>What does it cost?</summary><p>The founding-batch fee is <b>₹2,999</b> (from ₹9,999) for the full 12-module programme, the textbook and the certificate — founding pricing for the first cohort only. You can pay securely online or reserve and pay later.</p></details></div>
+      <div class="item"><details><summary>What does it cost?</summary><p>The founding-batch fee is <b>₹2,999</b> (from ₹9,999) for the full 12-module programme, the textbook and the certificate — founding pricing for the first cohort only. Pay securely online to reserve your seat.</p></details></div>
       <div class="item"><details><summary>What if it isn't right for me?</summary><p>There's a money-back guarantee: a full refund any time before Session 1, and if the first session isn't value for money, a full refund within 7 days of it. After that, one free deferral to the next batch and one free exam retake.</p></details></div>
       <div class="item"><details><summary>Is this an accredited course, and is it a degree or diploma?</summary><p>On passing the final exam you receive the CASPIAN Certificate in Obesity Medicine from Caspian Healthcare Foundation, Hyderabad. Accreditation of the programme by a national professional body in obesity and diabetes is under process, and CME credit points will be applied for from the Telangana State Medical Council once accreditation is granted. This is an independent educational certificate — not a university degree, diploma or fellowship.</p></details></div>
-      <div class="item"><details><summary>How do I secure a seat?</summary><p>Cohorts are small and case-based, so seats are limited. Pay ₹2,999 online to lock a seat, reserve via the form below, or WhatsApp <b>+91 89784 54547</b>.</p></details></div>
+      <div class="item"><details><summary>How do I secure a seat?</summary><p>Seats are reserved on payment. Pay the ₹2,999 founding fee securely online and your seat is confirmed straight away — places are capped at 40. The enquiry form and WhatsApp (<b>+91 89784 54547</b>) are for questions and don't hold a seat.</p></details></div>
+      <div class="item"><details><summary>How much attendance is required?</summary><p>You need to attend at least <b>80% of the live modules</b> — that's 10 of the 12 sessions in person. If you have to miss a session (up to two), you keep your place by watching the recording and completing that module's post-session assessment within 14 days. Miss more than two live sessions and we'll help you defer the outstanding modules to the next cohort.</p></details></div>
+      <div class="item"><details><summary>What are the assessments and feedback forms?</summary><p>Each module has a short <b>pre-session and post-session assessment</b>, and a <b>feedback form after every module</b> so we can keep the teaching sharp. After Module 12 there's a 60-question final exam. To be certified you need ≥80% attendance, all twelve module assessments and feedback forms completed, and a pass (60%; 75% for distinction) on the final exam.</p></details></div>
+      <div class="item"><details><summary>What if I attend but skip an assessment or feedback form?</summary><p>That module is marked incomplete until the assessment and feedback are submitted. You can complete any outstanding ones through the participant portal before the final exam. The certificate is issued once attendance, all assessments and feedback, and the final exam are complete — so nothing is left hanging.</p></details></div>
+      <div class="item"><details><summary>Is the certificate verifiable?</summary><p>Yes. Every CASPIAN certificate carries a <b>unique Credential ID</b> and a <b>QR code</b>. Anyone can confirm it's genuine at <a href="/verify">caspianobesity.com/verify</a> — scan the QR or enter the ID to see the holder's name, the credential and the issue date.</p></details></div>
     </div>
   </div>
 </section>
@@ -319,13 +328,17 @@
     <div class="reveal">
       <span class="eyebrow" style="color:var(--gold-l)">Founding batch · begins 30 Aug 2026</span>
       <h2>Reserve your seat.</h2>
-      <p>Small groups &mdash; just <b>40 founding seats</b> at the ₹2,999 fee. Pay online to lock a seat now, leave your details below, or WhatsApp <b>+91 89784 54547</b>.</p>
+      <p>Small groups &mdash; just <b>40 founding seats</b> at the ₹2,999 fee. Your seat is reserved the moment payment is received. Pay securely below to lock a seat; questions can go through the form or WhatsApp <b>+91 89784 54547</b>.</p>
       <div class="assure">
         <div><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg> The course textbook included</div>
         <div><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg> Certificate on completion</div>
         <div><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg> India-first, clinic-ready, no fluff</div>
       </div>
-      <button type="button" onclick="payCaspian(this)" class="btn btn-gold" style="margin-top:26px;border:0;cursor:pointer">Pay ₹2,999 &amp; reserve your seat</button>
+      <div style="display:flex;gap:8px;margin-top:24px;max-width:340px">
+        <input class="promo-input" type="text" placeholder="Promo code (optional)" autocomplete="off" spellcheck="false" style="flex:1;min-width:0;padding:11px 13px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;border-radius:10px;font-size:.92rem;font-family:inherit;text-transform:uppercase"/>
+      </div>
+      <button type="button" onclick="payCaspian(this)" class="btn btn-gold" style="margin-top:12px;border:0;cursor:pointer">Pay ₹2,999 &amp; reserve your seat</button>
+      <div class="promo-msg" style="display:none;margin-top:10px;font-size:.85rem;font-weight:600;color:#e7c65a"></div>
       <div style="color:#9fb3cc;font-size:.82rem;margin-top:10px">Secure payment via Razorpay. Prefer to ask first? Use the form &rarr;</div>
     </div>
     <form id="regform" onsubmit="return submitForm(event)">
@@ -341,8 +354,8 @@
         <div class="field"><label for="role">You are a…</label><select id="role" name="role"><option>General Physician</option><option>Diabetologist</option><option>Endocrinologist</option><option>Family Physician / GP</option><option>Surgeon</option><option>Other specialist</option><option>Postgraduate / Resident</option></select></div>
       </div>
       <div class="field"><label for="msg">Anything you'd like to ask? (optional)</label><textarea id="msg" name="msg" rows="3" placeholder="Your question..."></textarea></div>
-      <button class="btn btn-gold" type="submit">Reserve my seat</button>
-      <div class="fine">By registering you agree to be contacted about the course. No spam.</div>
+      <button class="btn btn-gold" type="submit">Send my enquiry</button>
+      <div class="fine">This is an enquiry, not a booking — seats are reserved on payment. By sending you agree to be contacted about the course. No spam.</div>
     </form>
   </div>
 </section>
@@ -367,6 +380,7 @@
         <a href="#included">What you get</a>
         <a href="#fees">Fees</a>
         <a href="#faq">FAQ</a>
+        <a href="/verify">Verify a certificate</a>
       </div>
       <div>
         <h5>Contact</h5>
@@ -388,7 +402,7 @@
 {"@context":"https://schema.org","@type":"Course","name":"CASPIAN Certificate in Obesity Medicine","description":"A practical, India-first 12-module certificate course that teaches physicians to treat obesity in the GLP-1 era — case-based and clinic-ready, in Hyderabad.","url":"https://caspianobesity.com/","educationalCredentialAwarded":"CASPIAN Certificate in Obesity Medicine","inLanguage":"en","provider":{"@type":"EducationalOrganization","name":"Caspian Healthcare Foundation","url":"https://caspianobesity.com/","address":{"@type":"PostalAddress","streetAddress":"10-3-761/8, Ahmed Plaza, Vijay Nagar Colony","addressLocality":"Hyderabad","addressRegion":"Telangana","postalCode":"500057","addressCountry":"IN"}},"audience":{"@type":"EducationalAudience","educationalRole":"Registered physicians (MBBS and above)"},"hasCourseInstance":{"@type":"CourseInstance","courseMode":"in-person","courseWorkload":"P12M","location":{"@type":"Place","name":"API Hall, Oasis Plaza, Tilak Road, Abids, Hyderabad"},"startDate":"2026-08-30","offers":{"@type":"Offer","price":"2999","priceCurrency":"INR","availability":"https://schema.org/InStock","url":"https://caspianobesity.com/#register"}}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who is this course for?","acceptedAnswer":{"@type":"Answer","text":"Registered physicians (MBBS and above) who see people with obesity, diabetes or metabolic disease and want a structured, modern way to treat weight."}},{"@type":"Question","name":"How much time does it take?","acceptedAnswer":{"@type":"Answer","text":"One 3-hour in-person session a month for 12 months, in Hyderabad, plus short pre and post quizzes."}},{"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"The founding-batch fee is Rs 2,999 (from Rs 9,999) for the full 12-module programme, the textbook and the certificate."}},{"@type":"Question","name":"Is this an accredited course, and is it a degree or diploma?","acceptedAnswer":{"@type":"Answer","text":"On passing the final exam you receive the CASPIAN Certificate in Obesity Medicine from Caspian Healthcare Foundation. Accreditation of the programme is under process, and CME credit points will be applied for from the Telangana State Medical Council once granted. It is an independent educational certificate, not a university degree, diploma or fellowship."}},{"@type":"Question","name":"What if it isn't right for me?","acceptedAnswer":{"@type":"Answer","text":"There is a money-back guarantee: a full refund any time before Session 1, and if the first session is not value for money, a full refund within 7 days of it."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who is this course for?","acceptedAnswer":{"@type":"Answer","text":"Registered physicians (MBBS and above) who see people with obesity, diabetes or metabolic disease and want a structured, modern way to treat weight."}},{"@type":"Question","name":"How much time does it take?","acceptedAnswer":{"@type":"Answer","text":"One 3-hour in-person session a month for 12 months, in Hyderabad, plus short pre and post quizzes."}},{"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"The founding-batch fee is Rs 2,999 (from Rs 9,999) for the full 12-module programme, the textbook and the certificate."}},{"@type":"Question","name":"Is this an accredited course, and is it a degree or diploma?","acceptedAnswer":{"@type":"Answer","text":"On passing the final exam you receive the CASPIAN Certificate in Obesity Medicine from Caspian Healthcare Foundation. Accreditation of the programme is under process, and CME credit points will be applied for from the Telangana State Medical Council once granted. It is an independent educational certificate, not a university degree, diploma or fellowship."}},{"@type":"Question","name":"What if it isn't right for me?","acceptedAnswer":{"@type":"Answer","text":"There is a money-back guarantee: a full refund any time before Session 1, and if the first session is not value for money, a full refund within 7 days of it."}},{"@type":"Question","name":"How much attendance is required?","acceptedAnswer":{"@type":"Answer","text":"At least 80% of the live modules (10 of 12) attended in person. You may miss up to two sessions and keep your place by watching the recording and completing that module's post-session assessment within 14 days."}},{"@type":"Question","name":"Is the certificate verifiable?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every CASPIAN certificate carries a unique Credential ID and a QR code, verifiable at caspianobesity.com/verify by scanning the QR or entering the ID."}}]}
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="/app.js" defer></script>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Verify a Certificate — CASPIAN Certificate in Obesity Medicine</title>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0e2643;--navy2:#14375d;--gold:#c9a227;--gold-l:#e7c65a;--gold-d:#8a6d12;--cream:#f7f4ec;--line:#e7e0d2;--muted:#5b6b7a;--ok:#1f7a4d;--bad:#b23b3b}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:#0e2643;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold-d)}
+  .top{background:radial-gradient(120% 160% at 50% 0%,var(--navy2),var(--navy));color:#fff;padding:26px 20px 30px;text-align:center}
+  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .brand svg{width:40px;height:40px}
+  .brand b{font-weight:700;letter-spacing:.22em;font-size:1.05rem}
+  .brand small{display:block;letter-spacing:.2em;font-size:.56rem;color:#9fb3cc;font-weight:500;margin-top:4px}
+  .top h1{font-family:'Playfair Display',serif;font-weight:800;font-size:1.5rem;margin-top:16px}
+  .top p{color:#c8d6e6;font-size:.92rem;margin-top:6px}
+  .wrap{max-width:640px;margin:-22px auto 0;padding:0 18px 60px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(14,38,67,.1);padding:26px 24px}
+  .lookup{display:flex;gap:10px;margin-top:6px}
+  .lookup input{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit}
+  .btn{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);font-weight:700;border:0;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:1rem;font-family:inherit}
+  .status{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;margin-bottom:4px}
+  .badge{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;font-size:.82rem;font-weight:700}
+  .badge.ok{background:rgba(31,122,77,.12);color:var(--ok)}
+  .badge.bad{background:rgba(178,59,59,.1);color:var(--bad)}
+  .badge.specimen{background:rgba(201,162,39,.14);color:var(--gold-d)}
+  dl{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+  dt{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding-top:2px}
+  dd{font-weight:600;color:#12283f}
+  .cid{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .muted{color:var(--muted);font-size:.9rem}
+  .hint{margin-top:16px;font-size:.85rem;color:var(--muted)}
+  .foot{text-align:center;margin-top:24px;font-size:.82rem;color:var(--muted)}
+  .foot a{text-decoration:none}
+  .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(14,38,67,.2);border-top-color:var(--navy);border-radius:50%;animation:s .7s linear infinite;vertical-align:-3px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .certthumb{margin-top:18px;border-radius:10px;overflow:hidden;border:1px solid var(--line);line-height:0}
+  .certthumb img{width:100%;display:block}
+  @media(max-width:480px){.lookup{flex-direction:column}dl{grid-template-columns:1fr;gap:3px 0}dt{margin-top:10px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="brand" href="/">
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span>
+  </a>
+  <h1>Certificate Verification</h1>
+  <p>Confirm a CASPIAN Certificate in Obesity Medicine is genuine.</p>
+</div>
+<div class="wrap">
+  <div class="card" id="card">
+    <div id="result"><span class="spin"></span> <span class="muted">Checking…</span></div>
+    <form class="lookup" id="lookupForm" style="display:none">
+      <input id="idInput" placeholder="Credential ID — e.g. CASP-OM-2026-0001" autocomplete="off" spellcheck="false"/>
+      <button class="btn" type="submit">Verify</button>
+    </form>
+    <div class="hint" id="hint" style="display:none">Enter the Credential ID printed on the certificate, or scan its QR code.</div>
+  </div>
+  <div class="foot">
+    Issued by <b>Caspian Healthcare Foundation</b>, Hyderabad · <a href="/">caspianobesity.com</a><br/>
+    Questions about a credential? <a href="/contact.html">Contact us</a>.
+  </div>
+</div>
+<script>
+  var CERT_BASE = '/certs/';
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function normId(v){return String(v||'').trim().toUpperCase().replace(/\s+/g,'');}
+  function getParam(name){return new URLSearchParams(location.search).get(name);}
+  var resultEl=document.getElementById('result');
+  var formEl=document.getElementById('lookupForm');
+  var hintEl=document.getElementById('hint');
+
+  function showLookup(prefill){
+    formEl.style.display='flex'; hintEl.style.display='block';
+    if(prefill) document.getElementById('idInput').value=prefill;
+  }
+  function renderNotFound(id){
+    resultEl.innerHTML='<div class="status"><span class="badge bad">✕ Not found</span></div>'+
+      '<p class="muted" style="margin-top:12px">No certificate matches <b class="cid">'+esc(id)+'</b>. Please check the Credential ID exactly as printed on the certificate. If you believe this is an error, <a href="/contact.html">contact us</a>.</p>';
+    showLookup(id);
+  }
+  function fmtDate(d){
+    if(!d) return '';
+    var dt=new Date(d); if(isNaN(dt)) return d;
+    return dt.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  }
+  function renderRecord(r){
+    var specimen = r.status && /specimen/i.test(r.status);
+    var revoked = r.status && /revok/i.test(r.status);
+    var badge = specimen ? '<span class="badge specimen">◆ Specimen</span>'
+              : revoked ? '<span class="badge bad">✕ Revoked</span>'
+              : '<span class="badge ok">✓ Verified — genuine</span>';
+    var rows='';
+    rows+='<dt>Name</dt><dd>'+esc(r.name)+'</dd>';
+    rows+='<dt>Credential</dt><dd>'+esc(r.course||'CASPIAN Certificate in Obesity Medicine')+'</dd>';
+    rows+='<dt>Credential ID</dt><dd class="cid">'+esc(r.id)+'</dd>';
+    if(r.issued) rows+='<dt>Issued</dt><dd>'+esc(fmtDate(r.issued))+'</dd>';
+    if(r.result) rows+='<dt>Result</dt><dd>'+esc(r.result)+'</dd>';
+    rows+='<dt>Issued by</dt><dd>Caspian Healthcare Foundation, Hyderabad</dd>';
+    var thumb = r.image ? '<div class="certthumb"><img src="'+esc(r.image)+'" alt="Certificate"/></div>' : '';
+    var note = specimen ? '<p class="hint">This is a sample record used to demonstrate verification. It does not represent a real graduate.</p>' : '';
+    resultEl.innerHTML='<div class="status">'+badge+'</div>'+'<dl>'+rows+'</dl>'+thumb+note;
+    showLookup('');
+    formEl.style.display='flex';
+  }
+  function lookup(id){
+    id=normId(id);
+    if(!id){ showLookup(''); resultEl.innerHTML='<p class="muted">Enter a Credential ID below to verify a certificate.</p>'; return; }
+    resultEl.innerHTML='<span class="spin"></span> <span class="muted">Checking '+esc(id)+'…</span>';
+    formEl.style.display='none'; hintEl.style.display='none';
+    fetch(CERT_BASE+encodeURIComponent(id)+'.json',{cache:'no-store'})
+      .then(function(res){ if(!res.ok) throw new Error('nf'); return res.json(); })
+      .then(function(r){ if(!r.id) r.id=id; renderRecord(r); })
+      .catch(function(){ renderNotFound(id); });
+  }
+  formEl.addEventListener('submit',function(e){e.preventDefault();var v=document.getElementById('idInput').value;history.replaceState(null,'',location.pathname+'?id='+encodeURIComponent(normId(v)));lookup(v);});
+  var initial=getParam('id');
+  if(initial){ lookup(initial); } else { showLookup(''); resultEl.innerHTML='<p class="muted">Enter a Credential ID below to verify a certificate, or scan the QR code on a certificate.</p>'; }
+</script>
+</body>
+</html>
