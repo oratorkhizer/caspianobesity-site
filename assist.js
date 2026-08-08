@@ -44,7 +44,7 @@ var KB=[
   a:'<p>The course is <b>in person, in Hyderabad</b> — that’s deliberate: it’s case-based and hands-on. Recordings exist only as a make-up for up to two missed sessions (with that module’s assessment completed within 14 days). If you’re travelling from outside Hyderabad, it’s one Sunday a month.</p>'},
  {t:'Who teaches it?', k:'teacher teaches faculty director instructor trainer khizer junaidy who conduct conducting speaker',
   a:'<p>The course is directed and taught by <b>Dr Khizer Hussain Junaidy, MD</b> — diabetologist and obesity specialist, MD (Pharmacology), Fellowship in Diabetes, and a SCOPE-certified obesity physician (World Obesity Federation). He has delivered 200+ invited talks and CMEs, and wrote the course textbook.</p>',
-  c:[['LinkedIn profile','https://www.linkedin.com/in/drkhizerjunaidy/']]},
+  c:[['Watch his 80-second message','/#director-message'],['LinkedIn profile','https://www.linkedin.com/in/drkhizerjunaidy/']]},
  {t:'What is the CASPIAN framework?', k:'caspian framework method system approach classify assess screen personalise intervene anchor nurture meaning stands',
   a:'<p><b>CASPIAN</b> is the clinical framework the whole course is built around — one system you run for every patient: <b>C</b>lassify, <b>A</b>ssess, <b>S</b>creen, <b>P</b>ersonalise, <b>I</b>ntervene, <b>A</b>nchor, <b>N</b>urture. It grew out of daily obesity practice at Caspian Healthcare.</p>'},
  {t:'Curriculum — the 12 modules', k:'curriculum syllabus modules module topics content covered cover glp1 glp semaglutide tirzepatide drugs pharmacotherapy surgery bariatric nutrition diet exercise sleep behaviour psychology special populations practice',
