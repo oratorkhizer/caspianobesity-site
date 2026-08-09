@@ -47,6 +47,24 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   }).catch(function(){});
 })();
 
+// Asset guard: the intro video and the endorsement photo are uploaded separately.
+// Until they exist, hide those sections rather than showing a broken player/image.
+(function(){
+  var probe=new Image();
+  probe.onerror=function(){
+    var s=document.getElementById('director-message'); if(s) s.remove();
+    var a=document.querySelector('a[href="#director-message"]');
+    if(a && a.parentNode) a.parentNode.remove();
+  };
+  probe.src='/video-poster.jpg';
+
+  var rr=document.querySelector('img[src="/raghu-ramulu.jpg"]');
+  if(rr){
+    var drop=function(){ var s=rr.closest('section'); if(s) s.remove(); };
+    if(rr.complete && rr.naturalWidth===0) drop(); else rr.addEventListener('error',drop);
+  }
+})();
+
 // sticky mobile CTA bar — appears once the hero CTA has scrolled away
 (function(){
   var bar=document.getElementById('mbar'); if(!bar) return;
