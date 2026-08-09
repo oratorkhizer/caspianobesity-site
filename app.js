@@ -65,6 +65,33 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   }
 })();
 
+// Share the Course Director's video. Always shares the LINK (not a bare file), so the
+// recipient gets a rich preview and is one tap from the site. Native sheet on mobile,
+// clipboard on desktop, WhatsApp as the last resort.
+(function(){
+  var btn=document.getElementById('shareVideo'); if(!btn) return;
+  var url='https://caspianobesity.com/#director-message';
+  var title='CASPIAN Certificate in Obesity Medicine';
+  var text="A short message from Dr Khizer Hussain Junaidy on the CASPIAN Certificate in Obesity Medicine — 12 monthly modules for Indian physicians. Founding batch begins 30 August 2026, Hyderabad.";
+  var msg=document.getElementById('shareMsg');
+  function say(t){ if(msg){ msg.textContent=t; msg.style.display='block'; } }
+  btn.addEventListener('click',function(){
+    if(navigator.share){
+      navigator.share({title:title,text:text,url:url})
+        .then(function(){ say('Thank you for sharing.'); })
+        .catch(function(){});
+      return;
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text+' '+url)
+        .then(function(){ say('Link copied — paste it into WhatsApp, an email or a group.'); })
+        .catch(function(){ window.open('https://wa.me/?text='+encodeURIComponent(text+' '+url),'_blank','noopener'); });
+      return;
+    }
+    window.open('https://wa.me/?text='+encodeURIComponent(text+' '+url),'_blank','noopener');
+  });
+})();
+
 // sticky mobile CTA bar — appears once the hero CTA has scrolled away
 (function(){
   var bar=document.getElementById('mbar'); if(!bar) return;
