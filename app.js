@@ -118,3 +118,16 @@ function submitForm(ev){
    .catch(function(){btn.textContent='Send my enquiry';btn.style.opacity=1;window.location.href='https://wa.me/918978454547?text='+encodeURIComponent('Hi, I have a question about the CASPIAN Certificate in Obesity Medicine. Name: '+f.name.value+', City: '+f.city.value);});
   return false;
 }
+
+// Cache-bust the Course Director video. The file was replaced at the same URL while a
+// 30-day cache header was in force, so a browser that fetched the earlier cut (or a
+// partial copy served while the CDN was still filling the new one) can keep serving that
+// stale copy from disk. Pointing the source at a versioned URL forces one clean fetch.
+(function(){
+  var VER='2';
+  var s=document.querySelector('#director-message source[src="/caspian-intro.mp4"]');
+  if(!s) return;
+  s.setAttribute('src','/caspian-intro.mp4?v='+VER);
+  var v=s.parentNode;
+  if(v && typeof v.load==='function') v.load();
+})();
