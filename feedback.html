@@ -2,8 +2,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="theme-color" content="#0e2643"/>
 <meta name="robots" content="noindex,nofollow"/>
-<meta name="description" content="Session feedback for participants of the CASPIAN Certificate in Obesity Medicine."/>
+<meta name="description" content="Two minutes of feedback on today's module of the CASPIAN Certificate in Obesity Medicine. Anonymous unless you add your name."/>
 <title>Session feedback, CASPIAN Certificate in Obesity Medicine</title>
+<link rel="canonical" href="https://caspianobesity.com/feedback"/>
+<!-- Open Graph / link preview -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="CASPIAN Certificate in Obesity Medicine"/>
+<meta property="og:title" content="How was today's session?"/>
+<meta property="og:description" content="Two minutes of feedback on today's module. Anonymous unless you add your name."/>
+<meta property="og:url" content="https://caspianobesity.com/feedback"/>
+<meta property="og:image" content="https://caspianobesity.com/og-image.jpg"/>
+<meta property="og:image:secure_url" content="https://caspianobesity.com/og-image.jpg"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="en_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="How was today's session?"/>
+<meta name="twitter:description" content="Two minutes of feedback on today's module. Anonymous unless you add your name."/>
+<meta name="twitter:image" content="https://caspianobesity.com/og-image.jpg"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>*{margin:0;padding:0;box-sizing:border-box}
@@ -190,7 +207,7 @@ footer a{color:#9fb3cc}
       b.type = "button";
       b.textContent = String(i);
       b.setAttribute("aria-pressed", "false");
-      b.setAttribute("aria-label", text + " — " + i + " out of 5");
+      b.setAttribute("aria-label", text + " Rated " + i + " out of 5.");
       b.setAttribute("data-v", String(i));
       row.appendChild(b);
     }
@@ -250,7 +267,7 @@ footer a{color:#9fb3cc}
     hideError();
     for (var i = 0; i < STATEMENTS.length; i++) {
       if (!answers[STATEMENTS[i][0]]) {
-        showError("Please rate every statement — one tap each. The first unanswered one is above.");
+        showError("Please rate every statement. One tap each. The first unanswered one is above.");
         var missing = scales.querySelector('[data-key="' + STATEMENTS[i][0] + '"]');
         if (missing) missing.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
@@ -293,7 +310,7 @@ footer a{color:#9fb3cc}
     }).catch(function(){
       btn.disabled = false;
       btn.textContent = "Send my feedback";
-      showError("That did not send. Check your connection and tap again — nothing you typed has been lost.");
+      showError("That did not send. Check your connection and tap again. Nothing you typed has been lost.");
     });
   });
 })();
