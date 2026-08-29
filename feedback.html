@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="Session feedback for participants of the CASPIAN Certificate in Obesity Medicine."/>
+<title>Session feedback, CASPIAN Certificate in Obesity Medicine</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial,sans-serif;color:#14202e;line-height:1.6;background:#f4f6f9;-webkit-font-smoothing:antialiased}
+a{color:#8a6d12;text-decoration:none}a:hover{text-decoration:underline}
+header{background:#0e2643;position:sticky;top:0;z-index:10}
+nav{max-width:720px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px}
+nav .b{display:flex;align-items:center;gap:10px;color:#fff}
+nav .b b{letter-spacing:.2em;font-weight:700;font-size:.95rem}
+nav .b small{display:block;font-size:.56rem;letter-spacing:.12em;color:#9fb3cc}
+nav .sp{flex:1}nav a.home{color:#e7c65a;font-weight:600;font-size:.85rem}
+
+.wrap{max-width:720px;margin:0 auto;padding:30px 20px 90px}
+h1{font-family:Georgia,serif;color:#0e2643;font-size:1.75rem;line-height:1.2;margin-bottom:8px}
+.sub{color:#5a6b7a;font-size:.95rem;margin-bottom:6px}
+.anon{display:inline-block;background:#eef3ee;color:#2f5d3a;border:1px solid #cfe0d2;border-radius:999px;padding:3px 12px;font-size:.78rem;font-weight:600;margin:12px 0 0}
+
+.card{background:#fff;border:1px solid #e3e9f0;border-radius:12px;padding:20px;margin-top:18px;box-shadow:0 1px 2px rgba(14,38,67,.04)}
+.card h2{font-family:Georgia,serif;color:#14375d;font-size:1.1rem;margin-bottom:4px}
+.card .hint{color:#7b8b9c;font-size:.83rem;margin-bottom:14px}
+
+label.fl{display:block;font-weight:600;font-size:.9rem;color:#14375d;margin-bottom:6px}
+select,input[type=text],textarea{width:100%;font-family:inherit;font-size:1rem;color:#14202e;background:#fff;border:1px solid #cdd8e4;border-radius:8px;padding:11px 12px;line-height:1.5}
+select:focus,input[type=text]:focus,textarea:focus{outline:none;border-color:#0e2643;box-shadow:0 0 0 3px rgba(14,38,67,.12)}
+textarea{min-height:82px;resize:vertical}
+.modline{color:#5a6b7a;font-size:.88rem;margin-top:8px}
+
+.q{padding:16px 0;border-top:1px solid #eef2f6}
+.q:first-of-type{border-top:none;padding-top:4px}
+.q .t{font-size:.97rem;color:#22364a;font-weight:500;margin-bottom:10px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button{font-family:inherit;font-size:1rem;font-weight:600;color:#4a5f74;background:#f4f7fa;border:1.5px solid #dbe3ec;border-radius:9px;padding:12px 0;cursor:pointer;transition:.12s}
+.scale button:hover{border-color:#b6c6d8}
+.scale button:focus-visible{outline:3px solid rgba(14,38,67,.3);outline-offset:1px}
+.scale button[aria-pressed=true]{background:#0e2643;border-color:#0e2643;color:#fff}
+.ends{display:flex;justify-content:space-between;font-size:.74rem;color:#8b9aab;margin-top:6px}
+
+.nps{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.nps button{font-family:inherit;font-size:.9rem;font-weight:600;color:#4a5f74;background:#f4f7fa;border:1.5px solid #dbe3ec;border-radius:7px;padding:11px 0;cursor:pointer;transition:.12s}
+.nps button[aria-pressed=true]{background:#c9a227;border-color:#a8871a;color:#1d1500}
+@media (max-width:420px){.nps{grid-template-columns:repeat(6,1fr)}}
+
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:#33475c;margin-top:10px}
+.chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:#0e2643}
+
+.submit{width:100%;font-family:inherit;font-size:1.02rem;font-weight:700;color:#1d1500;background:#e7c65a;border:none;border-radius:10px;padding:16px;cursor:pointer;margin-top:20px;transition:.15s}
+.submit:hover{background:#d9b545}
+.submit:disabled{opacity:.55;cursor:not-allowed}
+.err{background:#fdeceb;border:1px solid #f0b9b4;color:#8d2b22;border-radius:9px;padding:12px 14px;font-size:.9rem;margin-top:16px}
+.foot{color:#7b8b9c;font-size:.82rem;text-align:center;margin-top:22px}
+
+.done{background:#fff;border:1px solid #e3e9f0;border-radius:12px;padding:40px 26px;text-align:center;margin-top:24px}
+.done .tick{width:56px;height:56px;border-radius:50%;background:#eef3ee;color:#2f5d3a;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.7rem}
+.done h2{font-family:Georgia,serif;color:#0e2643;font-size:1.4rem;margin-bottom:8px}
+.done p{color:#5a6b7a;font-size:.95rem;max-width:38ch;margin:0 auto}
+footer{background:#091a31;color:#9fb3cc;font-size:.82rem}
+footer .f{max-width:720px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+footer a{color:#9fb3cc}
+[hidden]{display:none!important}
+</style></head><body>
+
+<header><nav><a class="b" href="/"><svg viewBox="0 0 40 40" fill="none" width="28" height="28" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span></a><span class="sp"></span><a class="home" href="/">&larr; Site</a></nav></header>
+
+<div class="wrap">
+
+  <div id="formview">
+    <h1>How was today&rsquo;s session?</h1>
+    <p class="sub">Two minutes. Your answers shape the next module and the next batch.</p>
+    <span class="anon">Anonymous unless you add your name at the end</span>
+
+    <div class="card">
+      <div class="field">
+        <label class="fl" for="module">Which module are you giving feedback on?</label>
+        <select id="module">
+          <option value="1">Module 1 &middot; The New Science of Obesity</option>
+          <option value="2">Module 2 &middot; Diagnosis, Classification &amp; Staging</option>
+          <option value="3">Module 3 &middot; The Obesity Consultation</option>
+          <option value="4">Module 4 &middot; Secondary Causes &amp; Complications</option>
+          <option value="5">Module 5 &middot; Medical Nutrition Therapy</option>
+          <option value="6">Module 6 &middot; Physical Activity, Exercise &amp; Sleep</option>
+          <option value="7">Module 7 &middot; Behavioural &amp; Psychological Management</option>
+          <option value="8">Module 8 &middot; Pharmacotherapy I</option>
+          <option value="9">Module 9 &middot; Pharmacotherapy II</option>
+          <option value="10">Module 10 &middot; Metabolic &amp; Bariatric Surgery</option>
+          <option value="11">Module 11 &middot; Special Populations</option>
+          <option value="12">Module 12 &middot; Building an Obesity Practice</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="fl" for="role">Your role <span style="font-weight:400;color:#8b9aab">(optional)</span></label>
+        <input type="text" id="role" placeholder="e.g. family physician, consultant, postgraduate" maxlength="80"/>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Rate the session</h2>
+      <p class="hint">1 means strongly disagree, 5 means strongly agree.</p>
+      <div id="scales"></div>
+    </div>
+
+    <div class="card">
+      <h2>In your own words</h2>
+      <p class="hint">Skip anything you would rather not answer.</p>
+      <div class="field">
+        <label class="fl" for="most_useful">The single most useful thing I learned today</label>
+        <textarea id="most_useful" maxlength="1000"></textarea>
+      </div>
+      <div class="field">
+        <label class="fl" for="improve">One thing that would have made today better</label>
+        <textarea id="improve" maxlength="1000"></textarea>
+      </div>
+      <div class="field">
+        <label class="fl" for="future_topic">A topic or question I would like a future session to cover</label>
+        <textarea id="future_topic" maxlength="1000"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>One last question</h2>
+      <p class="hint">How likely are you to recommend this course to a colleague?</p>
+      <div class="nps" id="nps"></div>
+      <div class="ends"><span>0 &middot; not at all likely</span><span>extremely likely &middot; 10</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Your name <span style="font-weight:400;color:#8b9aab;font-size:.85rem">optional</span></h2>
+      <p class="hint">Leave this blank and your feedback stays completely anonymous.</p>
+      <input type="text" id="respondent_name" placeholder="Dr ..." maxlength="120"/>
+      <label class="chk"><input type="checkbox" id="can_quote"/><span>You may quote my comments, with my name and qualification, in course materials.</span></label>
+    </div>
+
+    <div id="error" class="err" hidden></div>
+    <button class="submit" id="send">Send my feedback</button>
+    <p class="foot">CASPIAN Certificate in Obesity Medicine &middot; Caspian Healthcare Foundation</p>
+  </div>
+
+  <div id="doneview" hidden>
+    <div class="done">
+      <div class="tick">&#10003;</div>
+      <h2>Thank you</h2>
+      <p>Your feedback has been recorded. It shapes the next session and the next batch.</p>
+    </div>
+  </div>
+
+</div>
+
+<script defer src="/_vercel/insights/script.js"></script>
+<footer><div class="f"><span>&copy; 2026 Caspian Healthcare Foundation</span><span><a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></span></div></footer>
+
+<script>
+(function(){
+  var SB = "https://itqxfypvrvwplzeeldaz.supabase.co";
+  var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0cXhmeXB2cnZ3cGx6ZWVsZGF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwODY4NDYsImV4cCI6MjEwMTY2Mjg0Nn0.O9CZPubPNjpkRr82hAFpjvUdXNUZ0_xy2XljM0LHrds";
+
+  var STATEMENTS = [
+    ["obj_clear",      "The objectives of the session were clear."],
+    ["relevant",       "The content was relevant to my day-to-day practice."],
+    ["teaching_clear", "The teaching was clear and easy to follow."],
+    ["cases_helped",   "The clinical cases helped me apply what I learned."],
+    ["slides_clear",   "The slides and figures were clear and useful."],
+    ["pace_right",     "The pace and the timing of the session were right."],
+    ["use_this_week",  "I can use something from today in my clinic this week."],
+    ["venue_ok",       "The venue, refreshments and arrangements were satisfactory."]
+  ];
+
+  var answers = {};
+
+  var scales = document.getElementById("scales");
+  STATEMENTS.forEach(function(s){
+    var key = s[0], text = s[1];
+    var q = document.createElement("div");
+    q.className = "q";
+    var t = document.createElement("div");
+    t.className = "t";
+    t.textContent = text;
+    q.appendChild(t);
+    var row = document.createElement("div");
+    row.className = "scale";
+    row.setAttribute("data-key", key);
+    for (var i = 1; i <= 5; i++) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = String(i);
+      b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", text + " — " + i + " out of 5");
+      b.setAttribute("data-v", String(i));
+      row.appendChild(b);
+    }
+    q.appendChild(row);
+    var ends = document.createElement("div");
+    ends.className = "ends";
+    ends.innerHTML = "<span>strongly disagree</span><span>strongly agree</span>";
+    q.appendChild(ends);
+    scales.appendChild(q);
+  });
+
+  var npsWrap = document.getElementById("nps");
+  for (var n = 0; n <= 10; n++) {
+    var nb = document.createElement("button");
+    nb.type = "button";
+    nb.textContent = String(n);
+    nb.setAttribute("aria-pressed", "false");
+    nb.setAttribute("aria-label", "Recommend score " + n + " out of 10");
+    nb.setAttribute("data-v", String(n));
+    npsWrap.appendChild(nb);
+  }
+
+  function wire(container, key) {
+    container.addEventListener("click", function(e){
+      var btn = e.target.closest("button");
+      if (!btn || !container.contains(btn)) return;
+      var sibs = container.querySelectorAll("button");
+      for (var i = 0; i < sibs.length; i++) sibs[i].setAttribute("aria-pressed", "false");
+      btn.setAttribute("aria-pressed", "true");
+      answers[key] = parseInt(btn.getAttribute("data-v"), 10);
+      hideError();
+    });
+  }
+  var rows = scales.querySelectorAll(".scale");
+  for (var r = 0; r < rows.length; r++) wire(rows[r], rows[r].getAttribute("data-key"));
+  wire(npsWrap, "nps");
+
+  var params = new URLSearchParams(window.location.search);
+  var m = parseInt(params.get("m"), 10);
+  if (m >= 1 && m <= 12) document.getElementById("module").value = String(m);
+
+  var errBox = document.getElementById("error");
+  function showError(msg) {
+    errBox.textContent = msg;
+    errBox.hidden = false;
+    errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  function hideError() { errBox.hidden = true; }
+
+  function val(id) {
+    var v = document.getElementById(id).value.trim();
+    return v ? v : null;
+  }
+
+  var btn = document.getElementById("send");
+  btn.addEventListener("click", function(){
+    hideError();
+    for (var i = 0; i < STATEMENTS.length; i++) {
+      if (!answers[STATEMENTS[i][0]]) {
+        showError("Please rate every statement — one tap each. The first unanswered one is above.");
+        var missing = scales.querySelector('[data-key="' + STATEMENTS[i][0] + '"]');
+        if (missing) missing.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+    }
+    if (answers.nps === undefined) {
+      showError("Please pick a number from 0 to 10 for the last question.");
+      return;
+    }
+
+    var row = {
+      module_no: parseInt(document.getElementById("module").value, 10),
+      role: val("role"),
+      most_useful: val("most_useful"),
+      improve: val("improve"),
+      future_topic: val("future_topic"),
+      respondent_name: val("respondent_name"),
+      can_quote: document.getElementById("can_quote").checked
+    };
+    STATEMENTS.forEach(function(s){ row[s[0]] = answers[s[0]]; });
+    row.nps = answers.nps;
+
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+
+    fetch(SB + "/rest/v1/feedback", {
+      method: "POST",
+      headers: {
+        apikey: KEY,
+        Authorization: "Bearer " + KEY,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(row)
+    }).then(function(res){
+      if (!res.ok) throw new Error("save failed");
+      document.getElementById("formview").hidden = true;
+      document.getElementById("doneview").hidden = false;
+      window.scrollTo(0, 0);
+    }).catch(function(){
+      btn.disabled = false;
+      btn.textContent = "Send my feedback";
+      showError("That did not send. Check your connection and tap again — nothing you typed has been lost.");
+    });
+  });
+})();
+</script>
+</body></html>
