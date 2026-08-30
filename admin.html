@@ -21,7 +21,7 @@ body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:#12283
 .gate input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit}
 .btn{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);font-weight:700;border:0;border-radius:10px;padding:12px 22px;cursor:pointer;font-size:.95rem;font-family:inherit;margin-top:12px}
 .err{color:var(--bad);font-size:.85rem;margin-top:10px;min-height:1em}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
 .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
 .stat .n{font-size:1.7rem;font-weight:700;color:var(--navy)}
 .stat .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
@@ -59,14 +59,13 @@ tr:last-child td{border-bottom:0}
    <div class="stat"><div class="n" id="cPaid">–</div><div class="l">Paid seats</div></div>
    <div class="stat"><div class="n" id="cSub">–</div><div class="l">Applied, unpaid</div></div>
    <div class="stat"><div class="n" id="cTotal">–</div><div class="l">Total applications</div></div>
-   <div class="stat"><div class="n" id="cLeft">–</div><div class="l">Of 40 seats left</div></div>
   </div>
  </div>
  <div class="bar"><h2 style="margin:0">Applications (newest first)</h2><div class="r"><a class="linkbtn" href="/results">Session feedback</a> <a class="linkbtn" href="/attendance">Attendance</a> <button class="linkbtn" id="csv">Download CSV</button></div></div>
  <div class="scroll"><table id="tApps"><thead><tr><th>When</th><th>Name</th><th>Status</th><th>City</th><th>Specialty</th><th>Qualification</th><th>Phone</th><th>Email</th><th>Meal</th><th>Promo</th><th>Heard via</th></tr></thead><tbody></tbody></table></div>
  <h2>Promo codes</h2>
  <div class="scroll"><table id="tPromos"><thead><tr><th>Code</th><th>Type</th><th>Label</th><th>State</th><th>Used at</th><th>Used by</th></tr></thead><tbody></tbody></table></div>
- <p class="muted" style="font-size:.75rem;margin-top:14px">Shows an operational subset only — full records (addresses, DOB, registration numbers, photos) stay in Supabase. Payments reconcile in the Razorpay dashboard.</p>
+ <p class="muted" style="font-size:.75rem;margin-top:14px">Shows an operational subset only: full records (addresses, DOB, registration numbers, photos) stay in Supabase. Payments reconcile in the Razorpay dashboard.</p>
 </div>
 
 </div>
@@ -93,7 +92,6 @@ function render(d){
   document.getElementById('cPaid').textContent=d.counts.paid;
   document.getElementById('cSub').textContent=d.counts.submitted;
   document.getElementById('cTotal').textContent=d.counts.total;
-  document.getElementById('cLeft').textContent=Math.max(0,40-d.counts.paid);
   var tb=document.querySelector('#tApps tbody'); tb.innerHTML='';
   d.apps.forEach(function(a){
     var name=((a.salutation?a.salutation+' ':'')+(a.full_name||'')).trim();
