@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
   try {
     const [featured, all] = await Promise.all([
-      sb("feedback?select=respondent_name,role,quote_override,module_no&featured=is.true&order=module_no.asc"),
+      sb("feedback?select=respondent_name,role,display_name,display_role,quote_override,module_no&featured=is.true&order=module_no.asc"),
       sb(`feedback?select=nps,${LIKERT.join(",")}`)
     ]);
 
@@ -55,8 +55,11 @@ export default async function handler(req, res) {
       .filter((q) => q.quote_override && q.quote_override.trim())
       .map((q) => ({
         text: q.quote_override.trim(),
-        name: (q.respondent_name || "").trim() || null,
-        role: (q.role || "").trim() || null,
+        // display_name / display_role are the curated public forms, carrying the
+        // doctor's full name and title. They fall back to what was typed in the
+        // form, which is never overwritten.
+        name: (q.display_name || q.respondent_name || "").trim() || null,
+        role: (q.display_role || q.role || "").trim() || null,
         module: q.module_no
       }));
 
