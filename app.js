@@ -153,3 +153,52 @@ function submitForm(ev){
   var v=s.parentNode;
   if(v && typeof v.load==='function') v.load();
 })();
+
+// What the founding batch said. Rendered from /api/testimonials rather than
+// written into the page, because the quotes grow by one module a month and a
+// hand-maintained list would go stale. Only consented, curated quotes come back.
+(function(){
+  var anchor=document.getElementById('faq'); if(!anchor) return;
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  fetch('/api/testimonials').then(function(r){return r.json();}).then(function(j){
+    var q=(j&&j.quotes)||[]; if(!q.length) return;
+    var s=(j&&j.stats)||{};
+
+    // The site's .stat tiles are built for a navy band; on white their labels
+    // wash out, so these carry their own colours.
+    function tile(n,l){
+      return '<div style="text-align:center;padding:6px 10px">'+
+             '<div style="font-family:\'Playfair Display\',Georgia,serif;font-weight:800;font-size:2.6rem;color:var(--navy);line-height:1">'+n+'</div>'+
+             '<div style="font-size:.8rem;color:#5b6b7a;margin-top:6px;letter-spacing:.02em">'+l+'</div></div>';
+    }
+    var tiles='';
+    if(s.responses) tiles+=tile(s.responses,'Doctors gave feedback');
+    if(s.recommend!=null) tiles+=tile(s.recommend+'%','Would recommend it to a colleague');
+    if(s.avg!=null) tiles+=tile(s.avg,'Average rating out of 5');
+
+    var cards=q.map(function(x){
+      var who=[x.name, x.role].filter(Boolean).map(esc).join(', ');
+      return '<div class="card reveal in" style="text-align:left">'+
+             '<p style="font-family:\'Playfair Display\',Georgia,serif;font-style:italic;font-size:1.06rem;color:var(--navy);line-height:1.5;margin:0 0 14px">&ldquo;'+esc(x.text)+'&rdquo;</p>'+
+             (who?'<div style="font-size:.84rem;font-weight:700;color:var(--gold-d)">'+who+'</div>':'')+
+             '<div style="font-size:.76rem;color:var(--muted)">Founding batch &middot; Module '+(x.module||1)+'</div>'+
+             '</div>';
+    }).join('');
+
+    var sec=document.createElement('section');
+    sec.className='why'; sec.id='voices';
+    sec.style.background='#fff';
+    sec.innerHTML=
+      '<div class="wrap">'+
+       '<div class="sec-head reveal in">'+
+        '<span class="eyebrow" style="color:var(--gold-d)">From the founding batch</span>'+
+        '<h2>What the first cohort took away.</h2>'+
+        '<p>After each module we ask every doctor in the room what was most useful. These are their own words, published with their permission.</p>'+
+       '</div>'+
+       (tiles?'<div style="display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin:0 0 34px">'+tiles+'</div>':'')+
+       '<div class="grid">'+cards+'</div>'+
+      '</div>';
+    anchor.parentNode.insertBefore(sec, anchor);
+  }).catch(function(){});
+})();
