@@ -162,7 +162,10 @@ footer a{color:#9fb3cc}
   var rows=[], key="";
 
   function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-  function d(r){return r.session_date?new Date(r.session_date+"T00:00:00+05:30"):null;}
+  // Build the date from its parts, not from a parsed string. A string with a
+  // +05:30 offset is the right instant but renders in the viewer's own zone, so
+  // a phone set to anything west of India showed the day before.
+  function d(r){if(!r.session_date)return null;var p=String(r.session_date).split("-");if(p.length!==3)return null;return new Date(+p[0],+p[1]-1,+p[2]);}
   function clock(t){var p=String(t||"").split(":"),H=+p[0],M=+p[1];if(isNaN(H))return t||"";var ap=H<12?"am":"pm",h=H%12===0?12:H%12;return M?h+"."+String(M).padStart(2,"0")+" "+ap:h+" "+ap;}
   function isPast(r){var x=d(r);if(!x)return false;var t=new Date();t.setHours(0,0,0,0);return x<t;}
 
@@ -186,7 +189,7 @@ footer a{color:#9fb3cc}
 
   function listBlock(){
     var nextNo=null;
-    rows.forEach(function(r){if(nextNo===null&&!isPast(r)&&r.status!=="cancelled")nextNo=r.module_no;});
+    rows.forEach(function(r){if(nextNo===null&&!isPast(r)&&r.status!=="cancelled"&&r.status!=="completed")nextNo=r.module_no;});
     var keyOf=function(r){return (r.venue_name||"")+"|"+(r.venue_address||"");};
     var up=rows.filter(function(r){return !isPast(r);});
     var common=up.length?keyOf(up[0]):"";
