@@ -186,6 +186,16 @@ function submitForm(ev){
              '</div>';
     }).join('');
 
+    // Three across, not the site's usual four: six quotes then sit as two even
+    // rows instead of a row of four and an orphaned pair.
+    if(!document.getElementById('voices-cols')){
+      var st=document.createElement('style'); st.id='voices-cols';
+      st.textContent='#voices .grid{grid-template-columns:repeat(3,1fr)}'+
+        '@media(max-width:900px){#voices .grid{grid-template-columns:1fr 1fr}}'+
+        '@media(max-width:600px){#voices .grid{grid-template-columns:1fr}}';
+      document.head.appendChild(st);
+    }
+
     var sec=document.createElement('section');
     sec.className='why'; sec.id='voices';
     sec.style.background='#fff';
