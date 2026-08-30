@@ -24,26 +24,48 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   g.innerHTML=html;
 })();
 
-// countdown to Session 1 (Sunday 30 Aug 2026, 10:00 IST) — hides itself once the course starts
+// Countdown to the NEXT module, read from /api/schedule rather than a fixed
+// date, so the homepage stops going stale the morning after a session runs.
 (function(){
-  var t=new Date('2026-08-30T10:00:00+05:30');
-  var d=Math.ceil((t-new Date())/86400000);
-  if(d<=0) return;
-  var label=d===1?'Starts tomorrow':'Starts in '+d+' days';
-  var p=document.getElementById('pillDays'); if(p){p.hidden=false;p.textContent=label;}
-  var f=document.getElementById('feeCountdown');
-  if(f){f.hidden=false;f.textContent=(d===1?'Session 1 is tomorrow':'Session 1 is in '+d+' days')+' — Sunday, 30 August 2026';}
-  var m=document.getElementById('mbarDays'); if(m){m.textContent=d===1?'starts tomorrow':'starts in '+d+' days';}
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  fetch('/api/schedule').then(function(r){return r.json();}).then(function(j){
+    var rows=(j&&j.rows)||[]; if(!rows.length) return;
+    var today=new Date(); today.setHours(0,0,0,0);
+    var row=null, dt=null, now=new Date();
+    rows.forEach(function(r){
+      if(row||!r.session_date||r.status==='cancelled'||r.status==='completed') return;
+      var p=String(r.session_date).split('-'), x=new Date(+p[0],+p[1]-1,+p[2]);
+      // A session that has already finished today is not the next one.
+      var e=String(r.end_time||'13:00').split(':');
+      var ends=new Date(+p[0],+p[1]-1,+p[2],+e[0]||13,+e[1]||0);
+      if(ends>now){ row=r; dt=x; }
+    });
+    if(!row) return;
+    var d=Math.round((dt-today)/86400000);
+    var when=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()];
+    var soon=d===0?'is today':d===1?'is tomorrow':'is in '+d+' days';
+    // Only a doctor joining after Module 1 has run needs the catch-up promise.
+    var catchup=row.module_no>1?' Join before it starts and sit Module 1 with the next batch.':'';
+    var p=document.getElementById('pillDays');
+    if(p){p.hidden=false;p.textContent='Module '+row.module_no+' '+soon;}
+    var f=document.getElementById('feeCountdown');
+    if(f){f.hidden=false;f.textContent='Module '+row.module_no+' '+soon+', '+when+'.'+catchup;}
+    var m=document.getElementById('mbarDays');
+    if(m){m.textContent='Module '+row.module_no+' '+soon;}
+    var g=document.getElementById('nextModuleGlance');
+    if(g){g.innerHTML='Module '+row.module_no+', '+when+' &middot; <a href="/schedule" style="color:var(--gold-d);text-decoration:underline">all twelve dates</a>';}
+  }).catch(function(){});
 })();
 
-// live seat counter — shows real numbers only once enough founding seats are taken
+// Live enrolment counter. There is no seat cap: the hall takes 100 and every
+// doctor who enrols is taken, so this is social proof, not scarcity.
 (function(){
   var SHOW_AT=10;
   fetch('/api/seats').then(function(r){return r.json();}).then(function(s){
-    if(!s || !s.cap || typeof s.taken!=='number' || s.taken<SHOW_AT) return;
-    var left=Math.max(0,s.cap-s.taken);
-    var p=document.getElementById('pillSeats'); if(p){p.textContent=s.taken+' of '+s.cap+' seats taken';}
-    var g=document.getElementById('seatsGlance'); if(g){g.textContent='Capped at '+s.cap+' — '+s.taken+' taken, '+left+' left';}
+    if(!s || typeof s.taken!=='number' || s.taken<SHOW_AT) return;
+    var p=document.getElementById('pillSeats'); if(p){p.textContent=s.taken+' doctors enrolled';}
+    var g=document.getElementById('seatsGlance'); if(g){g.textContent=s.taken+' doctors enrolled so far';}
   }).catch(function(){});
 })();
 
@@ -72,7 +94,7 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   var btn=document.getElementById('shareVideo'); if(!btn) return;
   var url='https://caspianobesity.com/#director-message';
   var title='CASPIAN Certificate in Obesity Medicine';
-  var text="A short message from Dr Khizer Hussain Junaidy on the CASPIAN Certificate in Obesity Medicine — 12 monthly modules for Indian physicians. Founding batch begins 30 August 2026, Hyderabad.";
+  var text="A short message from Dr Khizer Hussain Junaidy on the CASPIAN Certificate in Obesity Medicine, 12 monthly modules for Indian physicians. The founding batch is under way in Hyderabad.";
   var msg=document.getElementById('shareMsg');
   function say(t){ if(msg){ msg.textContent=t; msg.style.display='block'; } }
   btn.addEventListener('click',function(){
@@ -84,7 +106,7 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
     }
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text+' '+url)
-        .then(function(){ say('Link copied — paste it into WhatsApp, an email or a group.'); })
+        .then(function(){ say('Link copied. Paste it into WhatsApp, an email or a group.'); })
         .catch(function(){ window.open('https://wa.me/?text='+encodeURIComponent(text+' '+url),'_blank','noopener'); });
       return;
     }
@@ -92,7 +114,7 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   });
 })();
 
-// sticky mobile CTA bar — appears once the hero CTA has scrolled away
+// sticky mobile CTA bar, appears once the hero CTA has scrolled away
 (function(){
   var bar=document.getElementById('mbar'); if(!bar) return;
   var ticking=false;
@@ -111,10 +133,10 @@ function submitForm(ev){
   ev.preventDefault();
   var f=ev.target, btn=f.querySelector('button[type=submit]');
   btn.textContent='Sending…'; btn.style.opacity=.7;
-  var data={name:f.name.value,email:f.email.value,phone:f.phone.value,city:f.city.value,role:f.role.value,question:f.msg.value,_subject:'New seat enquiry — CASPIAN Obesity Medicine',_template:'table'};
+  var data={name:f.name.value,email:f.email.value,phone:f.phone.value,city:f.city.value,role:f.role.value,question:f.msg.value,_subject:'New seat enquiry, CASPIAN Obesity Medicine',_template:'table'};
   fetch('https://formsubmit.co/ajax/drkhizer@caspianobesity.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
    .then(function(r){return r.json();})
-   .then(function(){f.innerHTML='<h3>Thank you 🙏</h3><p class="fsub">Your enquiry is in — Dr Khizer\'s team will reach out from drkhizer@caspianobesity.com. Seats are reserved on payment of the ₹2,999 founding fee: you can <a href="/apply" style="color:var(--gold-d);text-decoration:underline">apply and pay securely</a> to lock one of the 40 founding seats.</p>';})
+   .then(function(){f.innerHTML='<h3>Thank you 🙏</h3><p class="fsub">Your enquiry is in. Dr Khizer\'s team will reach out from drkhizer@caspianobesity.com. Seats are reserved on payment of the ₹2,999 founding fee: you can <a href="/apply" style="color:var(--gold-d);text-decoration:underline">apply and pay securely</a> to join the founding batch.</p>';})
    .catch(function(){btn.textContent='Send my enquiry';btn.style.opacity=1;window.location.href='https://wa.me/918978454547?text='+encodeURIComponent('Hi, I have a question about the CASPIAN Certificate in Obesity Medicine. Name: '+f.name.value+', City: '+f.city.value);});
   return false;
 }
