@@ -5,201 +5,39 @@
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     },
-    {
-      "source": "/certs/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/favicon.svg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/certificate.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/faculty.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/chf-logo.png",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-image.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-about.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-apply.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-contact.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-terms.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-privacy.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-refund.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-cancellation.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/og-verify.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/CASPIAN-Prospectus.pdf",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/sample-chapter.pdf",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/samplechapter.pdf",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/caspian-intro.mp4",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/video-poster.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
-    }
+    { "source": "/certs/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
+    { "source": "/favicon.svg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/certificate.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/faculty.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/chf-logo.png", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/og-image.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-about.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-apply.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-contact.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-terms.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-privacy.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-refund.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-cancellation.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-verify.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/og-feedback.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/CASPIAN-Prospectus.pdf", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }] },
+    { "source": "/sample-chapter.pdf", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }] },
+    { "source": "/samplechapter.pdf", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }] },
+    { "source": "/caspian-intro.mp4", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] },
+    { "source": "/video-poster.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] }
+  ],
+  "rewrites": [
+    { "source": "/calendar.ics", "destination": "/api/calendar" }
   ],
   "redirects": [
-    {
-      "source": "/sample-chapter.pdf",
-      "destination": "/samplechapter.pdf",
-      "permanent": false
-    }
+    { "source": "/sample-chapter.pdf", "destination": "/samplechapter.pdf", "permanent": false },
+    { "source": "/dates", "destination": "/schedule", "permanent": false },
+    { "source": "/calendar", "destination": "/schedule", "permanent": false }
   ]
 }
