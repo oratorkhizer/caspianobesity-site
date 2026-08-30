@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="Attendance register for the CASPIAN Certificate in Obesity Medicine."/>
+<title>Attendance register, CASPIAN Certificate in Obesity Medicine</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial,sans-serif;color:#14202e;line-height:1.6;background:#f4f6f9;-webkit-font-smoothing:antialiased}
+a{color:#8a6d12;text-decoration:none}a:hover{text-decoration:underline}
+header{background:#0e2643;position:sticky;top:0;z-index:20}
+nav{max-width:760px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:12px}
+nav .b{display:flex;align-items:center;gap:10px;color:#fff}
+nav .b b{letter-spacing:.2em;font-weight:700;font-size:.95rem}
+nav .b small{display:block;font-size:.56rem;letter-spacing:.12em;color:#9fb3cc}
+nav .sp{flex:1}nav a.home{color:#e7c65a;font-weight:600;font-size:.85rem}
+.wrap{max-width:760px;margin:0 auto;padding:24px 18px 90px}
+h1{font-family:Georgia,serif;color:#0e2643;font-size:1.7rem;line-height:1.2;margin-bottom:4px}
+.sub{color:#5a6b7a;font-size:.92rem;margin-bottom:18px}
+.card{background:#fff;border:1px solid #e3e9f0;border-radius:12px;padding:18px;margin-top:14px;box-shadow:0 1px 2px rgba(14,38,67,.04)}
+label.fl{display:block;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#7b8b9c;font-weight:700;margin-bottom:6px}
+input,select{width:100%;font-family:inherit;font-size:1rem;color:#14202e;background:#fff;border:1px solid #cdd8e4;border-radius:8px;padding:11px 12px}
+input:focus,select:focus{outline:none;border-color:#0e2643;box-shadow:0 0 0 3px rgba(14,38,67,.12)}
+.btn{font-family:inherit;font-size:.95rem;font-weight:700;border-radius:9px;padding:12px 16px;cursor:pointer;border:1.5px solid transparent}
+.btn.p{background:#e7c65a;color:#1d1500}.btn.p:hover{background:#d9b545}
+.btn.s{background:#fff;border-color:#cdd8e4;color:#14375d}
+.row{display:flex;gap:8px}
+.err{background:#fdeceb;border:1px solid #f0b9b4;color:#8d2b22;border-radius:9px;padding:11px 13px;font-size:.9rem;margin-top:12px}
+
+/* tabs */
+.tabs{display:flex;gap:6px;margin-top:16px;background:#e8edf3;border-radius:10px;padding:4px}
+.tabs button{flex:1;font-family:inherit;font-size:.9rem;font-weight:600;color:#5a6b7a;background:none;border:none;border-radius:7px;padding:10px 0;cursor:pointer}
+.tabs button[aria-selected=true]{background:#fff;color:#0e2643;box-shadow:0 1px 2px rgba(14,38,67,.1)}
+
+/* roll call */
+.bar{display:flex;align-items:baseline;gap:10px;margin:16px 0 6px;flex-wrap:wrap}
+.bar .n{font-family:Georgia,serif;font-size:1.5rem;color:#0e2643}
+.bar .of{color:#5a6b7a;font-size:.9rem}
+.bar .sp{flex:1}
+.saved{font-size:.8rem;font-weight:600;color:#2f5d3a;opacity:0;transition:opacity .2s}
+.saved.on{opacity:1}
+ul.roll{list-style:none;margin-top:6px}
+li.d{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e3e9f0;border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+li.d.on{border-color:#2f5d3a;background:#f4faf5}
+li.d .tick{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid #cdd8e4;display:flex;align-items:center;justify-content:center;color:transparent;font-size:1rem;font-weight:800}
+li.d.on .tick{border-color:#2f5d3a;background:#2f5d3a;color:#fff}
+li.d .who{flex:1;min-width:0}
+li.d .nm,li.d .mt{display:block}
+li.d .nm{font-weight:600;color:#14202e;font-size:.98rem;line-height:1.3}
+li.d .mt{color:#7b8b9c;font-size:.8rem}
+li.d .bt{flex:none;font-size:.68rem;font-weight:800;letter-spacing:.05em;border-radius:999px;padding:4px 9px;border:1px solid #cdd8e4;background:#fff;color:#5a6b7a;cursor:pointer;font-family:inherit}
+li.d.on .bt{border-color:#b6c6d8}
+li.d .bt.b2{background:#0e2643;border-color:#0e2643;color:#e7c65a}
+.hint{color:#7b8b9c;font-size:.82rem;margin-top:10px}
+
+/* eligibility */
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#7b8b9c;padding:8px 6px;border-bottom:1px solid #e3e9f0}
+td{padding:10px 6px;border-bottom:1px solid #f0f4f8;vertical-align:middle}
+td.nm{font-weight:600;color:#14202e}
+.meter{height:7px;background:#e8edf3;border-radius:99px;overflow:hidden;min-width:80px}
+.meter i{display:block;height:100%;background:#2f5d3a;border-radius:99px}
+.meter i.warn{background:#c9a227}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:.7rem;font-weight:800}
+.pill.ok{background:#eef3ee;color:#2f5d3a}
+.pill.risk{background:#fdf3e3;color:#8a6d12}
+.foot{color:#7b8b9c;font-size:.82rem;margin-top:18px}
+@media(max-width:520px){td .city{display:none}}
+</style></head><body>
+<header><nav><a class="b" href="/"><svg viewBox="0 0 40 40" fill="none" width="28" height="28"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span></a><span class="sp"></span><a class="home" href="/admin">Admin</a></nav></header>
+
+<div class="wrap">
+  <h1>Attendance register</h1>
+  <div class="sub">Tap a name to mark that doctor present. It saves as you go.</div>
+
+  <div class="card" id="gate">
+    <label class="fl" for="pass">Passcode</label>
+    <div class="row"><input id="pass" type="password" autocomplete="current-password" placeholder="Same passcode as the admin dashboard"/><button class="btn p" id="signin" type="button">Open</button></div>
+    <div class="err" id="gateerr" style="display:none"></div>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="tabs" role="tablist">
+      <button id="t-roll" role="tab" aria-selected="true">Roll call</button>
+      <button id="t-elig" role="tab" aria-selected="false">Eligibility</button>
+    </div>
+
+    <div id="panel-roll">
+      <div class="card">
+        <label class="fl" for="mod">Module</label>
+        <select id="mod"></select>
+        <div style="height:10px"></div>
+        <label class="fl" for="q">Find a name</label>
+        <input id="q" type="text" placeholder="Start typing..." autocomplete="off"/>
+      </div>
+      <div class="bar"><span class="n" id="count">0</span><span class="of" id="ofn"></span><span class="sp"></span><span class="saved" id="saved">Saved</span></div>
+      <ul class="roll" id="roll"></ul>
+      <div class="hint">The <b>B2</b> button records that the doctor sat this module with a later batch. Use it for the twelve who will take Module 1 with Batch 2.</div>
+    </div>
+
+    <div id="panel-elig" style="display:none">
+      <div class="card">
+        <table><thead><tr><th>Doctor</th><th>Attended</th><th></th><th>Status</th></tr></thead><tbody id="elig"></tbody></table>
+      </div>
+      <div class="foot" id="eligfoot"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var key="", roster=[], marks=[], modules=[], REQ=10, TOT=12, cur=1, queue={}, timer=null;
+
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function markKey(m,a){return m+"|"+a;}
+  function markMap(){var o={};marks.forEach(function(x){if(x.present)o[markKey(x.module_no,x.application_id)]=x;});return o;}
+  function name(d){return ((d.salutation?d.salutation+" ":"")+(d.full_name||"")).trim();}
+
+  function post(payload){
+    return fetch("/api/attendance",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||"Something went wrong.");return j;});});
+  }
+  function absorb(j){
+    roster=j.roster||[]; marks=j.marks||[]; modules=j.modules||[];
+    REQ=j.required||10; TOT=j.total||12;
+  }
+
+  // ---- sign in ----
+  document.getElementById("signin").addEventListener("click",function(){
+    var p=document.getElementById("pass").value.trim();
+    var err=document.getElementById("gateerr"); err.style.display="none";
+    if(!p)return;
+    post({key:p}).then(function(j){
+      key=p; try{sessionStorage.setItem("caspian_admin_key",p);}catch(e){}
+      absorb(j);
+      document.getElementById("gate").style.display="none";
+      document.getElementById("app").style.display="block";
+      buildModules(); render();
+    }).catch(function(e){err.textContent=e.message;err.style.display="block";});
+  });
+  document.getElementById("pass").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("signin").click();});
+  try{var s=sessionStorage.getItem("caspian_admin_key");if(s)document.getElementById("pass").value=s;}catch(e){}
+
+  // ---- module picker: default to the most recent module that has already run ----
+  function buildModules(){
+    var sel=document.getElementById("mod"), h="", today=new Date(); today.setHours(0,0,0,0);
+    var best=1;
+    for(var i=1;i<=TOT;i++){
+      var m=modules.filter(function(x){return x.module_no===i;})[0]||{};
+      var label="Module "+i+(m.title?": "+m.title:"");
+      if(m.session_date){
+        var p=m.session_date.split("-"), dt=new Date(+p[0],+p[1]-1,+p[2]);
+        label+="  ("+dt.getDate()+" "+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][dt.getMonth()]+" "+dt.getFullYear()+")";
+        if(dt<=today) best=i;
+      }
+      h+='<option value="'+i+'">'+esc(label)+"</option>";
+    }
+    sel.innerHTML=h; cur=best; sel.value=String(cur);
+    sel.addEventListener("change",function(){cur=+sel.value;render();});
+  }
+
+  // ---- roll call ----
+  function render(){
+    var mm=markMap(), q=(document.getElementById("q").value||"").toLowerCase().trim();
+    var h="", present=0;
+    roster.forEach(function(d){
+      var m=mm[markKey(cur,d.id)], on=!!m;
+      if(on)present++;
+      if(q && name(d).toLowerCase().indexOf(q)===-1) return;
+      var b2=on && m.sat_with_batch>1;
+      h+='<li class="d'+(on?" on":"")+'" data-id="'+d.id+'">'+
+         '<span class="tick">&#10003;</span>'+
+         '<span class="who"><span class="nm">'+esc(name(d))+'</span>'+
+         '<span class="mt">'+esc([d.specialty,d.city].filter(Boolean).join(" · "))+'</span></span>'+
+         (on?'<button class="bt'+(b2?" b2":"")+'" data-b2="'+d.id+'" type="button">'+(b2?"B"+m.sat_with_batch:"B1")+'</button>':"")+
+         '</li>';
+    });
+    document.getElementById("roll").innerHTML=h||'<li class="d" style="cursor:default"><span class="who"><span class="mt">No doctor matches that name.</span></span></li>';
+    document.getElementById("count").textContent=present;
+    document.getElementById("ofn").textContent="of "+roster.length+" present at Module "+cur;
+    renderElig();
+  }
+
+  document.getElementById("roll").addEventListener("click",function(e){
+    var b2=e.target.closest("[data-b2]");
+    if(b2){ e.stopPropagation(); cycleBatch(b2.getAttribute("data-b2")); return; }
+    var li=e.target.closest("li.d[data-id]");
+    if(li) toggle(li.getAttribute("data-id"));
+  });
+  document.getElementById("q").addEventListener("input",render);
+
+  function localMark(module_no,application_id,present,batch){
+    marks=marks.filter(function(x){return !(x.module_no===module_no&&x.application_id===application_id);});
+    if(present)marks.push({module_no:module_no,application_id:application_id,present:true,sat_with_batch:batch||1});
+    roster.forEach(function(d){
+      if(d.id!==application_id)return;
+      d.attended=marks.filter(function(x){return x.application_id===d.id&&x.present;}).length;
+      d.short_by=Math.max(0,REQ-d.attended);
+    });
+  }
+  function toggle(id){
+    var mm=markMap(), on=!!mm[markKey(cur,id)];
+    localMark(cur,id,!on,1);
+    queue[markKey(cur,id)]={module_no:cur,application_id:id,present:!on,sat_with_batch:1};
+    render(); flushSoon();
+  }
+  function cycleBatch(id){
+    var mm=markMap(), m=mm[markKey(cur,id)]; if(!m)return;
+    var b=(m.sat_with_batch||1)>=2?1:2;
+    localMark(cur,id,true,b);
+    queue[markKey(cur,id)]={module_no:cur,application_id:id,present:true,sat_with_batch:b};
+    render(); flushSoon();
+  }
+
+  function flushSoon(){ clearTimeout(timer); timer=setTimeout(flush,600); }
+  function flush(){
+    var batch=Object.keys(queue).map(function(k){return queue[k];});
+    if(!batch.length)return;
+    queue={};
+    post({key:key,marks:batch}).then(function(j){
+      absorb(j); render();
+      var el=document.getElementById("saved"); el.classList.add("on");
+      setTimeout(function(){el.classList.remove("on");},1200);
+    }).catch(function(e){
+      var el=document.getElementById("saved"); el.textContent="Not saved: "+e.message;
+      el.style.color="#8d2b22"; el.classList.add("on");
+    });
+  }
+  window.addEventListener("beforeunload",function(){ if(Object.keys(queue).length) flush(); });
+
+  // ---- eligibility ----
+  function renderElig(){
+    var list=roster.slice().sort(function(a,b){return (a.attended-b.attended)||name(a).localeCompare(name(b));});
+    var h="", eligible=0;
+    list.forEach(function(d){
+      var pct=Math.round((d.attended/TOT)*100), ok=d.attended>=REQ;
+      if(ok)eligible++;
+      h+='<tr><td class="nm">'+esc(name(d))+'</td>'+
+         '<td>'+d.attended+" / "+TOT+'</td>'+
+         '<td style="width:38%"><span class="meter"><i class="'+(ok?"":"warn")+'" style="width:'+pct+'%"></i></span></td>'+
+         '<td>'+(ok?'<span class="pill ok">Eligible</span>':'<span class="pill risk">'+d.short_by+" more</span>")+'</td></tr>';
+    });
+    document.getElementById("elig").innerHTML=h;
+    document.getElementById("eligfoot").textContent=
+      eligible+" of "+roster.length+" have already reached "+REQ+" modules. Eligibility needs "+REQ+" of "+TOT+
+      "; a doctor who has missed more than "+(TOT-REQ)+" cannot reach it, so watch this list from about Module 8 onward.";
+  }
+
+  // ---- tabs ----
+  function tab(which){
+    var r=which==="roll";
+    document.getElementById("t-roll").setAttribute("aria-selected",String(r));
+    document.getElementById("t-elig").setAttribute("aria-selected",String(!r));
+    document.getElementById("panel-roll").style.display=r?"block":"none";
+    document.getElementById("panel-elig").style.display=r?"none":"block";
+  }
+  document.getElementById("t-roll").addEventListener("click",function(){tab("roll");});
+  document.getElementById("t-elig").addEventListener("click",function(){tab("elig");});
+})();
+</script>
+</body></html>
