@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#0e2643"/>
 <title>Apply, CASPIAN Certificate in Obesity Medicine</title>
 <meta name="robots" content="noindex"/>
-<meta name="description" content="Apply for the CASPIAN Certificate in Obesity Medicine, founding batch begins 30 August 2026, Hyderabad."/>
+<meta name="description" content="Apply for the CASPIAN Certificate in Obesity Medicine. The founding batch is under way in Hyderabad and enrolment is open."/>
 <!-- Open Graph / link preview (WhatsApp, Facebook, LinkedIn) -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="CASPIAN Certificate in Obesity Medicine"/>
 <meta property="og:title" content="Apply, CASPIAN Certificate in Obesity Medicine"/>
-<meta property="og:description" content="Apply for the founding batch of the CASPIAN Certificate in Obesity Medicine, begins 30 August 2026, in Hyderabad."/>
+<meta property="og:description" content="Apply for the founding batch of the CASPIAN Certificate in Obesity Medicine, under way in Hyderabad. Join now and sit Module 1 with the next batch."/>
 <meta property="og:url" content="https://caspianobesity.com/apply"/>
 <meta property="og:image" content="https://caspianobesity.com/og-apply.jpg"/>
 <meta property="og:image:secure_url" content="https://caspianobesity.com/og-apply.jpg"/>
@@ -22,7 +22,7 @@
 <meta property="og:locale" content="en_IN"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Apply, CASPIAN Certificate in Obesity Medicine"/>
-<meta name="twitter:description" content="Apply for the founding batch, 30 August 2026, Hyderabad."/>
+<meta name="twitter:description" content="Apply for the founding batch in Hyderabad. Enrolment is open."/>
 <meta name="twitter:image" content="https://caspianobesity.com/og-apply.jpg"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,11 @@
  .top p{color:#c8d6e6;font-size:.9rem;margin-top:5px}
  .wrap{max-width:660px;margin:-20px auto 0;padding:0 16px 60px}
  .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(14,38,67,.1);padding:24px 22px}
+ .resume{background:#f7f4ec;border:1px solid var(--gold);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+ .resume b{display:block;color:var(--navy2);font-size:.95rem}
+ .resume span.sub{display:block;color:var(--muted);font-size:.85rem;margin-top:3px}
+ .resume .ra{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+ .resume .ra .btn{padding:9px 16px;font-size:.88rem}
  .steps{display:flex;gap:6px;margin-bottom:20px}
  .steps .s{flex:1;height:5px;border-radius:3px;background:#e7e0d2}
  .steps .s.on{background:linear-gradient(90deg,var(--gold-l),var(--gold))}
@@ -88,10 +93,18 @@
 <div class="top">
  <a class="brand" href="/"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span></a>
  <h1>Course Application</h1>
- <p>Founding batch · begins 30 August 2026 · Hyderabad</p>
+ <p>Founding batch under way · Hyderabad. Join now and sit Module 1 with the next batch.</p>
 </div>
 <div class="wrap">
  <div class="card">
+  <div class="resume" id="resume" hidden>
+   <b>You started an application on <span id="resumeWhen"></span>.</b>
+   <span class="sub">Everything you typed is still here. Your photo and the consent boxes are the only things to do again.</span>
+   <div class="ra">
+    <button type="button" class="btn btn-g" id="resumeYes">Continue where I left off</button>
+    <button type="button" class="btn btn-o" id="resumeNo">Start again</button>
+   </div>
+  </div>
   <div class="steps" id="bars"></div>
   <form id="apply" onsubmit="return false">
 
@@ -250,12 +263,81 @@ function onPhoto(ev){
  el('e3').textContent=''; photoFile=f;
  var r=new FileReader(); r.onload=function(){ el('pvimg').innerHTML='<img src="'+r.result+'"/>'; }; r.readAsDataURL(f);
 }
+
+/* ---------- the draft ----------
+   Nothing used to survive a closed tab: a doctor who stopped at step 3, or whose
+   payment failed, came back to a blank form and started again. Three of them did
+   exactly that, producing five of the seven unpaid rows on the books, one filling
+   all six steps four times in a day.
+
+   The draft lives in this browser and is never sent anywhere. That matters: the
+   consent boxes are on step 6, so we have no right to put a half-filled form on a
+   server before they are ticked. It also means the two acts that should be
+   deliberate, ticking the consents and confirming the certificate spelling, are
+   left for the doctor to do again; only typing is restored. */
+var DRAFT_KEY='caspian_apply_draft_v2', DRAFT_DAYS=45;
+var DRAFT_FIELDS=['salutation','gender','full_name','dob','council','registration_no',
+ 'registration_year','qualification','specialty','years_practice','city','workplace',
+ 'email','phone','permanent_address','correspondence_same','correspondence_address',
+ 'why_enrolling','runs_service','patient_volume','prior_training','dietary','hear_about','promo'];
+
+function draftRead(){
+ try{
+  var raw=localStorage.getItem(DRAFT_KEY); if(!raw) return null;
+  var d=JSON.parse(raw);
+  if(!d||!d.savedAt) return null;
+  if(Date.now()-d.savedAt > DRAFT_DAYS*864e5){ localStorage.removeItem(DRAFT_KEY); return null; }
+  return d;
+ }catch(e){ return null; }
+}
+function draftSave(){
+ try{
+  var f={};
+  DRAFT_FIELDS.forEach(function(id){ var e=el(id); if(e) f[id]= e.type==='checkbox'?e.checked:e.value; });
+  var topics=Array.prototype.slice.call(document.querySelectorAll('#topics input:checked')).map(function(c){return c.value;});
+  // Only worth keeping once there is something to lose.
+  if(!f.full_name && !f.email && !f.registration_no){ return; }
+  localStorage.setItem(DRAFT_KEY, JSON.stringify({savedAt:Date.now(), step:step, fields:f, topics:topics}));
+ }catch(e){ /* private browsing, or storage full: the form still works */ }
+}
+function draftClear(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+function draftRestore(d){
+ DRAFT_FIELDS.forEach(function(id){
+  var e=el(id); if(!e || !(id in d.fields)) return;
+  if(e.type==='checkbox') e.checked=!!d.fields[id]; else e.value=d.fields[id];
+ });
+ (d.topics||[]).forEach(function(v){
+  document.querySelectorAll('#topics input').forEach(function(c){ if(c.value===v) c.checked=true; });
+ });
+ preview(); toggleAddr();
+ // Back to the step they were on, but never straight to the review page: the
+ // consents and the photo are not restored, so landing there would look finished
+ // when it is not.
+ step=Math.min(d.step||0, LAST-1);
+ showStep();
+}
+var draftTimer=null;
+function draftSoon(){ clearTimeout(draftTimer); draftTimer=setTimeout(draftSave,400); }
+el('apply').addEventListener('input', draftSoon);
+el('apply').addEventListener('change', draftSoon);
+
+(function offerResume(){
+ var d=draftRead(); if(!d) return;
+ var when=new Date(d.savedAt);
+ var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ el('resumeWhen').textContent = when.getDate()+' '+MON[when.getMonth()];
+ el('resume').hidden=false;
+ el('resumeYes').addEventListener('click',function(){ el('resume').hidden=true; draftRestore(d); });
+ el('resumeNo').addEventListener('click',function(){ el('resume').hidden=true; draftClear(); });
+})();
+
 function showStep(){
  document.querySelectorAll('section[data-step]').forEach(function(s){ s.hidden = (+s.dataset.step!==step); });
  document.querySelectorAll('#bars .s').forEach(function(b,i){ b.className='s'+(i<=step?' on':''); });
  el('back').style.visibility = step===0?'hidden':'visible';
  el('next').textContent = step===LAST ? 'Submit & pay ₹2,999' : 'Continue';
  if(step===LAST) buildReview();
+ draftSave();
  window.scrollTo(0,0);
 }
 function need(id,msg,box){ var v=val(id); if(!v||(typeof v==='string'&&!v.trim())){ el(box).textContent=msg; el(id).focus&&el(id).focus(); return false;} return true; }
@@ -321,6 +403,21 @@ function submitAll(){
    var up = (photoFile && res.uploadUrl)
     ? fetch(res.uploadUrl,{method:'PUT',headers:{'Content-Type':photoFile.type,'x-upsert':'true'},body:photoFile}).catch(function(){})
     : Promise.resolve();
+   if(res.paidBefore){
+    // Stop rather than open checkout: this address already has a paid seat, and a
+    // doctor re-filling the form is far more likely to be repeating themselves than
+    // buying a second one.
+    up.then(function(){
+     busy(false);
+     el('e5').innerHTML='This email already has a paid seat with us. Please check with the office before paying again: '+
+      '<a href="https://wa.me/918978454547?text=Hi%2C%20I%20am%20applying%20again%20and%20the%20site%20says%20my%20email%20already%20has%20a%20seat." target="_blank" rel="noopener">WhatsApp +91 89784 54547</a>'+
+      '. If this really is a second seat, <a href="#" id="payAnyway">continue to payment</a>.';
+     var pa=el('payAnyway');
+     if(pa) pa.addEventListener('click',function(ev){ ev.preventDefault(); el('e5').textContent=''; busy(true); startPayment(); });
+     setMsg('');
+    });
+    return;
+   }
    up.then(startPayment);
   })
   .catch(function(){ busy(false); el('e5').textContent='Network error. Please try again.'; setMsg(''); });
@@ -336,7 +433,7 @@ function startPayment(){
    if(o.free){ // complimentary seat
     fetch('/api/redeem-free',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({promo:code,appId:appId,email:val('email')})})
      .then(function(r){return r.json();})
-     .then(function(v){ if(v&&v.ok){ window.location.href='/thanks?free=1'; } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
+     .then(function(v){ if(v&&v.ok){ draftClear(); window.location.href='/thanks?free=1'; } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
      .catch(function(){ busy(false); setMsg('Could not confirm the complimentary seat.','bad'); });
     return;
    }
@@ -350,7 +447,7 @@ function startPayment(){
      setMsg('Verifying payment…','ok');
      fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
       .then(function(r){return r.json();})
-      .then(function(v){ if(v&&v.verified){ window.location.href='/thanks?paid=1'; } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
+      .then(function(v){ if(v&&v.verified){ draftClear(); window.location.href='/thanks?paid=1'; } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
       .catch(function(){ busy(false); setMsg('Payment made but verification failed. WhatsApp +91 89784 54547.','bad'); });
     },
     modal:{ ondismiss:function(){ busy(false); setMsg('Checkout closed. Your application is saved, you can pay again.','bad'); } }
