@@ -72,22 +72,56 @@ export default async function handler(req, res) {
       status: "submitted",
     };
 
-    // Insert and get the new id
-    const ins = await fetch(`${SB_URL}/rest/v1/applications`, {
-      method: "POST",
-      headers: sbHeaders({ Prefer: "return=representation" }),
-      body: JSON.stringify(row),
-    });
-    if (!ins.ok) {
-      return res.status(500).json({ error: "Could not save the application." });
+    // Has this doctor been here before?
+    //
+    // A doctor whose payment failed had no way back to the application they had
+    // just filled, so they filled all six steps again, and again. Three doctors
+    // produced five of the seven unpaid rows on the books that way, one of them
+    // filling the form four times in a single day. So: reuse the unpaid row
+    // instead of laying down another one, and flag an email that has already
+    // paid so the browser can stop before charging a second time.
+    let existing = [];
+    try {
+      // ilike with no wildcard is a case-insensitive exact match.
+      const look = await fetch(
+        `${SB_URL}/rest/v1/applications?email=ilike.${encodeURIComponent(email)}` +
+          `&select=id,status,photo_path&order=created_at.desc`,
+        { headers: sbHeaders() }
+      );
+      if (look.ok) existing = await look.json();
+    } catch {
+      /* a lookup failure must never stop someone applying */
     }
-    const created = (await ins.json())[0];
-    const id = created.id;
+    const unpaid = existing.find((r) => r.status === "submitted");
+    const paidBefore = existing.some((r) => r.status === "paid");
+
+    let id, photoAlready = null;
+    if (unpaid) {
+      const upd = await fetch(`${SB_URL}/rest/v1/applications?id=eq.${unpaid.id}`, {
+        method: "PATCH",
+        headers: sbHeaders({ Prefer: "return=representation" }),
+        body: JSON.stringify(row),
+      });
+      if (!upd.ok) return res.status(500).json({ error: "Could not save the application." });
+      id = unpaid.id;
+      photoAlready = unpaid.photo_path || null;
+    } else {
+      const ins = await fetch(`${SB_URL}/rest/v1/applications`, {
+        method: "POST",
+        headers: sbHeaders({ Prefer: "return=representation" }),
+        body: JSON.stringify(row),
+      });
+      if (!ins.ok) {
+        return res.status(500).json({ error: "Could not save the application." });
+      }
+      id = (await ins.json())[0].id;
+    }
 
     // Signed upload URL for the photo (optional client-side use).
     // NB: no Content-Type header on this call - an empty JSON body makes storage reject it.
     let uploadUrl = null;
     const photoPath = `${id}.jpg`;
+    void photoAlready; // the path is per-id, so a resumed application overwrites its own photo
     try {
       const sign = await fetch(
         `${SB_URL}/storage/v1/object/upload/sign/applicant-photos/${photoPath}`,
@@ -108,7 +142,14 @@ export default async function handler(req, res) {
       /* photo is optional; never block the application on it */
     }
 
-    return res.status(200).json({ id, uploadUrl });
+    return res.status(200).json({
+      id,
+      uploadUrl,
+      // The browser uses these: resumed keeps the message honest, paidBefore
+      // makes it stop and ask rather than open checkout a second time.
+      resumed: !!unpaid,
+      paidBefore: paidBefore && !unpaid,
+    });
   } catch (err) {
     return res.status(500).json({ error: "Could not save the application." });
   }
