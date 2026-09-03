@@ -23,6 +23,29 @@ ol.next{margin:0 0 10px 22px}
 ol.next li{margin-bottom:8px}
 .cal{display:inline-block;background:linear-gradient(135deg,#e7c65a,#c9a227);color:#12233b;font-weight:700;border-radius:9px;padding:11px 20px;margin:6px 0 2px}
 .cal:hover{text-decoration:none;filter:brightness(1.05)}
+/* finish-your-file card */
+.done{background:#fff;border:1px solid #e2ddce;border-radius:14px;box-shadow:0 16px 40px rgba(14,38,67,.08);padding:22px 20px;margin:22px 0}
+.done h2{margin-top:0}
+.done .why{font-size:.9rem;color:#5a6b7a;margin-bottom:14px}
+.field{margin-bottom:14px}
+label{display:block;font-size:.82rem;font-weight:600;color:#33475c;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px 13px;border:1px solid #e2ddce;border-radius:10px;font-size:.98rem;font-family:inherit;background:#fff;color:#12283f}
+textarea{resize:vertical;min-height:70px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #e2ddce;border-radius:20px;padding:7px 12px;font-size:.85rem;cursor:pointer;user-select:none;background:#fff}
+.chip input{width:auto;flex:none}
+.photo{display:flex;gap:16px;align-items:center}
+.photo .pv{width:96px;height:96px;border-radius:12px;border:1px dashed #e2ddce;background:#faf8f2;display:flex;align-items:center;justify-content:center;color:#b7bcc4;font-size:.7rem;text-align:center;overflow:hidden;flex:none}
+.photo .pv img{width:100%;height:100%;object-fit:cover}
+.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:.9rem;color:#33475c}
+.check input{width:auto;margin-top:3px;flex:none}
+.btn{border:0;border-radius:10px;padding:12px 22px;font-weight:700;font-size:.98rem;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#e7c65a,#c9a227);color:#0e2643}
+.btn[disabled]{opacity:.6;cursor:default}
+.err{color:#c0554f;font-size:.84rem;margin-top:10px;min-height:1em}
+.ok{color:#2e7d52;font-weight:600;font-size:.9rem;margin-top:10px}
+.later{font-size:.82rem;color:#5a6b7a;margin-top:10px}
 footer{background:#091a31;color:#9fb3cc;font-size:.85rem}
 footer .f{max-width:820px;margin:0 auto;padding:26px 24px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 footer a{color:#9fb3cc}
@@ -32,10 +55,39 @@ footer a{color:#9fb3cc}
 
 <div class="box" id="msg"><b>You're in 🙏</b> Thank you, your request has reached us. Dr Khizer's team will confirm your seat in the founding batch and share the joining details.</div>
 
+<!-- Finish your file: the photo and the goals questions used to sit BEFORE
+     payment on /apply. They now live here, after the seat is reserved, so the
+     only thing between a doctor and paying is three short steps. -->
+<div class="done" id="done" hidden>
+ <h2>Two small things to finish your file</h2>
+ <div class="why" id="doneWhy">A passport-style photo for your course ID, and a few questions so the teaching is tailored to the room. About a minute.</div>
+ <form id="pf" onsubmit="return false">
+  <div class="field"><label>Your photo (passport style, plain background)</label>
+   <div class="photo">
+    <div class="pv" id="pvimg">No photo yet</div>
+    <div><input id="photo" type="file" accept="image/png,image/jpeg,image/webp" onchange="onPhoto(event)"/></div>
+   </div>
+  </div>
+  <label class="check"><input type="checkbox" id="consent_photo" checked/> <span>I consent to my photo being used for my course records and certificate.</span></label>
+  <div class="field"><label>Why are you enrolling? What do you most want to be able to do after the course?</label><textarea id="why_enrolling" placeholder="In your words…"></textarea></div>
+  <div class="two">
+   <div class="field"><label>Do you run an obesity / weight service?</label><select id="runs_service"><option>No</option><option>Building one</option><option>Yes</option></select></div>
+   <div class="field"><label>Patients with obesity / metabolic disease you see a week</label><select id="patient_volume"><option>0–5</option><option>6–20</option><option>21–50</option><option>50+</option></select></div>
+  </div>
+  <div class="field"><label>Prior training in obesity medicine</label><select id="prior_training"><option>None</option><option>Some</option><option>Formal</option></select></div>
+  <div class="field"><label>Topics you most want covered</label><div class="chips" id="topics"></div></div>
+  <div class="field"><label>How did you hear about the course?</label><input id="hear_about" placeholder="Colleague, WhatsApp group, a CME talk…"/></div>
+  <button class="btn" type="button" id="save">Save and finish</button>
+  <div class="err" id="perr"></div>
+  <div class="ok" id="pok" hidden>Saved. Thank you, your file is complete.</div>
+  <div class="later">Short of time? Keep this page's link; you can come back to it any time.</div>
+ </form>
+</div>
+
 <h2>What happens next</h2>
 <ol class="next">
  <li>You'll hear from us from <a href="mailto:drkhizer@caspianobesity.com">drkhizer@caspianobesity.com</a> or on WhatsApp with your joining details.</li>
- <li><b>Your next session is Module 2, Sunday 13 September 2026, 10:00 am – 1:00 pm</b> (followed by lunch) at API Hall, Oasis Plaza, Tilak Road, Abids, Hyderabad. Registration opens at 9.30.</li>
+ <li id="nextRow"><b>Your next session:</b> <a href="/schedule">see the course dates</a>. Sessions run 10:00 am to 1:00 pm (followed by lunch) at API Hall, Oasis Plaza, Tilak Road, Abids, Hyderabad. Registration opens at 9.30.</li>
  <li>Module 1 ran on 30 August. If you have joined since, you will sit it with the next batch, so you miss nothing. <a href="/schedule">See all twelve dates</a>.</li>
  <li>Your course textbook and materials are handed over as part of the programme.</li>
 </ol>
@@ -47,9 +99,70 @@ footer a{color:#9fb3cc}
 // Tailor the confirmation to how the seat was secured.
 (function(){
   var m=document.getElementById('msg'), q=location.search;
-  var wab='<div style="margin-top:14px"><a href="https://chat.whatsapp.com/H3XmvEyB49N081olfP2fg0" target="_blank" rel="noopener" style="display:inline-block;background:#1daa61;color:#fff;font-weight:700;border-radius:9px;padding:12px 22px;text-decoration:none">Join your cohort\'s WhatsApp group &rarr;</a><div style="font-size:.82rem;color:#5a6b7a;margin-top:8px">“CASPIAN Obesity Medicine Founding Batch” — say hello when you join.</div></div>';
+  var wab='<div style="margin-top:14px"><a href="https://chat.whatsapp.com/H3XmvEyB49N081olfP2fg0" target="_blank" rel="noopener" style="display:inline-block;background:#1daa61;color:#fff;font-weight:700;border-radius:9px;padding:12px 22px;text-decoration:none">Join your cohort\'s WhatsApp group &rarr;</a><div style="font-size:.82rem;color:#5a6b7a;margin-top:8px">"CASPIAN Obesity Medicine Founding Batch": say hello when you join.</div></div>';
   if(q.indexOf('paid=1')>-1){m.innerHTML='<b>Payment received &amp; verified ✅</b> Your founding-batch seat is reserved. A receipt will follow by email. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
   else if(q.indexOf('free=1')>-1){m.innerHTML='<b>Complimentary seat confirmed ✅</b> Your code has been accepted and your founding-batch seat is reserved. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
+})();
+
+// Next session, read from the live schedule rather than typed in here, so this
+// page does not keep promising a date that has already passed.
+(function(){
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  fetch('/api/schedule').then(function(r){return r.json();}).then(function(j){
+    var rows=(j&&j.rows)||[], now=new Date(), row=null, dt=null;
+    rows.forEach(function(r){
+      if(row||!r.session_date||r.status==='cancelled'||r.status==='completed') return;
+      var p=String(r.session_date).split('-'), e=String(r.end_time||'13:00').split(':');
+      var ends=new Date(+p[0],+p[1]-1,+p[2],+e[0]||13,+e[1]||0);
+      if(ends>now){ row=r; dt=new Date(+p[0],+p[1]-1,+p[2]); }
+    });
+    if(!row) return;
+    var when=DAYS[dt.getDay()]+' '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+    var el=document.getElementById('nextRow');
+    if(el) el.innerHTML='<b>Your next session is Module '+row.module_no+', '+when+', 10:00 am to 1:00 pm</b> (followed by lunch) at '+(row.venue_name||'API Hall')+(row.venue_address?', '+row.venue_address:'')+'. Registration opens at 9.30. <a href="/schedule">All twelve dates</a>.';
+  }).catch(function(){});
+})();
+
+// Finish your file: photo + goals, saved on to the application by its id.
+(function(){
+  var q=new URLSearchParams(location.search), appId=q.get('app');
+  if(!appId || !/^[0-9a-f-]{36}$/i.test(appId)) return;
+  var box=document.getElementById('done'); if(!box) return;
+  var MODULES=['New science of obesity','Diagnosis & staging','The obesity consultation','Secondary causes','Nutrition therapy','Activity, exercise & sleep','Behavioural care','Pharmacotherapy I','Pharmacotherapy II','Bariatric & metabolic surgery','Special populations','Building an obesity practice'];
+  var t=document.getElementById('topics');
+  MODULES.forEach(function(m){var l=document.createElement('label');l.className='chip';l.innerHTML='<input type="checkbox" value="'+m.replace(/"/g,'')+'"> '+m;t.appendChild(l);});
+  var photoFile=null;
+  window.onPhoto=function(ev){
+    var f=ev.target.files&&ev.target.files[0]; if(!f) return;
+    if(f.size>6*1024*1024){ document.getElementById('perr').textContent='Please choose an image under 6 MB.'; ev.target.value=''; return; }
+    document.getElementById('perr').textContent=''; photoFile=f;
+    var r=new FileReader(); r.onload=function(){ document.getElementById('pvimg').innerHTML='<img src="'+r.result+'"/>'; }; r.readAsDataURL(f);
+  };
+  function post(body){ return fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}); }
+  // Show the card only for a real application, and say what is already done.
+  post({appId:appId}).then(function(j){
+    if(!j||!j.ok) return;
+    if(j.answered && j.hasPhoto) return; // nothing left to do
+    box.hidden=false;
+    var why=document.getElementById('doneWhy');
+    if(j.hasPhoto) why.textContent='We have your photo. A few questions so the teaching is tailored to the room, about a minute.';
+    else if(j.answered) why.textContent='We have your answers. Just a passport-style photo for your course ID is left.';
+  }).catch(function(){});
+  document.getElementById('save').addEventListener('click',function(){
+    var btn=this, err=document.getElementById('perr'); err.textContent=''; btn.disabled=true; btn.textContent='Saving…';
+    var v=function(id){var e=document.getElementById(id);return e?(e.type==='checkbox'?e.checked:e.value):null;};
+    var topics=Array.prototype.slice.call(document.querySelectorAll('#topics input:checked')).map(function(c){return c.value;}).join(', ');
+    post({appId:appId, photo:!!photoFile, consent_photo:v('consent_photo'), why_enrolling:v('why_enrolling'), runs_service:v('runs_service'), patient_volume:v('patient_volume'), prior_training:v('prior_training'), topics_interest:topics, hear_about:v('hear_about')})
+     .then(function(j){
+       if(!j||!j.ok){ throw new Error((j&&j.error)||'Could not save.'); }
+       if(photoFile && j.uploadUrl){
+         return fetch(j.uploadUrl,{method:'PUT',headers:{'Content-Type':photoFile.type,'x-upsert':'true'},body:photoFile});
+       }
+     })
+     .then(function(){ document.getElementById('pok').hidden=false; btn.textContent='Saved'; })
+     .catch(function(e){ btn.disabled=false; btn.textContent='Save and finish'; err.textContent=(e&&e.message)||'Could not save. Please try again, or WhatsApp +91 89784 54547.'; });
+  });
 })();
 </script>
 

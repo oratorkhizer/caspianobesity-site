@@ -59,19 +59,12 @@
  input,select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:.98rem;font-family:inherit;background:#fff;color:var(--ink)}
  textarea{resize:vertical;min-height:70px}
  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
- .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
- @media(max-width:520px){.two,.three{grid-template-columns:1fr}}
+ @media(max-width:520px){.two{grid-template-columns:1fr}}
  .preview{background:var(--navy);border-radius:12px;padding:16px 18px;text-align:center;margin:6px 0 12px}
  .preview .lbl{color:#9fb3cc;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
  .preview .nm{font-family:'Great Vibes',cursive;color:#fff;font-size:2.1rem;line-height:1.2;margin-top:4px;word-break:break-word}
  .check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:.9rem;color:#33475c}
  .check input{width:auto;margin-top:3px;flex:none}
- .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
- .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:20px;padding:7px 12px;font-size:.85rem;cursor:pointer;user-select:none;background:#fff}
- .chip input{width:auto;flex:none}
- .photo{display:flex;gap:16px;align-items:center}
- .photo .pv{width:96px;height:96px;border-radius:12px;border:1px dashed var(--line);background:#faf8f2;display:flex;align-items:center;justify-content:center;color:#b7bcc4;font-size:.7rem;text-align:center;overflow:hidden;flex:none}
- .photo .pv img{width:100%;height:100%;object-fit:cover}
  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
  .btn{border:0;border-radius:10px;padding:12px 22px;font-weight:700;font-size:.98rem;font-family:inherit;cursor:pointer}
  .btn-g{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy)}
@@ -86,20 +79,22 @@
  .fee{display:flex;align-items:baseline;gap:10px;margin:6px 0 2px}
  .fee .a{font-family:'Playfair Display';font-weight:800;font-size:2rem;color:var(--navy)}
  .fee s{color:#9aa7b4;font-size:1.1rem}
+ .assure{background:rgba(201,162,39,.1);border-radius:10px;padding:10px 14px;font-size:.84rem;color:var(--gold-d);margin-top:12px}
+ .after{font-size:.82rem;color:var(--muted);margin-top:10px}
  .foot{text-align:center;margin-top:20px;font-size:.8rem;color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="top">
  <a class="brand" href="/"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span></a>
- <h1>Course Application</h1>
- <p>Founding batch under way · Hyderabad. Join now and sit Module 1 with the next batch.</p>
+ <h1>Reserve your seat</h1>
+ <p>Three short steps, then secure payment. About two minutes.</p>
 </div>
 <div class="wrap">
  <div class="card">
   <div class="resume" id="resume" hidden>
    <b>You started an application on <span id="resumeWhen"></span>.</b>
-   <span class="sub">Everything you typed is still here. Your photo and the consent boxes are the only things to do again.</span>
+   <span class="sub">Everything you typed is still here. Only the consent boxes need ticking again.</span>
    <div class="ra">
     <button type="button" class="btn btn-g" id="resumeYes">Continue where I left off</button>
     <button type="button" class="btn btn-o" id="resumeNo">Start again</button>
@@ -110,7 +105,7 @@
 
    <!-- STEP 1 -->
    <section data-step="0">
-    <div class="stepno">Step 1 of 6</div>
+    <div class="stepno">Step 1 of 4</div>
     <h2 class="st">About you &amp; your certificate</h2>
     <p class="hint">Your certificate will be printed exactly as shown in the preview, please get it right.</p>
     <div class="two">
@@ -136,7 +131,7 @@
 
    <!-- STEP 2 -->
    <section data-step="1" hidden>
-    <div class="stepno">Step 2 of 6</div>
+    <div class="stepno">Step 2 of 4</div>
     <h2 class="st">Medical registration</h2>
     <p class="hint">This course is for registered physicians (MBBS and above).</p>
     <div class="field"><label>Medical council <span class="req">*</span></label>
@@ -169,7 +164,7 @@
 
    <!-- STEP 3 -->
    <section data-step="2" hidden>
-    <div class="stepno">Step 3 of 6</div>
+    <div class="stepno">Step 3 of 4</div>
     <h2 class="st">Contact &amp; address</h2>
     <p class="hint">We post the textbook and certificate to your correspondence address.</p>
     <div class="two">
@@ -179,55 +174,24 @@
     <div class="field"><label>Permanent address</label><textarea id="permanent_address" placeholder="House / street, area, city, PIN"></textarea></div>
     <label class="check"><input type="checkbox" id="correspondence_same" checked onchange="toggleAddr()"/> <span>My correspondence address is the same as my permanent address.</span></label>
     <div class="field" id="corrWrap" hidden><label>Correspondence / delivery address</label><textarea id="correspondence_address" placeholder="Where we should post your textbook &amp; certificate"></textarea></div>
+    <div class="field"><label>Meal preference (session lunch)</label><select id="dietary"><option>Vegetarian</option><option>Non-vegetarian</option><option>Jain</option><option>No preference</option></select></div>
     <div class="err" id="e2"></div>
    </section>
 
    <!-- STEP 4 -->
    <section data-step="3" hidden>
-    <div class="stepno">Step 4 of 6</div>
-    <h2 class="st">Your photo</h2>
-    <p class="hint">A recent, passport-style photo, plain background, face clearly visible. Used for your records and event ID.</p>
-    <div class="photo">
-     <div class="pv" id="pvimg">No photo yet</div>
-     <div><input id="photo" type="file" accept="image/png,image/jpeg,image/webp" onchange="onPhoto(event)"/></div>
-    </div>
-    <div class="err" id="e3"></div>
-   </section>
-
-   <!-- STEP 5 -->
-   <section data-step="4" hidden>
-    <div class="stepno">Step 5 of 6</div>
-    <h2 class="st">Your goals</h2>
-    <p class="hint">This helps us tailor the teaching. A minute now saves you time later.</p>
-    <div class="field"><label>Why are you enrolling? What do you most want to be able to do after the course?</label><textarea id="why_enrolling" placeholder="In your words…"></textarea></div>
-    <div class="two">
-     <div class="field"><label>Do you run an obesity / weight service?</label><select id="runs_service"><option>No</option><option>Building one</option><option>Yes</option></select></div>
-     <div class="field"><label>Patients with obesity / metabolic disease you see a week</label><select id="patient_volume"><option>0–5</option><option>6–20</option><option>21–50</option><option>50+</option></select></div>
-    </div>
-    <div class="two">
-     <div class="field"><label>Prior training in obesity medicine</label><select id="prior_training"><option>None</option><option>Some</option><option>Formal</option></select></div>
-     <div class="field"><label>Meal preference (session lunch)</label><select id="dietary"><option>Vegetarian</option><option>Non-vegetarian</option><option>Jain</option><option>No preference</option></select></div>
-    </div>
-    <div class="field"><label>Topics you most want covered</label>
-     <div class="chips" id="topics"></div>
-    </div>
-    <div class="field"><label>How did you hear about the course?</label><input id="hear_about" placeholder="Colleague, social media, a CME talk…"/></div>
-    <div class="err" id="e4"></div>
-   </section>
-
-   <!-- STEP 6 -->
-   <section data-step="5" hidden>
-    <div class="stepno">Step 6 of 6</div>
-    <h2 class="st">Review &amp; confirm</h2>
+    <div class="stepno">Step 4 of 4</div>
+    <h2 class="st">Review &amp; pay</h2>
     <div class="rev" id="review"></div>
     <div style="margin-top:16px">
      <label class="check"><input type="checkbox" id="consent_data"/> <span>I consent to Caspian Healthcare Foundation processing my details for this course, per the <a href="/privacy" target="_blank">Privacy Policy</a>. <span class="req">*</span></span></label>
-     <label class="check"><input type="checkbox" id="attendance_ack"/> <span>I understand the attendance (≥80%), assessment and feedback requirements for certification. <span class="req">*</span></span></label>
-     <label class="check"><input type="checkbox" id="consent_photo"/> <span>I consent to my photo being used for my course records and certificate.</span></label>
+     <label class="check"><input type="checkbox" id="attendance_ack"/> <span>I understand the attendance (at least 80%), assessment and feedback requirements for certification. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="consent_comms"/> <span>I'm happy to receive course updates and alumni communications.</span></label>
     </div>
     <div style="margin-top:16px" class="field"><label>Promo code (optional)</label><input id="promo" placeholder="If you have one" style="text-transform:uppercase"/></div>
     <div class="fee"><span class="a">₹2,999</span><s>₹9,999</s><span style="color:var(--muted);font-size:.85rem">founding-batch fee</span></div>
+    <div class="assure"><b>Money-back guarantee:</b> full refund any time before your first session, and if that session is not value for money, a full refund within 7 days of it.</div>
+    <div class="after">After payment we will ask for a passport-style photo for your course ID, and a few questions about what you want from the course. Both take a minute and can be done later.</div>
     <div class="msg" id="pmsg"></div>
     <div class="err" id="e5"></div>
    </section>
@@ -243,43 +207,35 @@
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-var step=0, LAST=5, appId=null, photoFile=null;
-var MODULES=['New science of obesity','Diagnosis & staging','The obesity consultation','Secondary causes','Nutrition therapy','Activity, exercise & sleep','Behavioural care','Pharmacotherapy I','Pharmacotherapy II','Bariatric & metabolic surgery','Special populations','Building an obesity practice'];
+var step=0, LAST=3, appId=null;
 function el(id){return document.getElementById(id);}
 function val(id){var e=el(id);return e?(e.type==='checkbox'?e.checked:e.value):null;}
-// build step bars + topic chips
+// build step bars
 (function(){
  var bars=el('bars');for(var i=0;i<=LAST;i++){var d=document.createElement('div');d.className='s'+(i===0?' on':'');bars.appendChild(d);}
- var t=el('topics');MODULES.forEach(function(m){var l=document.createElement('label');l.className='chip';l.innerHTML='<input type="checkbox" value="'+m.replace(/"/g,'')+'"> '+m;t.appendChild(l);});
 })();
 function preview(){
  var s=val('salutation'), n=(val('full_name')||'').trim();
  el('pv').textContent=((s?s+' ':'')+(n||'Your Name')).trim();
 }
 function toggleAddr(){ el('corrWrap').hidden = val('correspondence_same'); }
-function onPhoto(ev){
- var f=ev.target.files&&ev.target.files[0]; if(!f) return;
- if(f.size>6*1024*1024){ el('e3').textContent='Please choose an image under 6 MB.'; ev.target.value=''; return; }
- el('e3').textContent=''; photoFile=f;
- var r=new FileReader(); r.onload=function(){ el('pvimg').innerHTML='<img src="'+r.result+'"/>'; }; r.readAsDataURL(f);
-}
 
 /* ---------- the draft ----------
    Nothing used to survive a closed tab: a doctor who stopped at step 3, or whose
    payment failed, came back to a blank form and started again. Three of them did
    exactly that, producing five of the seven unpaid rows on the books, one filling
-   all six steps four times in a day.
+   the whole form four times in a day.
 
    The draft lives in this browser and is never sent anywhere. That matters: the
-   consent boxes are on step 6, so we have no right to put a half-filled form on a
-   server before they are ticked. It also means the two acts that should be
+   consent boxes are on the last step, so we have no right to put a half-filled
+   form on a server before they are ticked. The two acts that should be
    deliberate, ticking the consents and confirming the certificate spelling, are
    left for the doctor to do again; only typing is restored. */
 var DRAFT_KEY='caspian_apply_draft_v2', DRAFT_DAYS=45;
 var DRAFT_FIELDS=['salutation','gender','full_name','dob','council','registration_no',
  'registration_year','qualification','specialty','years_practice','city','workplace',
  'email','phone','permanent_address','correspondence_same','correspondence_address',
- 'why_enrolling','runs_service','patient_volume','prior_training','dietary','hear_about','promo'];
+ 'dietary','promo'];
 
 function draftRead(){
  try{
@@ -294,10 +250,9 @@ function draftSave(){
  try{
   var f={};
   DRAFT_FIELDS.forEach(function(id){ var e=el(id); if(e) f[id]= e.type==='checkbox'?e.checked:e.value; });
-  var topics=Array.prototype.slice.call(document.querySelectorAll('#topics input:checked')).map(function(c){return c.value;});
   // Only worth keeping once there is something to lose.
   if(!f.full_name && !f.email && !f.registration_no){ return; }
-  localStorage.setItem(DRAFT_KEY, JSON.stringify({savedAt:Date.now(), step:step, fields:f, topics:topics}));
+  localStorage.setItem(DRAFT_KEY, JSON.stringify({savedAt:Date.now(), step:step, fields:f}));
  }catch(e){ /* private browsing, or storage full: the form still works */ }
 }
 function draftClear(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
@@ -306,13 +261,10 @@ function draftRestore(d){
   var e=el(id); if(!e || !(id in d.fields)) return;
   if(e.type==='checkbox') e.checked=!!d.fields[id]; else e.value=d.fields[id];
  });
- (d.topics||[]).forEach(function(v){
-  document.querySelectorAll('#topics input').forEach(function(c){ if(c.value===v) c.checked=true; });
- });
  preview(); toggleAddr();
  // Back to the step they were on, but never straight to the review page: the
- // consents and the photo are not restored, so landing there would look finished
- // when it is not.
+ // consents are not restored, so landing there would look finished when it is not.
+ // Drafts saved by the older six-step form carry step numbers up to 5; clamp them.
  step=Math.min(d.step||0, LAST-1);
  showStep();
 }
@@ -335,14 +287,14 @@ function showStep(){
  document.querySelectorAll('section[data-step]').forEach(function(s){ s.hidden = (+s.dataset.step!==step); });
  document.querySelectorAll('#bars .s').forEach(function(b,i){ b.className='s'+(i<=step?' on':''); });
  el('back').style.visibility = step===0?'hidden':'visible';
- el('next').textContent = step===LAST ? 'Submit & pay ₹2,999' : 'Continue';
+ el('next').textContent = step===LAST ? 'Pay ₹2,999 & reserve my seat' : 'Continue';
  if(step===LAST) buildReview();
  draftSave();
  window.scrollTo(0,0);
 }
 function need(id,msg,box){ var v=val(id); if(!v||(typeof v==='string'&&!v.trim())){ el(box).textContent=msg; el(id).focus&&el(id).focus(); return false;} return true; }
 function validate(){
- var b='e'+step; el(b).textContent='';
+ var b=step===LAST?'e5':'e'+step; el(b).textContent='';
  if(step===0){
   if(!need('full_name','Please enter your full name.','e0')) return false;
   if(!val('name_confirmed')){ el('e0').textContent='Please confirm your name is correct for the certificate.'; return false; }
@@ -367,7 +319,6 @@ function go(dir){
  if(dir>0 && step===LAST){ submitAll(); return; }
  step=Math.max(0,Math.min(LAST,step+dir)); showStep();
 }
-function topicsSelected(){ return Array.prototype.slice.call(document.querySelectorAll('#topics input:checked')).map(function(c){return c.value;}).join(', '); }
 function buildReview(){
  var r=el('review');
  var name=((val('salutation')?val('salutation')+' ':'')+val('full_name')).trim();
@@ -383,15 +334,15 @@ function collect(){
   workplace:val('workplace'), city:val('city'), email:val('email'), phone:val('phone'),
   permanent_address:val('permanent_address'), correspondence_same:val('correspondence_same'),
   correspondence_address:val('correspondence_address'),
-  why_enrolling:val('why_enrolling'), runs_service:val('runs_service'), patient_volume:val('patient_volume'),
-  prior_training:val('prior_training'), topics_interest:topicsSelected(), dietary:val('dietary'),
-  hear_about:val('hear_about'),
-  consent_data:val('consent_data'), consent_photo:val('consent_photo'),
-  consent_comms:val('consent_comms'), attendance_ack:val('attendance_ack')
+  dietary:val('dietary'),
+  consent_data:val('consent_data'), consent_comms:val('consent_comms'), attendance_ack:val('attendance_ack')
  };
 }
 function setMsg(t,kind){ var m=el('pmsg'); m.textContent=t||''; m.style.display=t?'block':'none'; m.style.color=kind==='bad'?'var(--bad)':(kind==='ok'?'var(--ok)':''); }
-function busy(on){ el('next').disabled=on; el('back').disabled=on; el('next').textContent=on?'Please wait…':'Submit & pay ₹2,999'; }
+function busy(on){ el('next').disabled=on; el('back').disabled=on; el('next').textContent=on?'Please wait…':'Pay ₹2,999 & reserve my seat'; }
+// The photo and the goals questions are asked on /thanks, after payment, so the
+// application id travels there in the URL.
+function thanksUrl(kind){ return '/thanks?'+kind+'=1'+(appId?'&app='+encodeURIComponent(appId):''); }
 
 function submitAll(){
  busy(true); setMsg('Saving your application…','ok'); el('e5').textContent='';
@@ -400,25 +351,20 @@ function submitAll(){
   .then(function(res){
    if(!res||res.error||!res.id){ busy(false); el('e5').textContent=(res&&res.error)||'Could not save your application. Please try again.'; setMsg(''); return; }
    appId=res.id;
-   var up = (photoFile && res.uploadUrl)
-    ? fetch(res.uploadUrl,{method:'PUT',headers:{'Content-Type':photoFile.type,'x-upsert':'true'},body:photoFile}).catch(function(){})
-    : Promise.resolve();
    if(res.paidBefore){
     // Stop rather than open checkout: this address already has a paid seat, and a
     // doctor re-filling the form is far more likely to be repeating themselves than
     // buying a second one.
-    up.then(function(){
-     busy(false);
-     el('e5').innerHTML='This email already has a paid seat with us. Please check with the office before paying again: '+
-      '<a href="https://wa.me/918978454547?text=Hi%2C%20I%20am%20applying%20again%20and%20the%20site%20says%20my%20email%20already%20has%20a%20seat." target="_blank" rel="noopener">WhatsApp +91 89784 54547</a>'+
-      '. If this really is a second seat, <a href="#" id="payAnyway">continue to payment</a>.';
-     var pa=el('payAnyway');
-     if(pa) pa.addEventListener('click',function(ev){ ev.preventDefault(); el('e5').textContent=''; busy(true); startPayment(); });
-     setMsg('');
-    });
+    busy(false);
+    el('e5').innerHTML='This email already has a paid seat with us. Please check with the office before paying again: '+
+     '<a href="https://wa.me/918978454547?text=Hi%2C%20I%20am%20applying%20again%20and%20the%20site%20says%20my%20email%20already%20has%20a%20seat." target="_blank" rel="noopener">WhatsApp +91 89784 54547</a>'+
+     '. If this really is a second seat, <a href="#" id="payAnyway">continue to payment</a>.';
+    var pa=el('payAnyway');
+    if(pa) pa.addEventListener('click',function(ev){ ev.preventDefault(); el('e5').textContent=''; busy(true); startPayment(); });
+    setMsg('');
     return;
    }
-   up.then(startPayment);
+   startPayment();
   })
   .catch(function(){ busy(false); el('e5').textContent='Network error. Please try again.'; setMsg(''); });
 }
@@ -433,7 +379,7 @@ function startPayment(){
    if(o.free){ // complimentary seat
     fetch('/api/redeem-free',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({promo:code,appId:appId,email:val('email')})})
      .then(function(r){return r.json();})
-     .then(function(v){ if(v&&v.ok){ draftClear(); window.location.href='/thanks?free=1'; } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
+     .then(function(v){ if(v&&v.ok){ draftClear(); window.location.href=thanksUrl('free'); } else { busy(false); setMsg((v&&v.error)||'That code could not be used.','bad'); } })
      .catch(function(){ busy(false); setMsg('Could not confirm the complimentary seat.','bad'); });
     return;
    }
@@ -447,7 +393,7 @@ function startPayment(){
      setMsg('Verifying payment…','ok');
      fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
       .then(function(r){return r.json();})
-      .then(function(v){ if(v&&v.verified){ draftClear(); window.location.href='/thanks?paid=1'; } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
+      .then(function(v){ if(v&&v.verified){ draftClear(); window.location.href=thanksUrl('paid'); } else { busy(false); setMsg('Could not verify payment. If money was deducted, WhatsApp +91 89784 54547.','bad'); } })
       .catch(function(){ busy(false); setMsg('Payment made but verification failed. WhatsApp +91 89784 54547.','bad'); });
     },
     modal:{ ondismiss:function(){ busy(false); setMsg('Checkout closed. Your application is saved, you can pay again.','bad'); } }
