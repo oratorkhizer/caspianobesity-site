@@ -285,7 +285,7 @@
   <div class="sec-head reveal">
    <span class="eyebrow">Founding batch</span>
    <h2>Join the founding batch, at the founding price.</h2>
-   <p><b>₹2,999 is the price today</b>, not a past offer. The batch is under way in Hyderabad and enrolment stays open until <b>Module 2 on Sunday, 13 September</b>. Module 1 ran on 30 August; join now and you sit it with the next batch, so nothing is missed.</p>
+   <p><b>₹2,999 is the price today</b>, not a past offer. The batch is under way in Hyderabad and enrolment stays open until <b>Module 2 on Sunday, 13 September</b>. Module 1 ran on 30 August; join now and you sit it with the next batch, so nothing is missed. Not joining now? <a href="#waitlist">Get notified when the next batch opens</a>.</p>
    <div id="feeCountdown" hidden></div>
    <div style="margin-top:8px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a href="/CASPIAN-Prospectus.pdf" class="btn btn-outline" style="font-size:.9rem;padding:11px 22px">Download the full prospectus (PDF)</a><a href="/sample-chapter.pdf" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:.9rem;padding:11px 22px">Read a sample chapter (PDF)</a></div>
   </div>
@@ -409,6 +409,68 @@
   </form>
  </div>
 </section>
+
+<!-- Next-batch waitlist: posts to the central Caspian subscribe endpoint -->
+<section class="waitlist" id="waitlist">
+  <div class="wrap">
+    <div class="card reveal wl-card">
+      <span class="eyebrow">Not joining this batch?</span>
+      <h2>Get notified when the next batch opens</h2>
+      <p>Leave your email or WhatsApp number. You will hear from us once, when enrolment for the next batch opens, with the dates and the fee. Nothing else. Reply STOP or unsubscribe any time.</p>
+      <form id="wlform" novalidate>
+        <div class="two">
+          <div class="field"><label for="wl-name">Name</label><input id="wl-name" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Dr ..."></div>
+          <div class="field"><label for="wl-city">City</label><input id="wl-city" name="city" type="text" autocomplete="address-level2" maxlength="60"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="wl-email">Email</label><input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <div class="field"><label for="wl-phone">WhatsApp number</label><input id="wl-phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="10-digit mobile"></div>
+        </div>
+        <input class="wl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-gold" type="submit" id="wlbtn">Notify me when the next batch opens</button>
+        <p class="fine" id="wlmsg" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+<style>
+.waitlist{padding:0 0 64px}
+.wl-card{max-width:760px;margin:0 auto;padding:36px 32px}
+.wl-card h2{margin:8px 0 10px}
+.wl-card p{color:var(--muted);margin:0 0 18px}
+.wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.wl-card .btn{margin-top:6px}
+#wlmsg{margin-top:12px;min-height:1.2em}
+#wlmsg.err{color:#b42318}
+#wlmsg.ok{color:#0f5132;font-weight:600}
+@media(max-width:640px){.wl-card{padding:28px 20px}.wl-card .btn{width:100%;text-align:center}}
+</style>
+<script>
+(function(){
+  var f=document.getElementById('wlform'),m=document.getElementById('wlmsg'),b=document.getElementById('wlbtn');
+  if(!f)return;
+  var EP='https://gjpbiiqkvzysmdpioexk.supabase.co/functions/v1/subscribe';
+  function post(channel,contact){
+    return fetch(EP,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({site:'caspianobesity',channel:channel,contact:contact,name:f.name.value,interest:'next_batch',source_path:location.pathname,website:f.website.value,meta:{city:f.city.value}})}).then(function(r){return r.json()});
+  }
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=f.email.value.trim(),phone=f.phone.value.replace(/\D/g,'');
+    if(phone.length===11&&phone.charAt(0)==='0')phone=phone.slice(1);
+    var phoneOk=(phone.length===10&&/^[6-9]/.test(phone))||(phone.length===12&&phone.indexOf('91')===0);
+    var emailOk=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email);
+    if(!emailOk&&!phoneOk){m.className='fine err';m.textContent='Enter a valid email or a 10-digit WhatsApp number (or both).';return;}
+    if(email&&!emailOk){m.className='fine err';m.textContent='That email does not look right.';return;}
+    if(f.phone.value.trim()&&!phoneOk){m.className='fine err';m.textContent='That WhatsApp number does not look right.';return;}
+    b.disabled=true;m.className='fine';m.textContent='Saving...';
+    var jobs=[];if(emailOk)jobs.push(post('email',email));if(phoneOk)jobs.push(post('whatsapp',phone));
+    Promise.all(jobs).then(function(rs){
+      if(rs.some(function(j){return !j.ok}))throw new Error('failed');
+      f.innerHTML='<p id="wlmsg" class="fine ok">You are on the list. We will message you when the next batch opens.</p>';
+    }).catch(function(){b.disabled=false;m.className='fine err';m.innerHTML='Could not save right now. Please WhatsApp us at <a href="https://wa.me/918978454547?text='+encodeURIComponent('Hello, please add me to the next batch list for the CASPIAN obesity course.')+'" target="_blank" rel="noopener">+91 89784 54547</a>.';});
+  });
+})();
+</script>
 
 <!-- FOOTER -->
 <footer>
