@@ -88,7 +88,7 @@ export default async function handler(req, res) {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
-        _subject: "COMPLIMENTARY seat" + (paid ? " #" + paid : "") + " — " + name + " — code " + code,
+        _subject: "COMPLIMENTARY seat" + (paid ? " #" + paid : "") + ": " + name + ", code " + code,
         _template: "table",
         seats: paid ? paid + " of 40 founding seats now confirmed" : "(count unavailable)",
         name: name,

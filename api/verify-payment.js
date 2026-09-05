@@ -69,7 +69,7 @@ async function notifySeat(appId, paymentId, promo, order) {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
-        _subject: "PAID seat" + (paid ? " #" + paid : "") + " — " + name + " — CASPIAN founding batch",
+        _subject: "PAID seat" + (paid ? " #" + paid : "") + ": " + name + ", CASPIAN founding batch",
         _template: "table",
         seats: paid ? paid + " of 40 founding seats now paid" : "(count unavailable)",
         name: name,
