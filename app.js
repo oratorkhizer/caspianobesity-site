@@ -212,3 +212,23 @@ function submitForm(ev){
     anchor.parentNode.insertBefore(sec, anchor);
   }).catch(function(){});
 })();
+
+// Consent line under the "next batch" waitlist form, added 10 September 2026.
+// The Digital Personal Data Protection Act 2023 asks that a person is told who
+// is collecting their details, for what, and how to withdraw, at the moment
+// they agree. The line names the button, the Foundation, the one message
+// promised, the channels, that details are not sold or passed on, how to stop,
+// and links the privacy policy.
+// It is inserted from here only because index.html is too large to re-upload
+// through the GitHub connector. Move it into the markup, under the button,
+// the next time index.html is edited directly.
+(function(){
+  var form=document.getElementById('wlform'), btn=document.getElementById('wlbtn');
+  if(!form||!btn||document.getElementById('wlconsent')) return;
+  var p=document.createElement('p');
+  p.id='wlconsent';
+  p.style.cssText='margin:12px 0 0;font-size:.82rem;line-height:1.5;color:var(--muted)';
+  p.innerHTML='By tapping &ldquo;Notify me when the next batch opens&rdquo;, you agree that Caspian Healthcare Foundation may contact you once, by the email address or WhatsApp number you entered, when enrolment for the next batch opens. We use your details only for this, and never sell them or pass them on for marketing. Reply STOP or unsubscribe at any time. <a href="/privacy" style="color:var(--gold-d);text-decoration:underline">Privacy policy</a>';
+  form.appendChild(p);
+  form.setAttribute('aria-describedby','wlconsent');
+})();
