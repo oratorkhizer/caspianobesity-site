@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     "obj_clear", "relevant", "teaching_clear", "cases_helped",
     "slides_clear", "pace_right", "use_this_week", "venue_ok",
     "most_useful", "improve", "future_topic",
-    "nps", "respondent_name", "can_quote"
+    "nps", "respondent_name", "can_quote", "format_pref"
   ].join(",");
 
   try {

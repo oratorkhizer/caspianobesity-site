@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#0e2643"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Batch 2 list, CASPIAN Certificate in Obesity Medicine</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial,sans-serif;color:#14202e;line-height:1.6;background:#f4f6f9}
+a{color:#8a6d12;text-decoration:none}a:hover{text-decoration:underline}
+header{background:#0e2643}
+nav{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;color:#fff}
+nav b{letter-spacing:.2em;font-size:.95rem}nav .sp{flex:1}nav a{color:#e7c65a;font-weight:600;font-size:.85rem}
+.wrap{max-width:1100px;margin:0 auto;padding:26px 20px 80px}
+h1{font-family:Georgia,serif;color:#0e2643;font-size:1.6rem;margin-bottom:6px}
+.sub{color:#5a6b7a;font-size:.92rem;margin-bottom:18px}
+.card{background:#fff;border:1px solid #e3e9f0;border-radius:12px;padding:20px;margin-bottom:18px}
+input[type=password],input[type=search],select{width:100%;font-family:inherit;font-size:1rem;border:1px solid #cdd8e4;border-radius:8px;padding:11px 12px;background:#fff}
+button{font-family:inherit;font-weight:600;border-radius:8px;padding:10px 16px;border:1.5px solid transparent;background:#0e2643;color:#fff;cursor:pointer}
+button.ghost{background:#fff;color:#0e2643;border-color:#cdd8e4}
+button.small{padding:5px 10px;font-size:.8rem;font-weight:500}
+.err{background:#fdeceb;border:1px solid #f0b9b4;color:#8d2b22;border-radius:9px;padding:11px 13px;font-size:.9rem;margin-top:12px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.tile{background:#fff;border:1px solid #e3e9f0;border-radius:12px;padding:14px 16px}
+.tile b{display:block;font-family:Georgia,serif;font-size:1.7rem;color:#0e2643;line-height:1.2}
+.tile span{color:#7b8b9c;font-size:.8rem}
+.bar{display:grid;grid-template-columns:1.6fr 1fr 1fr auto auto;gap:10px;margin-bottom:14px}
+@media (max-width:760px){.bar{grid-template-columns:1fr 1fr}}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid #eef2f6;vertical-align:top}
+th{color:#7b8b9c;font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.75rem;background:#eef3fa;color:#14375d;white-space:nowrap}
+.tag.on{background:#e8f1fb;color:#14375d}.tag.off{background:#eef3ee;color:#2f5d3a}.tag.done{background:#f1f3f5;color:#5a6b7a}
+.muted{color:#7b8b9c}
+a.wa{color:#0f8440;font-weight:600;white-space:nowrap}
+[hidden]{display:none!important}
+</style></head><body>
+<header><nav><b>CASPIAN</b><span class="sp"></span><a href="/admin">Applications</a><a href="/results">Feedback</a><a href="/schedule">Schedule</a></nav></header>
+<div class="wrap">
+
+  <div id="gate" class="card" style="max-width:420px;margin:50px auto">
+    <h1>Batch 2 list</h1>
+    <p class="sub">Same passcode as the applications dashboard.</p>
+    <input type="password" id="key" autocomplete="current-password" placeholder="Passcode"/>
+    <div id="gateErr" class="err" hidden></div>
+    <p style="margin-top:14px"><button id="open" style="width:100%">Open the list</button></p>
+  </div>
+
+  <div id="view" hidden>
+    <h1>Batch 2 list</h1>
+    <p class="sub">Doctors who left their details on <a href="/next">/next</a>. Registration opens in December.</p>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="card">
+      <div class="bar">
+        <input type="search" id="q" placeholder="Search name, number or city"/>
+        <select id="fmode"><option value="">Offline and online</option><option>Offline in Hyderabad</option><option>Online live batch</option><option>Either is fine</option></select>
+        <select id="ftime"><option value="">Any start</option><option>Batch 2, January 2027</option><option>A later batch in 2027</option></select>
+        <button class="ghost" id="refresh">Refresh</button>
+        <button id="csv">Download CSV</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Added</th><th>Name</th><th>WhatsApp</th><th>City</th><th>Attend</th><th>Start</th><th>Status</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p class="muted" id="count" style="font-size:.82rem;margin-top:10px"></p>
+    </div>
+  </div>
+</div>
+<script defer src="/credit.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var passcode = sessionStorage.getItem("caspian_admin_key") || "";
+  var ALL = [];
+
+  function esc(v){ return String(v === null || v === undefined ? "" : v).replace(/[&<>"]/g, function(c){ return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]; }); }
+
+  function api(body){
+    return fetch("/api/waitlist", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({ key: passcode }, body || {}))
+    }).then(function(r){
+      if (r.status === 401) throw new Error("Wrong passcode.");
+      if (!r.ok) return r.json().then(function(j){ throw new Error(j.error || "Could not load the list."); });
+      return r.json();
+    });
+  }
+
+  function load(showErr){
+    return api({}).then(function(d){
+      ALL = d.rows || [];
+      sessionStorage.setItem("caspian_admin_key", passcode);
+      $("gate").hidden = true; $("view").hidden = false;
+      render();
+    }).catch(function(e){
+      if (showErr) { $("gateErr").textContent = e.message; $("gateErr").hidden = false; }
+      else { sessionStorage.removeItem("caspian_admin_key"); passcode = ""; }
+    });
+  }
+
+  function filtered(){
+    var q = $("q").value.trim().toLowerCase(), m = $("fmode").value, t = $("ftime").value;
+    return ALL.filter(function(r){
+      if (m && r.mode !== m) return false;
+      if (t && r.timing !== t) return false;
+      if (!q) return true;
+      return (r.name || "").toLowerCase().indexOf(q) >= 0 || (r.phone || "").indexOf(q) >= 0 || (r.city || "").toLowerCase().indexOf(q) >= 0;
+    });
+  }
+
+  function render(){
+    var week = ALL.filter(function(r){ return Date.now() - new Date(r.created_at).getTime() < 7 * 864e5; }).length;
+    var online = ALL.filter(function(r){ return r.mode === "Online live batch"; }).length;
+    var jan = ALL.filter(function(r){ return r.timing === "Batch 2, January 2027"; }).length;
+    var outside = ALL.filter(function(r){ return (r.city || "").toLowerCase().indexOf("hyderabad") < 0; }).length;
+    $("tiles").innerHTML =
+      '<div class="tile"><b>' + ALL.length + '</b><span>on the list</span></div>' +
+      '<div class="tile"><b>' + week + '</b><span>added in the last 7 days</span></div>' +
+      '<div class="tile"><b>' + jan + '</b><span>want January 2027</span></div>' +
+      '<div class="tile"><b>' + online + '</b><span>want the online batch</span></div>' +
+      '<div class="tile"><b>' + outside + '</b><span>outside Hyderabad</span></div>';
+
+    var rows = filtered();
+    $("rows").innerHTML = rows.map(function(r){
+      var d = new Date(r.created_at);
+      var dt = d.toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
+      var wa = '<a class="wa" target="_blank" rel="noopener" href="https://wa.me/91' + esc(r.phone) + '">' + esc(r.phone) + '</a>';
+      var mode = r.mode === "Online live batch" ? '<span class="tag on">online</span>' : (r.mode === "Either is fine" ? '<span class="tag">either</span>' : '<span class="tag off">offline</span>');
+      var st = r.status === "contacted" ? '<span class="tag done">contacted</span>' : '<span class="tag">new</span>';
+      var next = r.status === "contacted" ? "new" : "contacted";
+      return '<tr><td class="muted">' + dt + '</td><td>' + esc(r.name) + (r.email ? '<div class="muted" style="font-size:.78rem">' + esc(r.email) + '</div>' : '') +
+        '</td><td>' + wa + '</td><td>' + esc(r.city) + '</td><td>' + mode + '</td><td class="muted">' + esc(r.timing) + '</td><td>' + st +
+        '</td><td><button class="ghost small" data-id="' + esc(r.id) + '" data-to="' + next + '">Mark ' + next + '</button></td></tr>';
+    }).join("") || '<tr><td colspan="8" class="muted">Nobody on the list yet.</td></tr>';
+    $("count").textContent = rows.length + " shown of " + ALL.length + " total";
+  }
+
+  $("open").addEventListener("click", function(){ passcode = $("key").value; $("gateErr").hidden = true; load(true); });
+  $("key").addEventListener("keydown", function(e){ if (e.key === "Enter") $("open").click(); });
+  ["q","fmode","ftime"].forEach(function(id){ $(id).addEventListener("input", render); });
+  $("refresh").addEventListener("click", function(){ load(true); });
+  $("rows").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-id]");
+    if (!b) return;
+    api({ action: "status", id: b.getAttribute("data-id"), status: b.getAttribute("data-to") }).then(function(){ load(true); });
+  });
+  $("csv").addEventListener("click", function(){
+    var rows = filtered();
+    var cols = ["created_at","name","phone","email","city","mode","timing","status"];
+    function q(v){ var s = v === null || v === undefined ? "" : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+    var lines = [cols.join(",")];
+    rows.forEach(function(r){ lines.push(cols.map(function(c){ return q(r[c]); }).join(",")); });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" }));
+    a.download = "caspian-batch2-list.csv";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  });
+
+  if (passcode) load(false);
+})();
+</script>
+</body></html>
