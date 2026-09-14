@@ -61,6 +61,11 @@ textarea{min-height:82px;resize:vertical}
 .nps{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
 .nps button{font-family:inherit;font-size:.9rem;font-weight:600;color:#4a5f74;background:#f4f7fa;border:1.5px solid #dbe3ec;border-radius:7px;padding:11px 0;cursor:pointer;transition:.12s}
 .nps button[aria-pressed=true]{background:#c9a227;border-color:#a8871a;color:#1d1500}
+.opts{display:grid;gap:8px}
+.opts button{font-family:inherit;font-size:.93rem;font-weight:500;color:#22364a;background:#f4f7fa;border:1.5px solid #dbe3ec;border-radius:9px;padding:12px 14px;cursor:pointer;text-align:left;line-height:1.45;transition:.12s}
+.opts button:hover{border-color:#b6c6d8}
+.opts button:focus-visible{outline:3px solid rgba(14,38,67,.3);outline-offset:1px}
+.opts button[aria-pressed=true]{background:#0e2643;border-color:#0e2643;color:#fff}
 @media (max-width:420px){.nps{grid-template-columns:repeat(6,1fr)}}
 
 .field{margin-bottom:16px}
@@ -138,6 +143,13 @@ footer a{color:#9fb3cc}
         <label class="fl" for="future_topic">A topic or question I would like a future session to cover</label>
         <textarea id="future_topic" maxlength="1000"></textarea>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>One question about future batches</h2>
+      <p class="hint">Your own batch does not change. This only helps plan the next one. Skip it if you have no preference.</p>
+      <div class="t" style="font-size:.97rem;color:#22364a;font-weight:500;margin-bottom:10px">Which pattern would suit you best?</div>
+      <div class="opts" id="fmt"></div>
     </div>
 
     <div class="card">
@@ -219,6 +231,30 @@ footer a{color:#9fb3cc}
     scales.appendChild(q);
   });
 
+  var FORMATS = [
+    "One Sunday a month, 10 am to 1 pm, twelve months",
+    "One Sunday a month, 10 am to 2.15 pm with a break, two modules a day, six months",
+    "Two Sundays a month, 10 am to 1 pm, six months",
+    "No preference, any of these works for me"
+  ];
+  var fmtWrap = document.getElementById("fmt");
+  FORMATS.forEach(function(label){
+    var fb = document.createElement("button");
+    fb.type = "button";
+    fb.textContent = label;
+    fb.setAttribute("aria-pressed", "false");
+    fb.setAttribute("data-v", label);
+    fmtWrap.appendChild(fb);
+  });
+  fmtWrap.addEventListener("click", function(e){
+    var btn = e.target.closest("button");
+    if (!btn || !fmtWrap.contains(btn)) return;
+    var sibs = fmtWrap.querySelectorAll("button");
+    for (var i = 0; i < sibs.length; i++) sibs[i].setAttribute("aria-pressed", "false");
+    btn.setAttribute("aria-pressed", "true");
+    answers.format_pref = btn.getAttribute("data-v");
+  });
+
   var npsWrap = document.getElementById("nps");
   for (var n = 0; n <= 10; n++) {
     var nb = document.createElement("button");
@@ -285,7 +321,8 @@ footer a{color:#9fb3cc}
       improve: val("improve"),
       future_topic: val("future_topic"),
       respondent_name: val("respondent_name"),
-      can_quote: document.getElementById("can_quote").checked
+      can_quote: document.getElementById("can_quote").checked,
+      format_pref: answers.format_pref || null
     };
     STATEMENTS.forEach(function(s){ row[s[0]] = answers[s[0]]; });
     row.nps = answers.nps;
