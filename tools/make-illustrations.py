@@ -236,7 +236,7 @@ def session_wide():
     xs = [90, 290, 530, 770, 1000]
     y = 86
     b.append(f'<line x1="{xs[0]}" y1="{y}" x2="{xs[-1]}" y2="{y}" stroke="{LINE}" stroke-width="10" stroke-linecap="round"/>')
-    b.append(f'<line x1="{xs[1]}" y1="{y}" x2="{xs[-1]}" y2="{y}" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>')
+    b.append(f'<line x1="{xs[1]}" y1="{y}" x2="{xs[-1]}" y2="{y}" stroke="{GOLD}" stroke-width="10" stroke-linecap="round"/>')
     b.append(text((xs[1] + xs[4]) / 2, 22, "THE THREE TEACHING HOURS", 13.5, GOLDD, 700, extra='letter-spacing="1.6"'))
     b.append(f'<path d="M{xs[1]} 46 v-12 H{xs[4]} v12" fill="none" stroke="{GOLD}" stroke-width="2"/>')
     for i, (t, name, sub, k) in enumerate(STOPS):
@@ -260,7 +260,7 @@ def session_tall():
     lx = 56
     ys = [60, 165, 270, 375, 480]
     b.append(f'<line x1="{lx}" y1="{ys[0]}" x2="{lx}" y2="{ys[-1]}" stroke="{LINE}" stroke-width="10" stroke-linecap="round"/>')
-    b.append(f'<line x1="{lx}" y1="{ys[1]}" x2="{lx}" y2="{ys[-1]}" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>')
+    b.append(f'<line x1="{lx}" y1="{ys[1]}" x2="{lx}" y2="{ys[-1]}" stroke="{GOLD}" stroke-width="10" stroke-linecap="round"/>')
     for i, (t, name, sub, k) in enumerate(STOPS):
         y = ys[i]
         b.append(f'<circle cx="{lx}" cy="{y}" r="30" fill="url(#navy)" stroke="{GOLD}" stroke-width="3"/>')
@@ -293,9 +293,9 @@ def wheel():
         x0, y0 = cx + R * math.cos(a0), cy + R * math.sin(a0)
         x1, y1 = cx + R * math.cos(a1), cy + R * math.sin(a1)
         b.append(f'<path d="M{x0:.1f} {y0:.1f} A{R} {R} 0 0 1 {x1:.1f} {y1:.1f}" fill="none" stroke="{GOLD}" stroke-width="4" marker-end="url(#arr)"/>')
-    b.append(f'<circle cx="{cx}" cy="{cy}" r="104" fill="url(#navy)"/>')
-    b.append(text(cx, cy - 14, "One system", 25, "#fff", 700, font=SERIF))
-    b.append(text(cx, cy + 16, "for every patient", 25, "#fff", 700, font=SERIF))
+    b.append(f'<circle cx="{cx}" cy="{cy}" r="112" fill="url(#navy)"/>')
+    b.append(text(cx, cy - 14, "One system", 22, "#fff", 700, font=SERIF))
+    b.append(text(cx, cy + 14, "for every patient", 22, "#fff", 700, font=SERIF))
     b.append(text(cx, cy + 46, "who walks in", 17, GOLDL, 600))
     for i, (L, name, sub) in enumerate(STEPS):
         a = math.radians(ang[i])
