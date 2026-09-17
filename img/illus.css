@@ -1,0 +1,12 @@
+/* ILLUSTRATIONS (drawn by tools/make-illustrations.py, files in /img) */
+.illus{margin:0 auto;text-align:center}
+.illus img{display:block;width:100%;height:auto;margin:0 auto}
+.illus figcaption{margin-top:12px;font-size:.92rem;color:var(--muted)}
+.illus-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 28px 22px;margin-top:40px;box-shadow:0 20px 50px rgba(14,38,67,.06)}
+.illus-card h3{font-size:1.35rem;margin-bottom:18px}
+.need-side{display:grid;gap:22px}
+.need-side .illus img{max-width:520px}
+@media(max-width:760px){
+  .illus picture img{max-width:420px}
+  .illus-card{padding:20px 14px 16px}
+}
