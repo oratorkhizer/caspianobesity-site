@@ -3,7 +3,7 @@
 <desc id="d">A timeline of a course Sunday from registration at 9:30 to lunch at 1:00 pm.</desc>
 <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7c65a"/><stop offset="1" stop-color="#c9a227"/></linearGradient><linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14375d"/><stop offset="1" stop-color="#0e2643"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>
 <line x1="56" y1="60" x2="56" y2="480" stroke="#e2e6ea" stroke-width="10" stroke-linecap="round"/>
-<line x1="56" y1="165" x2="56" y2="480" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+<line x1="56" y1="165" x2="56" y2="480" stroke="#c9a227" stroke-width="10" stroke-linecap="round"/>
 <circle cx="56" cy="60" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
 <path d="M46 48 h20 v26 h-20z M51 45 h10 v6 h-10z M51 60 h10 M51 67 h10" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="106.0" y="58.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Registration</text>

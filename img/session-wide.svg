@@ -3,7 +3,7 @@
 <desc id="d">A timeline of a course Sunday: registration from 9:30, live pre-test at 10:00, case-based teaching, post-test and feedback, and lunch with the cohort at 1:00 pm.</desc>
 <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7c65a"/><stop offset="1" stop-color="#c9a227"/></linearGradient><linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14375d"/><stop offset="1" stop-color="#0e2643"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>
 <line x1="90" y1="86" x2="1000" y2="86" stroke="#e2e6ea" stroke-width="10" stroke-linecap="round"/>
-<line x1="290" y1="86" x2="1000" y2="86" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+<line x1="290" y1="86" x2="1000" y2="86" stroke="#c9a227" stroke-width="10" stroke-linecap="round"/>
 <text x="645.0" y="22.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#8a6d12" text-anchor="middle" letter-spacing="1.6">THE THREE TEACHING HOURS</text>
 <path d="M290 46 v-12 H1000 v12" fill="none" stroke="#c9a227" stroke-width="2"/>
 <circle cx="90" cy="86" r="29" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>

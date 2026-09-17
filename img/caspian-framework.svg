@@ -9,9 +9,9 @@
 <path d="M446.1 494.3 A178 178 0 0 1 376.9 494.9" fill="none" stroke="#c9a227" stroke-width="4" marker-end="url(#arr)"/>
 <path d="M296.3 456.9 A178 178 0 0 1 252.6 403.2" fill="none" stroke="#c9a227" stroke-width="4" marker-end="url(#arr)"/>
 <path d="M232.0 316.4 A178 178 0 0 1 246.9 248.8" fill="none" stroke="#c9a227" stroke-width="4" marker-end="url(#arr)"/>
-<circle cx="410" cy="320" r="104" fill="url(#navy)"/>
-<text x="410.0" y="306.0" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" fill="#fff" text-anchor="middle" >One system</text>
-<text x="410.0" y="336.0" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" fill="#fff" text-anchor="middle" >for every patient</text>
+<circle cx="410" cy="320" r="112" fill="url(#navy)"/>
+<text x="410.0" y="306.0" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#fff" text-anchor="middle" >One system</text>
+<text x="410.0" y="334.0" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#fff" text-anchor="middle" >for every patient</text>
 <text x="410.0" y="366.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#e7c65a" text-anchor="middle" >who walks in</text>
 <circle cx="410.0" cy="142.0" r="34" fill="url(#gold)" stroke="#fff" stroke-width="4"/>
 <text x="410.0" y="153.0" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="700" fill="#091a31" text-anchor="middle" >C</text>
