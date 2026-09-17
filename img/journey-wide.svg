@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 250" width="1100" height="250" role="img" aria-labelledby="t d">
+<title id="t">The twelve-module journey</title>
+<desc id="d">Twelve numbered modules in four phases: Foundations (1 to 4), Lifestyle and behaviour (5 to 7), Medicines and surgery (8 to 10), Special groups and your practice (11 and 12), ending in the final exam and certificate.</desc>
+<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7c65a"/><stop offset="1" stop-color="#c9a227"/></linearGradient><linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14375d"/><stop offset="1" stop-color="#0e2643"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>
+<line x1="60" y1="86" x2="1014" y2="86" stroke="#c9a227" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>
+<rect x="30" y="48" width="294" height="76" rx="38" fill="#14375d" opacity=".1"/>
+<circle cx="60" cy="86" r="25" fill="#14375d"/>
+<text x="60.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >01</text>
+<circle cx="138" cy="86" r="25" fill="#14375d"/>
+<text x="138.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >02</text>
+<circle cx="216" cy="86" r="25" fill="#14375d"/>
+<text x="216.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >03</text>
+<circle cx="294" cy="86" r="25" fill="#14375d"/>
+<text x="294.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >04</text>
+<path d="M40 136 v8 H314 v-8" fill="none" stroke="#14375d" stroke-width="2"/>
+<text x="177.0" y="172.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >Foundations</text>
+<text x="177.0" y="194.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >Science, diagnosis,</text>
+<text x="177.0" y="212.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >the consultation, causes</text>
+<rect x="342" y="48" width="216" height="76" rx="38" fill="#1d5c7a" opacity=".1"/>
+<circle cx="372" cy="86" r="25" fill="#1d5c7a"/>
+<text x="372.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >05</text>
+<circle cx="450" cy="86" r="25" fill="#1d5c7a"/>
+<text x="450.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >06</text>
+<circle cx="528" cy="86" r="25" fill="#1d5c7a"/>
+<text x="528.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >07</text>
+<path d="M352 136 v8 H548 v-8" fill="none" stroke="#1d5c7a" stroke-width="2"/>
+<text x="450.0" y="172.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >Lifestyle and behaviour</text>
+<text x="450.0" y="194.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >Nutrition, activity and sleep,</text>
+<text x="450.0" y="212.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >psychology</text>
+<rect x="576" y="48" width="216" height="76" rx="38" fill="#8a6d12" opacity=".1"/>
+<circle cx="606" cy="86" r="25" fill="#8a6d12"/>
+<text x="606.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >08</text>
+<circle cx="684" cy="86" r="25" fill="#8a6d12"/>
+<text x="684.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >09</text>
+<circle cx="762" cy="86" r="25" fill="#8a6d12"/>
+<text x="762.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >10</text>
+<path d="M586 136 v8 H782 v-8" fill="none" stroke="#8a6d12" stroke-width="2"/>
+<text x="684.0" y="172.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >Medicines and surgery</text>
+<text x="684.0" y="194.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >Pharmacotherapy I and II,</text>
+<text x="684.0" y="212.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#5a6b7a" text-anchor="middle" >bariatric options</text>
+<rect x="810" y="48" width="138" height="76" rx="38" fill="#091a31" opacity=".1"/>
+<circle cx="840" cy="86" r="25" fill="#091a31"/>
+<text x="840.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >11</text>
+<circle cx="918" cy="86" r="25" fill="#091a31"/>
+<text x="918.0" y="93.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" >12</text>
+<path d="M820 136 v8 H938 v-8" fill="none" stroke="#091a31" stroke-width="2"/>
+<text x="879.0" y="172.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >Special groups</text>
+<text x="879.0" y="192.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >and your practice</text>
+<path d="M1024 106 l-8 34 l16 -9 l6 3z M1052 106 l8 34 l-16 -9 l-6 3z" fill="#8a6d12"/><polygon points="1070.0,82.0 1064.0,89.0 1065.7,98.0 1057.0,101.0 1054.0,109.7 1045.0,108.0 1038.0,114.0 1031.0,108.0 1022.0,109.7 1019.0,101.0 1010.3,98.0 1012.0,89.0 1006.0,82.0 1012.0,75.0 1010.3,66.0 1019.0,63.0 1022.0,54.3 1031.0,56.0 1038.0,50.0 1045.0,56.0 1054.0,54.3 1057.0,63.0 1065.7,66.0 1064.0,75.0" fill="url(#gold)" stroke="#8a6d12" stroke-width="1.5"/><circle cx="1038" cy="82" r="19.2" fill="none" stroke="#091a31" stroke-width="1.8"/><path d="M1029 82 l6 7 l12 -14" fill="none" stroke="#091a31" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1038.0" y="172.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >Final exam</text>
+<text x="1038.0" y="192.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#0e2643" text-anchor="middle" >and certificate</text>
+<text x="35.0" y="28.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#8a6d12" text-anchor="start" letter-spacing="1.6">ONE SUNDAY A MONTH, THREE HOURS EACH</text>
+</svg>

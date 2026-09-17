@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560" width="600" height="560" role="img" aria-labelledby="t d">
+<title id="t">One root, many diseases</title>
+<desc id="d">A tree. Above the ground are five branches labelled type 2 diabetes, hypertension, fatty liver, sleep apnoea and PCOS. Below the ground a single root is labelled excess visceral fat.</desc>
+<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7c65a"/><stop offset="1" stop-color="#c9a227"/></linearGradient><linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14375d"/><stop offset="1" stop-color="#0e2643"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>
+<path d="M0 352 H600 V530 Q300.0 570 0 530z" fill="#efe8d6"/>
+<line x1="0" y1="352" x2="600" y2="352" stroke="#8a6d12" stroke-width="2" stroke-dasharray="7 7"/>
+<text x="14.0" y="340.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#5a6b7a" text-anchor="start" letter-spacing="1.5">WHAT YOU TREAT</text>
+<text x="14.0" y="378.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8a6d12" text-anchor="start" letter-spacing="1.5">WHAT DRIVES IT</text>
+<path d="M300 262 C300 202 108 156 108 86" fill="none" stroke="#14375d" stroke-width="7" stroke-linecap="round"/>
+<path d="M300 262 C300 202 300 128 300 58" fill="none" stroke="#14375d" stroke-width="7" stroke-linecap="round"/>
+<path d="M300 262 C300 202 492 156 492 86" fill="none" stroke="#14375d" stroke-width="7" stroke-linecap="round"/>
+<path d="M300 262 C300 202 150 262 150 192" fill="none" stroke="#14375d" stroke-width="7" stroke-linecap="round"/>
+<path d="M300 262 C300 202 450 262 450 192" fill="none" stroke="#14375d" stroke-width="7" stroke-linecap="round"/>
+<path d="M282 358 C288 310 290 290 292 258 H308 C310 290 312 310 318 358z" fill="#14375d"/>
+<ellipse cx="215" cy="150" rx="13" ry="7" fill="url(#gold)" transform="rotate(-30 215 150)" opacity=".9"/>
+<ellipse cx="372" cy="128" rx="13" ry="7" fill="url(#gold)" transform="rotate(25 372 128)" opacity=".9"/>
+<ellipse cx="300" cy="120" rx="13" ry="7" fill="url(#gold)" transform="rotate(0 300 120)" opacity=".9"/>
+<ellipse cx="238" cy="228" rx="13" ry="7" fill="url(#gold)" transform="rotate(-50 238 228)" opacity=".9"/>
+<ellipse cx="364" cy="226" rx="13" ry="7" fill="url(#gold)" transform="rotate(50 364 226)" opacity=".9"/>
+<ellipse cx="180" cy="108" rx="13" ry="7" fill="url(#gold)" transform="rotate(-20 180 108)" opacity=".9"/>
+<ellipse cx="424" cy="110" rx="13" ry="7" fill="url(#gold)" transform="rotate(20 424 110)" opacity=".9"/>
+<rect x="10.0" y="39.0" width="196" height="46" rx="23.0" fill="#fff" stroke="#c9a227" stroke-width="2"/><text x="108.0" y="69.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#0e2643" text-anchor="middle" >Type 2 diabetes</text>
+<rect x="202.0" y="11.0" width="196" height="46" rx="23.0" fill="#fff" stroke="#c9a227" stroke-width="2"/><text x="300.0" y="41.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#0e2643" text-anchor="middle" >Hypertension</text>
+<rect x="394.0" y="39.0" width="196" height="46" rx="23.0" fill="#fff" stroke="#c9a227" stroke-width="2"/><text x="492.0" y="69.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#0e2643" text-anchor="middle" >Fatty liver</text>
+<rect x="52.0" y="145.0" width="196" height="46" rx="23.0" fill="#fff" stroke="#c9a227" stroke-width="2"/><text x="150.0" y="175.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#0e2643" text-anchor="middle" >Sleep apnoea</text>
+<rect x="352.0" y="145.0" width="196" height="46" rx="23.0" fill="#fff" stroke="#c9a227" stroke-width="2"/><text x="450.0" y="175.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#0e2643" text-anchor="middle" >PCOS</text>
+<path d="M290 352 C270 390 200 380 150 430" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M310 352 C330 390 400 380 450 430" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M300 352 C300 380 300 390 300 410" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M150 430 C120 460 90 470 60 500" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M450 430 C480 460 510 470 540 500" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M230 480 C220 510 200 520 185 540" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M370 480 C380 510 400 520 415 540" fill="none" stroke="#8a6d12" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<ellipse cx="300" cy="448" rx="196" ry="52" fill="url(#gold)" stroke="#8a6d12" stroke-width="2"/>
+<text x="300.0" y="443.0" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-weight="700" fill="#091a31" text-anchor="middle" >Excess visceral fat</text>
+<text x="300.0" y="470.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="500" fill="#091a31" text-anchor="middle" >the shared root</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" width="420" height="560" role="img" aria-labelledby="t d">
+<title id="t">Inside a session</title>
+<desc id="d">A timeline of a course Sunday from registration at 9:30 to lunch at 1:00 pm.</desc>
+<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7c65a"/><stop offset="1" stop-color="#c9a227"/></linearGradient><linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14375d"/><stop offset="1" stop-color="#0e2643"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9a227"/></marker></defs>
+<line x1="56" y1="60" x2="56" y2="480" stroke="#e2e6ea" stroke-width="10" stroke-linecap="round"/>
+<line x1="56" y1="165" x2="56" y2="480" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+<circle cx="56" cy="60" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
+<path d="M46 48 h20 v26 h-20z M51 45 h10 v6 h-10z M51 60 h10 M51 67 h10" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106.0" y="58.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Registration</text>
+<text x="106.0" y="82.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#5a6b7a" text-anchor="start" >Sign in and find a seat</text>
+<text x="106.0" y="32.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#8a6d12" text-anchor="start" letter-spacing="1">9:30</text>
+<circle cx="56" cy="165" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
+<rect x="47" y="150" width="18" height="30" rx="3.5" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M53 175 h6" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106.0" y="163.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Live pre-test</text>
+<text x="106.0" y="187.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#5a6b7a" text-anchor="start" >Five questions on your phone</text>
+<text x="106.0" y="137.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#8a6d12" text-anchor="start" letter-spacing="1">10:00</text>
+<circle cx="56" cy="270" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
+<circle cx="50" cy="263" r="5" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M41 283 c0 -12 18 -12 18 0" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M61 257 h11 v12 h-6 l-4 4 v-4" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106.0" y="268.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Case-based teaching</text>
+<text x="106.0" y="292.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#5a6b7a" text-anchor="start" >Real Indian-practice cases</text>
+<circle cx="56" cy="375" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
+<path d="M42 387 l8 -9 l7 5 l12 -17 M62 366 h7 v7" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106.0" y="373.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Post-test and feedback</text>
+<text x="106.0" y="397.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#5a6b7a" text-anchor="start" >Watch your own score move</text>
+<circle cx="56" cy="480" r="30" fill="url(#navy)" stroke="#c9a227" stroke-width="3"/>
+<circle cx="58" cy="480" r="11" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="58" cy="480" r="4.5" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 468 v24 M37 468 v7 c0 4 6 4 6 0 v-7" fill="none" stroke="#e7c65a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106.0" y="478.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#0e2643" text-anchor="start" >Lunch with the cohort</text>
+<text x="106.0" y="502.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#5a6b7a" text-anchor="start" >Every session ends with lunch</text>
+<text x="106.0" y="452.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#8a6d12" text-anchor="start" letter-spacing="1">1:00 pm</text>
+</svg>
