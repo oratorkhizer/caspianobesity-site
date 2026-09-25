@@ -272,3 +272,6 @@ footer::before{content:"";display:block;height:2px;background:linear-gradient(90
 }
 /* identity pass 2 */
 .eyebrow{font-family:'Spectral',Georgia,serif;font-style:italic;font-weight:500;letter-spacing:0;text-transform:none;font-size:1.05rem}
+/* identity pass 3 */
+#faq .item details{border:0!important;background:transparent!important;box-shadow:none!important}#faq .item summary::before{content:'Q.';font-family:'Spectral',Georgia,serif;font-style:italic;color:#E0A526;margin-right:.55rem;font-weight:600}#faq .item details[open]>*:not(summary){border-left:2px solid #E0A526;padding-left:14px}
+section#register.cta{background:#FBF3DE!important;color:#262B87!important;border-top:10px solid #262B87;background-image:repeating-linear-gradient(90deg,transparent 0 22px,rgba(224,165,38,.13) 22px 23px)!important}#register.cta h2{color:#262B87!important;font-family:'Spectral',Georgia,serif;font-style:italic}#register.cta p,#register.cta .assure div{color:#34386a!important}#register.cta .assure svg{stroke:#B7811A!important}#register.cta .eyebrow{color:#B7811A!important}#register.cta .reveal>div[style]{color:#5b5f8f!important}#register #regform{box-shadow:8px 8px 0 #262B87!important;border:1.5px solid #262B87!important}
