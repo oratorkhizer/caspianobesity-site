@@ -270,3 +270,5 @@ footer::before{content:"";display:block;height:2px;background:linear-gradient(90
   .foot{grid-template-columns:1fr}
   .copyright{flex-direction:column;align-items:flex-start;gap:8px}
 }
+/* identity pass 2 */
+.eyebrow{font-family:'Spectral',Georgia,serif;font-style:italic;font-weight:500;letter-spacing:0;text-transform:none;font-size:1.05rem}
