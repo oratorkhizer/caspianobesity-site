@@ -169,7 +169,7 @@ function submitForm(ev){
     // wash out, so these carry their own colours.
     function tile(n,l){
       return '<div style="text-align:center;padding:6px 10px">'+
-             '<div style="font-family:\'Playfair Display\',Georgia,serif;font-weight:800;font-size:2.6rem;color:var(--navy);line-height:1">'+n+'</div>'+
+             '<div style="font-family:\'Spectral\',Georgia,serif;font-weight:800;font-size:2.6rem;color:var(--navy);line-height:1">'+n+'</div>'+
              '<div style="font-size:.8rem;color:#5b6b7a;margin-top:6px;letter-spacing:.02em">'+l+'</div></div>';
     }
     var tiles='';
@@ -180,7 +180,7 @@ function submitForm(ev){
     var cards=q.map(function(x){
       var who=[x.name, x.role].filter(Boolean).map(esc).join(', ');
       return '<div class="card reveal in" style="text-align:left">'+
-             '<p style="font-family:\'Playfair Display\',Georgia,serif;font-style:italic;font-size:1.06rem;color:var(--navy);line-height:1.5;margin:0 0 14px">&ldquo;'+esc(x.text)+'&rdquo;</p>'+
+             '<p style="font-family:\'Spectral\',Georgia,serif;font-style:italic;font-size:1.06rem;color:var(--navy);line-height:1.5;margin:0 0 14px">&ldquo;'+esc(x.text)+'&rdquo;</p>'+
              (who?'<div style="font-size:.84rem;font-weight:700;color:var(--gold-d)">'+who+'</div>':'')+
              '<div style="font-size:.76rem;color:var(--muted)">Founding batch &middot; Module '+(x.module||1)+'</div>'+
              '</div>';

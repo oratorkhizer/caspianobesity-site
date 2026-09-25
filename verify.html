@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="theme-color" content="#0e2643"/>
+<meta name="theme-color" content="#262b87"/>
 <title>Verify a Certificate, CASPIAN Certificate in Obesity Medicine</title>
 <!-- Open Graph / link preview -->
 <meta property="og:type" content="website"/>
@@ -24,21 +24,21 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500&family=Public Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
- :root{--navy:#0e2643;--navy2:#14375d;--gold:#c9a227;--gold-l:#e7c65a;--gold-d:#8a6d12;--cream:#f7f4ec;--line:#e7e0d2;--muted:#5b6b7a;--ok:#1f7a4d;--bad:#b23b3b}
+ :root{--navy:#262b87;--navy2:#393778;--gold:#e0a526;--gold-l:#f4c152;--gold-d:#946907;--cream:#f7f4ec;--line:#e7e0d2;--muted:#5b6b7a;--ok:#1f7a4d;--bad:#b23b3b}
  *{margin:0;padding:0;box-sizing:border-box}
- body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:#0e2643;line-height:1.55;-webkit-font-smoothing:antialiased}
+ body{font-family:'Public Sans',system-ui,sans-serif;background:var(--cream);color:#262b87;line-height:1.55;-webkit-font-smoothing:antialiased}
  a{color:var(--gold-d)}
  .top{background:radial-gradient(120% 160% at 50% 0%,var(--navy2),var(--navy));color:#fff;padding:26px 20px 30px;text-align:center}
  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
  .brand svg{width:40px;height:40px}
  .brand b{font-weight:700;letter-spacing:.22em;font-size:1.05rem}
- .brand small{display:block;letter-spacing:.2em;font-size:.56rem;color:#9fb3cc;font-weight:500;margin-top:4px}
- .top h1{font-family:'Playfair Display',serif;font-weight:800;font-size:1.5rem;margin-top:16px}
+ .brand small{display:block;letter-spacing:.2em;font-size:.56rem;color:#a9aedb;font-weight:500;margin-top:4px}
+ .top h1{font-family:'Spectral',serif;font-weight:800;font-size:1.5rem;margin-top:16px}
  .top p{color:#c8d6e6;font-size:.92rem;margin-top:6px}
  .wrap{max-width:640px;margin:-22px auto 0;padding:0 18px 60px}
- .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(14,38,67,.1);padding:26px 24px}
+ .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(38,43,135,.1);padding:26px 24px}
  .lookup{display:flex;gap:10px;margin-top:6px}
  .lookup input{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit}
  .btn{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);font-weight:700;border:0;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:1rem;font-family:inherit}
@@ -46,16 +46,16 @@
  .badge{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;font-size:.82rem;font-weight:700}
  .badge.ok{background:rgba(31,122,77,.12);color:var(--ok)}
  .badge.bad{background:rgba(178,59,59,.1);color:var(--bad)}
- .badge.specimen{background:rgba(201,162,39,.14);color:var(--gold-d)}
+ .badge.specimen{background:rgba(224,165,38,.14);color:var(--gold-d)}
  dl{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
  dt{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding-top:2px}
- dd{font-weight:600;color:#12283f}
+ dd{font-weight:600;color:#282c55}
  .cid{font-variant-numeric:tabular-nums;letter-spacing:.02em}
  .muted{color:var(--muted);font-size:.9rem}
  .hint{margin-top:16px;font-size:.85rem;color:var(--muted)}
  .foot{text-align:center;margin-top:24px;font-size:.82rem;color:var(--muted)}
  .foot a{text-decoration:none}
- .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(14,38,67,.2);border-top-color:var(--navy);border-radius:50%;animation:s .7s linear infinite;vertical-align:-3px}
+ .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(38,43,135,.2);border-top-color:var(--navy);border-radius:50%;animation:s .7s linear infinite;vertical-align:-3px}
  @keyframes s{to{transform:rotate(360deg)}}
  .certthumb{margin-top:18px;border-radius:10px;overflow:hidden;border:1px solid var(--line);line-height:0}
  .certthumb img{width:100%;display:block}
@@ -65,7 +65,7 @@
 <body>
 <div class="top">
  <a class="brand" href="/">
-  <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#c9a227" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#c9a227" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#e7c65a" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#e7c65a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#e0a526" stroke-width="1.5"/><circle cx="20" cy="20" r="13.5" stroke="#e0a526" stroke-width="3"/><line x1="20" y1="9" x2="20" y2="31" stroke="#f4c152" stroke-width="2"/><path d="M20 11c-6 3 6 6 0 9s6 6 0 9" stroke="#f4c152" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
   <span><b>CASPIAN</b><small>OBESITY MEDICINE</small></span>
  </a>
  <h1>Certificate Verification</h1>
