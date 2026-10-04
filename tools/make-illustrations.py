@@ -7,8 +7,8 @@ Brand tokens match style.css. No em dashes anywhere in the artwork.
 """
 import math, os
 
-NAVY, NAVY2, NAVY3 = "#0e2643", "#14375d", "#091a31"
-GOLD, GOLDL, GOLDD = "#c9a227", "#e7c65a", "#8a6d12"
+NAVY, NAVY2, NAVY3 = "#4f5d2f", "#5d6c3a", "#2c3419"
+GOLD, GOLDL, GOLDD = "#e76f51", "#f39a80", "#a8432a"
 CREAM, INK, MUTED, LINE = "#f7f4ec", "#14202e", "#5a6b7a", "#e2e6ea"
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
@@ -138,7 +138,7 @@ PHASES = [("Foundations", [1, 2, 3, 4], "Science, diagnosis, the consultation, c
           ("Lifestyle and behaviour", [5, 6, 7], "Nutrition, activity and sleep, psychology", ("Nutrition, activity and sleep,", "psychology")),
           ("Medicines and surgery", [8, 9, 10], "Pharmacotherapy I and II, bariatric options", ("Pharmacotherapy I and II,", "bariatric options")),
           ("Special groups and your practice", [11, 12], "Special populations, building a service", ("", ""))]
-PH_FILL = [NAVY2, "#1d5c7a", GOLDD, NAVY3]
+PH_FILL = [NAVY2, "#6b7a48", GOLDD, NAVY3]
 
 
 def rosette(cx, cy, r=30):
