@@ -90,7 +90,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         _subject: "COMPLIMENTARY seat" + (paid ? " #" + paid : "") + ": " + name + ", code " + code,
         _template: "table",
-        seats: paid ? paid + " of 40 founding seats now confirmed" : "(count unavailable)",
+        seats: paid ? paid + " doctors in the founding batch are now confirmed" : "(count unavailable)",
         name: name,
         city: (app && app.city) || "",
         specialty: (app && app.specialty) || "",

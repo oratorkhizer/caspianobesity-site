@@ -1,4 +1,4 @@
-# caspianobesity.com — search engines and AI assistants are welcome.
+# caspianobesity.com: search engines and AI assistants are welcome.
 # A plain-language summary for AI models lives at /llms.txt
 
 User-agent: *
