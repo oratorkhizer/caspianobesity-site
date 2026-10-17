@@ -124,7 +124,9 @@ footer a{color:#c9d3a8}
         </div>
       </div>
 
-      <div class="hp"><label>Leave this empty<input type="text" id="website" tabindex="-1" autocomplete="off"/></label></div>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website" name="website" tabindex="-1" autocomplete="off"/></label></div>
+      <div id="tsbox"></div>
+      <div id="tsbox2"></div>
 
       <div id="error" class="err" hidden></div>
       <button class="submit" id="send">Keep me posted</button>
@@ -149,10 +151,14 @@ footer a{color:#c9d3a8}
 <script defer src="/_vercel/insights/script.js"></script>
 <footer><div class="f"><span>&copy; 2026 Caspian Healthcare Foundation</span><span><a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></span></div></footer>
 
+<script src="/bot-guard.js"></script>
 <script>
 (function(){
-  var SB = "https://itqxfypvrvwplzeeldaz.supabase.co";
-  var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0cXhmeXB2cnZ3cGx6ZWVsZGF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwODY4NDYsImV4cCI6MjEwMTY2Mjg0Nn0.O9CZPubPNjpkRr82hAFpjvUdXNUZ0_xy2XljM0LHrds";
+  // The row is saved through /api/submit (bot checks, then a service-key insert).
+  // The central opt-in call needs its own Turnstile token (tokens are single use),
+  // so a second invisible widget supplies it.
+  var guard = window.CaspianGuard ? CaspianGuard.attach(document.getElementById("tsbox")) : null;
+  var guard2 = window.CaspianGuard ? CaspianGuard.attach(document.getElementById("tsbox2")) : null;
   var CENTRAL = "https://gjpbiiqkvzysmdpioexk.supabase.co/functions/v1/subscribe";
 
   var $ = function(id){ return document.getElementById(id); };
@@ -195,30 +201,49 @@ footer a{color:#c9d3a8}
     btn.disabled = true;
     btn.textContent = "Sending...";
 
-    fetch(SB + "/rest/v1/waitlist", {
-      method: "POST",
-      headers: { apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json", Prefer: "return=minimal" },
-      body: JSON.stringify(row)
+    var hp = $("website").value;
+    var token2 = "";
+    Promise.all([
+      guard ? guard.take() : Promise.resolve(""),
+      guard2 ? guard2.take() : Promise.resolve("")
+    ]).then(function(tokens){
+      var token = tokens[0];
+      token2 = tokens[1];
+      var body = Object.assign({ form: "interest", turnstile: token, ms: guard ? guard.ms() : undefined, website: hp }, row);
+      return fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
     }).then(function(res){
-      if (!res.ok) throw new Error("save failed");
-      // Best effort: also add to the central Caspian opt-in list. Never blocks the doctor.
+      if (!res.ok) {
+        return res.json().catch(function(){ return {}; }).then(function(j){
+          var e = new Error("save failed");
+          if (res.status === 400 && j && j.error) e.shown = j.error;
+          throw e;
+        });
+      }
+      // Best effort: also add to the central Caspian opt-in list, with a fresh token.
+      // Never blocks the doctor.
       try {
         fetch(CENTRAL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            site: "caspianobesity", channel: "whatsapp", contact: phone, name: name,
-            interest: "next_batch", source_path: "/next",
-            meta: { city: city, mode: row.mode, timing: row.timing, email: email || "" }
-          })
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              site: "caspianobesity", channel: "whatsapp", contact: phone, name: name,
+              interest: "next_batch", source_path: "/next",
+              turnstile: token2, ms: guard2 ? guard2.ms() : undefined, website: hp,
+              meta: { city: city, mode: row.mode, timing: row.timing, email: email || "" }
+            })
         }).catch(function(){});
       } catch (e) {}
       $("formview").hidden = true;
       $("doneview").hidden = false;
       window.scrollTo(0, 0);
-    }).catch(function(){
+    }).catch(function(err){
       btn.disabled = false;
       btn.textContent = "Keep me posted";
+      if (err && err.shown) { showError(err.shown); return; }
       showError("That did not send. Check your connection and tap again. Nothing you typed has been lost.");
     });
   });

@@ -192,6 +192,8 @@
     <div class="fee"><span class="a">₹2,999</span><s>₹9,999</s><span style="color:var(--muted);font-size:.85rem">founding-batch fee</span></div>
     <div class="assure"><b>Money-back guarantee:</b> full refund any time before your first session, and if that session is not value for money, a full refund within 7 days of it.</div>
     <div class="after">After payment we will ask for a passport-style photo for your course ID, and a few questions about what you want from the course. Both take a minute and can be done later.</div>
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"/></div>
+    <div id="tsbox"></div>
     <div class="msg" id="pmsg"></div>
     <div class="err" id="e5"></div>
    </section>
@@ -206,8 +208,10 @@
 </div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/bot-guard.js"></script>
 <script>
 var step=0, LAST=3, appId=null;
+var guard=window.CaspianGuard?CaspianGuard.attach(document.getElementById('tsbox')):null;
 function el(id){return document.getElementById(id);}
 function val(id){var e=el(id);return e?(e.type==='checkbox'?e.checked:e.value):null;}
 // build step bars
@@ -346,7 +350,11 @@ function thanksUrl(kind){ return '/thanks?'+kind+'=1'+(appId?'&app='+encodeURICo
 
 function submitAll(){
  busy(true); setMsg('Saving your application…','ok'); el('e5').textContent='';
- fetch('/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(collect())})
+ (guard?guard.take():Promise.resolve(''))
+  .then(function(token){
+   var body=collect(); body.turnstile=token; body.ms=guard?guard.ms():undefined; body.website=val('website');
+   return fetch('/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  })
   .then(function(r){return r.json();})
   .then(function(res){
    if(!res||res.error||!res.id){ busy(false); el('e5').textContent=(res&&res.error)||'Could not save your application. Please try again.'; setMsg(''); return; }

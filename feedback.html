@@ -166,6 +166,8 @@ footer a{color:#c9d3a8}
       <label class="chk"><input type="checkbox" id="can_quote"/><span>You may quote my comments, with my name and qualification, in course materials.</span></label>
     </div>
 
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"/></div>
+    <div id="tsbox"></div>
     <div id="error" class="err" hidden></div>
     <button class="submit" id="send">Send my feedback</button>
     <p class="foot">CASPIAN Certificate in Obesity Medicine &middot; Caspian Healthcare Foundation</p>
@@ -184,10 +186,11 @@ footer a{color:#c9d3a8}
 <script defer src="/_vercel/insights/script.js"></script>
 <footer><div class="f"><span>&copy; 2026 Caspian Healthcare Foundation</span><span><a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></span></div></footer>
 
+<script src="/bot-guard.js"></script>
 <script>
 (function(){
-  var SB = "https://itqxfypvrvwplzeeldaz.supabase.co";
-  var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0cXhmeXB2cnZ3cGx6ZWVsZGF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwODY4NDYsImV4cCI6MjEwMTY2Mjg0Nn0.O9CZPubPNjpkRr82hAFpjvUdXNUZ0_xy2XljM0LHrds";
+  // Saved through /api/submit (bot checks, then a service-key insert).
+  var guard = window.CaspianGuard ? CaspianGuard.attach(document.getElementById("tsbox")) : null;
 
   var STATEMENTS = [
     ["obj_clear",      "The objectives of the session were clear."],
@@ -330,23 +333,31 @@ footer a{color:#c9d3a8}
     btn.disabled = true;
     btn.textContent = "Sending...";
 
-    fetch(SB + "/rest/v1/feedback", {
-      method: "POST",
-      headers: {
-        apikey: KEY,
-        Authorization: "Bearer " + KEY,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify(row)
+    row.form = "feedback";
+    row.website = document.getElementById("website").value;
+    (guard ? guard.take() : Promise.resolve("")).then(function(token){
+      row.turnstile = token;
+      row.ms = guard ? guard.ms() : undefined;
+      return fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(row)
+      });
     }).then(function(res){
-      if (!res.ok) throw new Error("save failed");
+      if (!res.ok) {
+        return res.json().catch(function(){ return {}; }).then(function(j){
+          var e = new Error("save failed");
+          if (res.status === 400 && j && j.error) e.shown = j.error;
+          throw e;
+        });
+      }
       document.getElementById("formview").hidden = true;
       document.getElementById("doneview").hidden = false;
       window.scrollTo(0, 0);
-    }).catch(function(){
+    }).catch(function(err){
       btn.disabled = false;
       btn.textContent = "Send my feedback";
+      if (err && err.shown) { showError(err.shown); return; }
       showError("That did not send. Check your connection and tap again. Nothing you typed has been lost.");
     });
   });

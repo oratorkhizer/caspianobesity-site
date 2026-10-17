@@ -2,7 +2,10 @@
 // the new application id plus a short-lived signed URL the browser uses to upload
 // the applicant photo directly to private storage.
 //
-// Env vars: SUPABASE_URL, SUPABASE_SERVICE_KEY
+// Env vars: SUPABASE_URL, SUPABASE_SERVICE_KEY, TURNSTILE_SECRET_KEY (optional)
+import crypto from "crypto";
+import { HUMAN_MSG, clientIp, isTrap, looksRandom, verifyTurnstile } from "./_guard.js";
+
 const SB_URL = process.env.SUPABASE_URL;
 const SB_KEY = process.env.SUPABASE_SERVICE_KEY;
 
@@ -31,6 +34,16 @@ export default async function handler(req, res) {
     const full_name = str(b.full_name, 120);
     const email = str(b.email, 160);
     const phone = str(b.phone, 40);
+
+    // Bot checks. Honeypot, too-fast and random-name submissions get a normal-looking
+    // reply and nothing is written. Only this human step is checked: the payment
+    // calls that follow (create-order, verify-payment, redeem-free) are untouched.
+    if (isTrap(b) || looksRandom(full_name, email)) {
+      return res.status(200).json({ id: crypto.randomUUID(), uploadUrl: null, resumed: false, paidBefore: false });
+    }
+    if (!(await verifyTurnstile(b.turnstile, clientIp(req)))) {
+      return res.status(400).json({ error: HUMAN_MSG });
+    }
     if (!full_name || !email || !phone) {
       return res.status(400).json({ error: "Name, email and phone are required." });
     }

@@ -419,6 +419,8 @@
     <div class="field"><label for="role">You are a…</label><select id="role" name="role"><option>General Physician</option><option>Diabetologist</option><option>Endocrinologist</option><option>Family Physician / GP</option><option>Surgeon</option><option>Other specialist</option><option>Postgraduate / Resident</option></select></div>
    </div>
    <div class="field"><label for="msg">Anything you'd like to ask? (optional)</label><textarea id="msg" name="msg" rows="3" placeholder="Your question..."></textarea></div>
+   <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><input type="text" name="website" tabindex="-1" autocomplete="off"/></div>
+   <div class="tsbox"></div>
    <button class="btn btn-gold" type="submit">Send my enquiry</button>
    <div class="fine">This is an enquiry, not a booking. By sending you agree to be contacted about the course, per our <a href="/privacy" style="color:inherit;text-decoration:underline">privacy policy</a>. No spam.</div>
   </form>
@@ -442,6 +444,7 @@
           <div class="field"><label for="wl-phone">WhatsApp number</label><input id="wl-phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="10-digit mobile"></div>
         </div>
         <input class="wl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="tsbox"></div>
         <button class="btn btn-gold" type="submit" id="wlbtn">Notify me when the next batch opens</button>
         <p class="fine" id="wlmsg" aria-live="polite"></p>
       </form>
@@ -462,13 +465,20 @@
 #wlmsg.ok{color:#0f5132;font-weight:600}
 @media(max-width:640px){.wl-card{padding:28px 20px}.wl-card .btn{width:100%;text-align:center}}
 </style>
+<script src="/bot-guard.js"></script>
 <script>
 (function(){
   var f=document.getElementById('wlform'),m=document.getElementById('wlmsg'),b=document.getElementById('wlbtn');
   if(!f)return;
   var EP='https://gjpbiiqkvzysmdpioexk.supabase.co/functions/v1/subscribe';
+  var guard=window.CaspianGuard?CaspianGuard.attach(f.querySelector('.tsbox')):null;
+  var HUMAN=window.CaspianGuard?CaspianGuard.MSG:'';
+  // One token per call: the email and the WhatsApp opt-ins are separate requests,
+  // so the second one waits for a fresh token after the first is used.
   function post(channel,contact){
-    return fetch(EP,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({site:'caspianobesity',channel:channel,contact:contact,name:f.name.value,interest:'next_batch',source_path:location.pathname,website:f.website.value,meta:{city:f.city.value}})}).then(function(r){return r.json()});
+    return (guard?guard.take():Promise.resolve('')).then(function(token){
+      return fetch(EP,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({site:'caspianobesity',channel:channel,contact:contact,name:f.name.value,interest:'next_batch',source_path:location.pathname,website:f.website.value,ms:guard?guard.ms():undefined,turnstile:token,meta:{city:f.city.value}})});
+    }).then(function(r){return r.json().catch(function(){return {ok:false}}).then(function(j){if(r.status===400&&j&&typeof j.error==='string'&&/person/i.test(j.error)){var e=new Error('human');e.human=true;e.msg=j.error;throw e;}return j;});});
   }
   f.addEventListener('submit',function(e){
     e.preventDefault();
@@ -480,11 +490,14 @@
     if(email&&!emailOk){m.className='fine err';m.textContent='That email does not look right.';return;}
     if(f.phone.value.trim()&&!phoneOk){m.className='fine err';m.textContent='That WhatsApp number does not look right.';return;}
     b.disabled=true;m.className='fine';m.textContent='Saving...';
-    var jobs=[];if(emailOk)jobs.push(post('email',email));if(phoneOk)jobs.push(post('whatsapp',phone));
-    Promise.all(jobs).then(function(rs){
+    var rs=[];
+    var chain=Promise.resolve();
+    if(emailOk)chain=chain.then(function(){return post('email',email).then(function(j){rs.push(j)})});
+    if(phoneOk)chain=chain.then(function(){return post('whatsapp',phone).then(function(j){rs.push(j)})});
+    chain.then(function(){
       if(rs.some(function(j){return !j.ok}))throw new Error('failed');
       f.innerHTML='<p id="wlmsg" class="fine ok">You are on the list. We will message you when the next batch opens.</p>';
-    }).catch(function(){b.disabled=false;m.className='fine err';m.innerHTML='Could not save right now. Please WhatsApp us at <a href="https://wa.me/918978454547?text='+encodeURIComponent('Hello, please add me to the next batch list for the CASPIAN obesity course.')+'" target="_blank" rel="noopener">+91 89784 54547</a>.';});
+    }).catch(function(err){b.disabled=false;m.className='fine err';if(err&&err.human){m.textContent=err.msg||HUMAN;return;}m.innerHTML='Could not save right now. Please WhatsApp us at <a href="https://wa.me/918978454547?text='+encodeURIComponent('Hello, please add me to the next batch list for the CASPIAN obesity course.')+'" target="_blank" rel="noopener">+91 89784 54547</a>.';});
   });
 })();
 </script>

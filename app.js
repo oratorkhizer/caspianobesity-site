@@ -129,15 +129,32 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
 })();
 
 // form -> FormSubmit AJAX (works on desktop; no mailto). First submission triggers a one-time activation email to drkhizer@caspianobesity.com.
+// Relayed through /api/submit, which runs the bot checks and then forwards to FormSubmit.
+var regGuard=(function(){var f=document.getElementById('regform');return (f&&window.CaspianGuard)?CaspianGuard.attach(f.querySelector('.tsbox')):null;})();
 function submitForm(ev){
   ev.preventDefault();
   var f=ev.target, btn=f.querySelector('button[type=submit]');
+  var oldErr=f.querySelector('.regerr'); if(oldErr) oldErr.remove();
   btn.textContent='Sending…'; btn.style.opacity=.7;
-  var data={name:f.name.value,email:f.email.value,phone:f.phone.value,city:f.city.value,role:f.role.value,question:f.msg.value,_subject:'New seat enquiry, CASPIAN Obesity Medicine',_template:'table'};
-  fetch('https://formsubmit.co/ajax/drkhizer@caspianobesity.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-   .then(function(r){return r.json();})
+  var data={form:'enquiry',name:f.name.value,email:f.email.value,phone:f.phone.value,city:f.city.value,role:f.role.value,question:f.msg.value,website:f.website?f.website.value:''};
+  (regGuard?regGuard.take():Promise.resolve(''))
+   .then(function(token){
+     data.turnstile=token; data.ms=regGuard?regGuard.ms():undefined;
+     return fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
+   })
+   .then(function(r){
+     return r.json().catch(function(){return {};}).then(function(j){
+       if(r.ok) return j;
+       if(r.status===400&&j&&j.error){
+         var e=new Error('bad'); e.shown=j.error; throw e;
+       }
+       throw new Error('failed');
+     });
+   })
    .then(function(){f.innerHTML='<h3>Thank you 🙏</h3><p class="fsub">Your enquiry is in. Dr Khizer\'s team will reach out from drkhizer@caspianobesity.com. Seats are reserved on payment of the ₹2,999 founding fee: you can <a href="/apply" style="color:var(--gold-d);text-decoration:underline">apply and pay securely</a> to join the founding batch.</p>';})
-   .catch(function(){btn.textContent='Send my enquiry';btn.style.opacity=1;window.location.href='https://wa.me/918978454547?text='+encodeURIComponent('Hi, I have a question about the CASPIAN Certificate in Obesity Medicine. Name: '+f.name.value+', City: '+f.city.value);});
+   .catch(function(err){btn.textContent='Send my enquiry';btn.style.opacity=1;
+     if(err&&err.shown){var d=document.createElement('div');d.className='fine regerr';d.setAttribute('role','alert');d.style.color='#b42318';d.textContent=err.shown;btn.parentNode.insertBefore(d,btn.nextSibling);return;}
+     window.location.href='https://wa.me/918978454547?text='+encodeURIComponent('Hi, I have a question about the CASPIAN Certificate in Obesity Medicine. Name: '+f.name.value+', City: '+f.city.value);});
   return false;
 }
 
