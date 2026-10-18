@@ -119,10 +119,15 @@
   rows+='<dt>Credential</dt><dd>'+esc(r.course||'CASPIAN Certificate in Obesity Medicine')+'</dd>';
   rows+='<dt>Credential ID</dt><dd class="cid">'+esc(r.id)+'</dd>';
   if(r.issued) rows+='<dt>Issued</dt><dd>'+esc(fmtDate(r.issued))+'</dd>';
+  if(r.qualification) rows+='<dt>Qualification</dt><dd>'+esc(r.qualification)+'</dd>';
   if(r.result) rows+='<dt>Result</dt><dd>'+esc(r.result)+'</dd>';
+  if(r.modules_attended) rows+='<dt>Attendance</dt><dd>'+esc(r.modules_attended)+' of 12 modules</dd>';
+  if(r.top_scorer_modules&&r.top_scorer_modules.length){
+   rows+='<dt>Awards</dt><dd>'+r.top_scorer_modules.map(function(n){return 'Top Kahoot scorer, Module '+esc(n);}).join('<br/>')+'</dd>';
+  }
   rows+='<dt>Issued by</dt><dd>Caspian Healthcare Foundation, Hyderabad</dd>';
   var thumb = r.image ? '<div class="certthumb"><img src="'+esc(r.image)+'" alt="Certificate"/></div>' : '';
-  var note = specimen ? '<p class="hint">This is a sample record used to demonstrate verification. It does not represent a real graduate.</p>' : '';
+  var note = revoked ? '<p class="hint">This certificate has been withdrawn by Caspian Healthcare Foundation and is no longer valid.</p>' : specimen ? '<p class="hint">This is a sample record used to demonstrate verification. It does not represent a real graduate.</p>' : '';
   resultEl.innerHTML='<div class="status">'+badge+'</div>'+'<dl>'+rows+'</dl>'+thumb+note;
   showLookup('');
   formEl.style.display='flex';
@@ -132,8 +137,16 @@
   if(!id){ showLookup(''); resultEl.innerHTML='<p class="muted">Enter a Credential ID below to verify a certificate.</p>'; return; }
   resultEl.innerHTML='<span class="spin"></span> <span class="muted">Checking '+esc(id)+'…</span>';
   formEl.style.display='none'; hintEl.style.display='none';
-  fetch(CERT_BASE+encodeURIComponent(id)+'.json',{cache:'no-store'})
+  // Real records live in the database (issued from /admin). The specimen and any
+  // older hand-made record still live in /certs/<ID>.json, so try that second.
+  function fromFile(){
+   return fetch(CERT_BASE+encodeURIComponent(id)+'.json',{cache:'no-store'})
+    .then(function(res){ if(!res.ok) throw new Error('nf'); return res.json(); });
+  }
+  fetch('/api/credentials?id='+encodeURIComponent(id),{cache:'no-store'})
    .then(function(res){ if(!res.ok) throw new Error('nf'); return res.json(); })
+   .then(function(r){ if(!r||!r.found) throw new Error('nf'); return r; })
+   .catch(fromFile)
    .then(function(r){ if(!r.id) r.id=id; renderRecord(r); })
    .catch(function(){ renderNotFound(id); });
  }

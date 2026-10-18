@@ -39,6 +39,19 @@ tr:last-child td{border-bottom:0}
 .scroll{overflow-x:auto}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .bar .r{font-size:.8rem;color:var(--muted)}
+.form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.form .f{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 160px}
+.form .f.sm{flex:0 1 110px}
+.form label{font-size:.74rem;font-weight:600;color:#3f4a28}
+.form select,.form input[type=number],.form input[type=date]{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:.9rem;font-family:inherit;background:#fff;color:#313a1c}
+.form .tick{display:flex;gap:7px;align-items:center;font-size:.85rem;padding-bottom:9px;flex:0 0 auto}
+.form .btn{margin-top:0;padding:10px 18px}
+#tRefs td:nth-child(2),#tCerts td:first-child{white-space:nowrap}
+.note{font-size:.78rem;color:var(--muted);margin:4px 0 10px}
+.fmsg{font-size:.85rem;margin:2px 0 10px;min-height:1em}
+.fmsg.bad{color:var(--bad)}.fmsg.ok{color:var(--ok)}
+.pill.dist{background:rgba(231,111,81,.16);color:var(--gold-d)}
+.mini{background:none;border:1px solid var(--line);border-radius:7px;padding:3px 9px;font-size:.74rem;cursor:pointer;font-family:inherit;color:#3f4a28}
 .linkbtn{background:none;border:1px solid var(--line);border-radius:8px;padding:7px 14px;font-size:.8rem;cursor:pointer;font-family:inherit;color:#3f4a28;text-decoration:none;display:inline-block}
 @media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
 </style></head><body>
@@ -65,12 +78,40 @@ tr:last-child td{border-bottom:0}
  <div class="scroll"><table id="tApps"><thead><tr><th>When</th><th>Name</th><th>Status</th><th>City</th><th>Specialty</th><th>Qualification</th><th>Phone</th><th>Email</th><th>Meal</th><th>Promo</th><th>Heard via</th></tr></thead><tbody></tbody></table></div>
  <h2>Promo codes</h2>
  <div class="scroll"><table id="tPromos"><thead><tr><th>Code</th><th>Type</th><th>Label</th><th>State</th><th>Used at</th><th>Used by</th></tr></thead><tbody></tbody></table></div>
+ <h2 id="certs">Certificates</h2>
+ <p class="note">Issue a record once a doctor has passed the final examination. Rules: pass mark 60%, distinction 75%, attendance at least 10 of 12 modules (taken from the <a href="/attendance">attendance register</a>). The next Credential ID is given automatically. The record appears at once on <a href="/verify">/verify</a>.</p>
+ <div class="form" id="certForm">
+  <div class="f"><label for="cDoc">Doctor (enrolled)</label><select id="cDoc"></select></div>
+  <div class="f sm"><label for="cScore">Exam score %</label><input id="cScore" type="number" min="0" max="100" step="0.5" placeholder="optional"/></div>
+  <div class="f sm"><label for="cDate">Issue date</label><input id="cDate" type="date"/></div>
+  <label class="tick"><input type="checkbox" id="cDist"/> Distinction</label>
+  <button class="btn" id="cIssue" type="button">Issue certificate</button>
+ </div>
+ <div class="fmsg" id="cMsg"></div>
+ <div class="scroll"><table id="tCerts"><thead><tr><th>Credential ID</th><th>Name</th><th>Issued</th><th>Result</th><th>Attendance</th><th>State</th><th></th></tr></thead><tbody></tbody></table></div>
+
+ <h2 id="kahoot">Top Kahoot scorer of the module</h2>
+ <p class="note">Record the doctor who topped the Kahoot in each module. It shows on that doctor's certificate record at /verify as "Top Kahoot scorer, Module N". It is not shown anywhere else in public.</p>
+ <div class="form" id="topForm">
+  <div class="f sm"><label for="tBatch">Batch</label><input id="tBatch" type="number" min="1" max="99" value="1"/></div>
+  <div class="f sm"><label for="tMod">Module</label><select id="tMod"></select></div>
+  <div class="f"><label for="tDoc">Doctor</label><select id="tDoc"></select></div>
+  <button class="btn" id="tSave" type="button">Record top scorer</button>
+ </div>
+ <div class="fmsg" id="tMsg"></div>
+ <div class="scroll"><table id="tTops"><thead><tr><th>Batch</th><th>Module</th><th>Doctor</th><th></th></tr></thead><tbody></tbody></table></div>
+
+ <h2 id="referrals">Referral codes</h2>
+ <p class="note">Every enrolled doctor has one personal code they can share again and again. A doctor who joins with it gets 25% off, the lowest price we offer (it never goes below the Rs 2,999 founding fee). The referrer gets nothing. A referral code cannot be combined with a promo code. Doctors can find their own code at <a href="/refer">/refer</a>.</p>
+ <div class="scroll"><table id="tRefs"><thead><tr><th>Doctor</th><th>Code</th><th>Paid referrals</th><th>Who joined</th><th></th></tr></thead><tbody></tbody></table></div>
+ <div class="fmsg" id="rMsg"></div>
+
  <p class="muted" style="font-size:.75rem;margin-top:14px">Shows an operational subset only: full records (addresses, DOB, registration numbers, photos) stay in Supabase. Payments reconcile in the Razorpay dashboard.</p>
 </div>
 
 </div>
 <script>
-var DATA=null;
+var DATA=null, ADMKEY=null, CREDS=null;
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function fmt(d){ if(!d) return ''; var t=new Date(d); if(isNaN(t)) return d;
   return t.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+t.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); }
@@ -83,7 +124,7 @@ function load(){
    .then(function(x){
      document.getElementById('go').disabled=false; document.getElementById('go').textContent='View applications';
      if(!x.ok||!x.j||x.j.error){err.textContent=(x.j&&x.j.error)||'Could not load.';return;}
-     DATA=x.j; render(x.j);
+     DATA=x.j; ADMKEY=key; render(x.j); loadCreds();
    })
    .catch(function(){document.getElementById('go').disabled=false;document.getElementById('go').textContent='View applications';err.textContent='Network error.';});
 }
@@ -113,6 +154,98 @@ document.getElementById('csv').addEventListener('click',function(){
   var blob=new Blob([lines.join('\n')],{type:'text/csv'});
   var u=URL.createObjectURL(blob), l=document.createElement('a');
   l.href=u; l.download='caspian-applications.csv'; document.body.appendChild(l); l.click(); l.remove(); URL.revokeObjectURL(u);
+});
+/* ---------- certificates, Kahoot top scorers, referral codes ---------- */
+function cpost(body){
+  body.key=ADMKEY;
+  return fetch('/api/credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+   .then(function(r){return r.json().then(function(j){ if(!r.ok||!j||j.error) throw new Error((j&&j.error)||'Could not save.'); return j; });});
+}
+function say(id,t,kind){ var m=document.getElementById(id); m.textContent=t||''; m.className='fmsg'+(kind?' '+kind:''); }
+function dname(a){ return ((a.salutation?a.salutation+' ':'')+(a.full_name||'')).trim(); }
+function fmtDay(d){ if(!d) return ''; var p=String(d).split('-'); var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return (+p[2])+' '+M[(+p[1])-1]+' '+p[0]; }
+function loadCreds(){
+  cpost({action:'list'}).then(function(j){ CREDS=j; renderCreds(); }).catch(function(e){ say('cMsg',e.message,'bad'); });
+}
+function renderCreds(){
+  var d=CREDS, byId={}; d.roster.forEach(function(a){ byId[a.id]=a; });
+  var issued={}; d.certs.forEach(function(c){ issued[c.application_id]=c; });
+  // doctor pickers
+  var cd=document.getElementById('cDoc'), td=document.getElementById('tDoc');
+  var keepC=cd.value, keepT=td.value;
+  cd.innerHTML='<option value="">Choose a doctor</option>'; td.innerHTML='<option value="">Choose a doctor</option>';
+  d.roster.forEach(function(a){
+    var n=esc(dname(a));
+    cd.insertAdjacentHTML('beforeend','<option value="'+a.id+'"'+(issued[a.id]?' disabled':'')+'>'+n+' ('+a.attended+' of 12'+(issued[a.id]?', issued':'')+')</option>');
+    td.insertAdjacentHTML('beforeend','<option value="'+a.id+'">'+n+'</option>');
+  });
+  cd.value=keepC; td.value=keepT;
+  var tm=document.getElementById('tMod'); if(!tm.options.length){ for(var i=1;i<=12;i++) tm.insertAdjacentHTML('beforeend','<option value="'+i+'">Module '+i+'</option>'); }
+  var cdt=document.getElementById('cDate'); if(!cdt.value){ var t=new Date(Date.now()+(330+new Date().getTimezoneOffset())*6e4); cdt.value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+  // certificates
+  var topsBy={}; d.tops.forEach(function(t){ (topsBy[t.application_id]=topsBy[t.application_id]||[]).push(t.module_no); });
+  var cb=document.querySelector('#tCerts tbody'); cb.innerHTML='';
+  if(!d.certs.length) cb.innerHTML='<tr><td colspan="7" class="muted">No certificates issued yet.</td></tr>';
+  d.certs.forEach(function(c){
+    var res=c.distinction?'<span class="pill dist">DISTINCTION</span>':'Pass';
+    if(c.exam_score!=null) res+=' <span class="muted">('+esc(c.exam_score)+'%)</span>';
+    var tops=topsBy[c.application_id]; if(tops) res+='<br/><span class="muted">Top Kahoot: M'+tops.join(', M')+'</span>';
+    var st=c.revoked?'<span class="pill used">REVOKED</span>':'<span class="pill paid">VALID</span>';
+    var btn='<button class="mini" data-rev="'+esc(c.cert_id)+'" data-to="'+(c.revoked?'0':'1')+'">'+(c.revoked?'Restore':'Revoke')+'</button>';
+    cb.insertAdjacentHTML('beforeend','<tr><td><a href="/verify?id='+encodeURIComponent(c.cert_id)+'" target="_blank" rel="noopener"><b>'+esc(c.cert_id)+'</b></a></td><td>'+esc(c.full_name)+'<br/><span class="muted">'+esc(c.qualification||'')+'</span></td><td>'+fmtDay(c.issued_on)+'</td><td>'+res+'</td><td>'+esc(c.modules_attended)+' of 12</td><td>'+st+'</td><td>'+btn+'</td></tr>');
+  });
+  // top scorers
+  var tb=document.querySelector('#tTops tbody'); tb.innerHTML='';
+  if(!d.tops.length) tb.innerHTML='<tr><td colspan="4" class="muted">None recorded yet.</td></tr>';
+  d.tops.forEach(function(t){
+    var a=byId[t.application_id];
+    tb.insertAdjacentHTML('beforeend','<tr><td>'+t.batch_no+'</td><td>Module '+t.module_no+'</td><td>'+esc(a?dname(a):'(not on roster)')+'</td><td><button class="mini" data-untop="'+t.application_id+'" data-m="'+t.module_no+'" data-b="'+t.batch_no+'">Remove</button></td></tr>');
+  });
+  // referral codes, most referrals first
+  var rb=document.querySelector('#tRefs tbody'); rb.innerHTML='';
+  d.roster.slice().sort(function(x,y){ return (y.paid_referrals-x.paid_referrals)||dname(x).localeCompare(dname(y)); }).forEach(function(a){
+    rb.insertAdjacentHTML('beforeend','<tr><td>'+esc(dname(a))+'</td><td><b>'+esc(a.ref_code||'')+'</b></td><td>'+a.paid_referrals+'</td><td class="muted">'+esc((a.referred_names||[]).join(', '))+'</td><td>'+(a.ref_code?'<button class="mini" data-copy="'+esc(a.ref_code)+'">Copy</button>':'')+'</td></tr>');
+  });
+}
+document.getElementById('cScore').addEventListener('input',function(){
+  var v=this.value, box=document.getElementById('cDist');
+  if(v===''){ box.disabled=false; return; }
+  box.checked=Number(v)>=75; box.disabled=true;
+});
+document.getElementById('cIssue').addEventListener('click',function(){
+  var app=document.getElementById('cDoc').value, btn=this;
+  if(!app){ say('cMsg','Choose a doctor first.','bad'); return; }
+  var a=CREDS.roster.filter(function(x){return x.id===app;})[0];
+  var score=document.getElementById('cScore').value, dist=document.getElementById('cDist').checked;
+  if(!confirm('Issue a certificate to '+dname(a)+(dist?' with Distinction':'')+'?\nThis creates a public record at /verify.')) return;
+  btn.disabled=true; say('cMsg','Issuing…');
+  cpost({action:'issue',application_id:app,exam_score:score===''?null:Number(score),distinction:dist,issued_on:document.getElementById('cDate').value})
+   .then(function(j){ btn.disabled=false; document.getElementById('cScore').value=''; document.getElementById('cDist').checked=false; document.getElementById('cDist').disabled=false; document.getElementById('cDoc').value='';
+     say('cMsg','Issued '+j.cert.cert_id+' to '+j.cert.full_name+'. Share: caspianobesity.com/verify?id='+j.cert.cert_id,'ok'); loadCreds(); })
+   .catch(function(e){ btn.disabled=false; say('cMsg',e.message,'bad'); });
+});
+document.getElementById('tSave').addEventListener('click',function(){
+  var app=document.getElementById('tDoc').value, btn=this;
+  if(!app){ say('tMsg','Choose a doctor first.','bad'); return; }
+  btn.disabled=true;
+  cpost({action:'top',batch_no:Number(document.getElementById('tBatch').value)||1,module_no:Number(document.getElementById('tMod').value),application_id:app})
+   .then(function(){ btn.disabled=false; say('tMsg','Saved.','ok'); loadCreds(); })
+   .catch(function(e){ btn.disabled=false; say('tMsg',e.message,'bad'); });
+});
+document.getElementById('dash').addEventListener('click',function(e){
+  var t=e.target;
+  if(t.dataset.rev){
+    var to=t.dataset.to==='1', reason='';
+    if(to){ reason=prompt('Revoke '+t.dataset.rev+'? It will show as revoked on /verify. Reason (kept private):',''); if(reason===null) return; }
+    else if(!confirm('Restore '+t.dataset.rev+' as valid?')) return;
+    cpost({action:'revoke',cert_id:t.dataset.rev,revoked:to,reason:reason}).then(loadCreds).catch(function(er){ say('cMsg',er.message,'bad'); });
+  } else if(t.dataset.untop){
+    if(!confirm('Remove this top scorer entry?')) return;
+    cpost({action:'top',remove:true,batch_no:Number(t.dataset.b),module_no:Number(t.dataset.m),application_id:t.dataset.untop}).then(loadCreds).catch(function(er){ say('tMsg',er.message,'bad'); });
+  } else if(t.dataset.copy){
+    var c=t.dataset.copy;
+    (navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(function(){ say('rMsg','Copied '+c+'.','ok'); },function(){ say('rMsg','Code: '+c,'ok'); });
+  }
 });
 </script>
 </body></html>
