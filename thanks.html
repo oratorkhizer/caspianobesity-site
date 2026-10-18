@@ -84,6 +84,15 @@ footer a{color:#c9d3a8}
  </form>
 </div>
 
+<!-- Alumnus referral: each enrolled doctor gets one personal, reusable code. -->
+<div class="done" id="refCard" hidden>
+ <h2>Your referral code</h2>
+ <div class="why">A colleague who enrols with your code gets 25% off the course fee. It is our lowest price and is not offered any other way. Share it as often as you like.</div>
+ <div class="box" style="margin:10px 0"><b id="refCode" style="font-size:1.3rem;letter-spacing:.04em;color:#4f5d2f;word-break:break-all"></b></div>
+ <a id="refWa" target="_blank" rel="noopener" href="#" style="display:inline-block;background:#1daa61;color:#fff;font-weight:700;border-radius:9px;padding:11px 18px;text-decoration:none">Share on WhatsApp</a>
+ <div class="later">You can find this code again any time at <a href="/refer">caspianobesity.com/refer</a>.</div>
+</div>
+
 <h2>What happens next</h2>
 <ol class="next">
  <li>You'll hear from us from <a href="mailto:drkhizer@caspianobesity.com">drkhizer@caspianobesity.com</a> or on WhatsApp with your joining details.</li>
@@ -122,6 +131,20 @@ footer a{color:#c9d3a8}
     var el=document.getElementById('nextRow');
     if(el) el.innerHTML='<b>Your next session is Module '+row.module_no+', '+when+', 10:00 am to 1:00 pm</b> (followed by lunch) at '+(row.venue_name||'API Hall')+(row.venue_address?', '+row.venue_address:'')+'. Registration opens at 9.30. <a href="/schedule">All twelve dates</a>.';
   }).catch(function(){});
+})();
+
+// Referral code card, shown once the seat is paid.
+(function(){
+  var q=new URLSearchParams(location.search), appId=q.get('app');
+  if(!(q.get('paid')==='1'||q.get('free')==='1') || !appId || !/^[0-9a-f-]{36}$/i.test(appId)) return;
+  fetch('/api/credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'myref',appId:appId})})
+   .then(function(r){return r.json();}).then(function(j){
+     if(!j||!j.ok||!j.code) return;
+     var msg='I am doing the CASPIAN Certificate in Obesity Medicine with Dr Khizer Hussain Junaidy, Diabetologist & Bariatric Physician. Use my referral code '+j.code+' when you apply and you get 25% off the course fee: https://caspianobesity.com/apply?ref='+encodeURIComponent(j.code);
+     document.getElementById('refCode').textContent=j.code;
+     document.getElementById('refWa').href='https://wa.me/?text='+encodeURIComponent(msg);
+     document.getElementById('refCard').hidden=false;
+   }).catch(function(){});
 })();
 
 // Finish your file: photo + goals, saved on to the application by its id.

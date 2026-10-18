@@ -45,6 +45,67 @@ function applyPromo(basePaise, def) {
   return { amount: basePaise, free: false };
 }
 
+// ---- Alumnus referral codes (REF-FIRSTNAME-XXXX) ----
+// Rule (18 Oct 2026): a doctor referred by an existing participant gets 25% off.
+// That is the lowest price and is offered through no other channel. The
+// referrer gets nothing. Codes are personal and reusable, so they are never
+// marked "used". The referral price never goes below REFERRAL_FLOOR_PAISE
+// (default Rs 2,999, the founding fee), so the doctors who backed the course
+// first are never undercut.
+const REFERRAL_PCT = 25;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+async function referralLookup(code, appId) {
+  if (!/^REF-[A-Z]{1,10}-[A-Z0-9]{4}$/.test(code)) return { error: "Invalid code" };
+  try {
+    const r = await fetch(
+      `${SB_URL}/rest/v1/referral_codes?select=code,application_id&code=eq.${encodeURIComponent(code)}`,
+      { headers: sbHeaders() }
+    );
+    const rows = r.ok ? await r.json() : [];
+    if (!rows[0]) return { error: "Invalid code" };
+    const referrer = rows[0].application_id;
+    const ra = await fetch(`${SB_URL}/rest/v1/applications?id=eq.${referrer}&select=id,status,email`, { headers: sbHeaders() });
+    const ref = ra.ok ? (await ra.json())[0] : null;
+    if (!ref || ref.status !== "paid") return { error: "This referral code is not active" };
+    const id = String(appId || "");
+    if (id && UUID.test(id)) {
+      if (id === referrer) return { error: "You cannot use your own referral code" };
+      const me = await fetch(`${SB_URL}/rest/v1/applications?id=eq.${id}&select=email`, { headers: sbHeaders() });
+      const mine = me.ok ? (await me.json())[0] : null;
+      if (mine && mine.email && ref.email && mine.email.trim().toLowerCase() === ref.email.trim().toLowerCase()) {
+        return { error: "You cannot use your own referral code" };
+      }
+    }
+    return { code: rows[0].code, referrer };
+  } catch {
+    return { error: "Referral codes aren't available right now" };
+  }
+}
+function applyReferral(basePaise) {
+  const floor = Math.round(Number(process.env.REFERRAL_FLOOR_PAISE) || 299900);
+  const off = Math.round((basePaise * (100 - REFERRAL_PCT)) / 100 / 100) * 100; // whole rupees
+  const amount = Math.max(MIN_PAISE, off, Math.min(floor, basePaise));
+  if (amount >= basePaise) {
+    return { amount: basePaise, label: "Referral recorded (the fee is already at its lowest)" };
+  }
+  return { amount, label: "Referral: " + REFERRAL_PCT + "% off" };
+}
+// Store who referred this application, or clear a stale one if this order
+// carries no referral. Best-effort: never blocks the payment.
+async function recordReferral(appId, referrer) {
+  if (!SB_URL || !SB_KEY || !appId || !UUID.test(appId)) return;
+  try {
+    const q = referrer ? `id=eq.${appId}` : `id=eq.${appId}&referred_by=not.is.null`;
+    await fetch(`${SB_URL}/rest/v1/applications?${q}`, {
+      method: "PATCH",
+      headers: sbHeaders(),
+      body: JSON.stringify({ referred_by: referrer || null }),
+    });
+  } catch {
+    /* best-effort */
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -66,13 +127,26 @@ export default async function handler(req, res) {
     let promoInfo = { code: codeRaw || null, applied: false, label: null };
     let amount = basePaise;
     let free = false;
+    let referrer = null;
 
     if (codeRaw) {
       if (!SB_URL || !SB_KEY) {
         promoInfo = { code: codeRaw, applied: false, error: "Promo codes aren't available right now" };
       } else {
         const row = await sbLookup(codeRaw);
-        if (!row) {
+        const ref = !row && /^REF-/.test(codeRaw) ? await referralLookup(codeRaw, body.appId) : null;
+        if (ref) {
+          // Alumnus referral: 25% off, worked out here on the server. It is the
+          // only code on the order, so it can never stack with a promo code.
+          if (ref.error) {
+            promoInfo = { code: codeRaw, applied: false, error: ref.error };
+          } else {
+            const r = applyReferral(basePaise);
+            amount = r.amount;
+            promoInfo = { code: ref.code, applied: true, label: r.label, referral: true };
+            referrer = ref.referrer;
+          }
+        } else if (!row) {
           promoInfo = { code: codeRaw, applied: false, error: "Invalid code" };
         } else if (row.used) {
           promoInfo = { code: codeRaw, applied: false, error: "This code has already been used" };
@@ -91,6 +165,7 @@ export default async function handler(req, res) {
     }
 
     const appId = (body.appId || "").toString().slice(0, 60);
+    await recordReferral(appId, referrer);
     const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
     const order = await razorpay.orders.create({
       amount, currency, receipt,

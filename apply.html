@@ -188,7 +188,7 @@
      <label class="check"><input type="checkbox" id="attendance_ack"/> <span>I understand the attendance (at least 80%), assessment and feedback requirements for certification. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="consent_comms"/> <span>I'm happy to receive course updates and alumni communications.</span></label>
     </div>
-    <div style="margin-top:16px" class="field"><label>Promo code (optional)</label><input id="promo" placeholder="If you have one" style="text-transform:uppercase"/></div>
+    <div style="margin-top:16px" class="field"><label>Promo or referral code (optional)</label><input id="promo" placeholder="If you have one" style="text-transform:uppercase"/></div>
     <div class="fee"><span class="a">₹2,999</span><s>₹9,999</s><span style="color:var(--muted);font-size:.85rem">founding-batch fee</span></div>
     <div class="assure"><b>Money-back guarantee:</b> full refund any time before your first session, and if that session is not value for money, a full refund within 7 days of it.</div>
     <div class="after">After payment we will ask for a passport-style photo for your course ID, and a few questions about what you want from the course. Both take a minute and can be done later.</div>
@@ -265,7 +265,7 @@ function draftRestore(d){
   var e=el(id); if(!e || !(id in d.fields)) return;
   if(e.type==='checkbox') e.checked=!!d.fields[id]; else e.value=d.fields[id];
  });
- preview(); toggleAddr();
+ preview(); toggleAddr(); applyRef();
  // Back to the step they were on, but never straight to the review page: the
  // consents are not restored, so landing there would look finished when it is not.
  // Drafts saved by the older six-step form carry step numbers up to 5; clamp them.
@@ -276,6 +276,16 @@ var draftTimer=null;
 function draftSoon(){ clearTimeout(draftTimer); draftTimer=setTimeout(draftSave,400); }
 el('apply').addEventListener('input', draftSoon);
 el('apply').addEventListener('change', draftSoon);
+
+// A colleague's referral link (/apply?ref=REF-NAME-XXXX) fills the code box.
+// Only one code can be used per seat, so a referral never stacks with a promo.
+function applyRef(){
+ try{
+  var r=(new URLSearchParams(location.search).get('ref')||'').trim().toUpperCase();
+  if(/^REF-[A-Z]{1,10}-[A-Z0-9]{4}$/.test(r) && el('promo')) el('promo').value=r;
+ }catch(e){}
+}
+applyRef();
 
 (function offerResume(){
  var d=draftRead(); if(!d) return;
