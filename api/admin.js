@@ -45,13 +45,37 @@ export default async function handler(req, res) {
       { headers: h }
     );
     const promos = promosR.ok ? await promosR.json() : [];
+    // Sign-ins on /me in the last 30 days, by method (one row per device sign-in).
+    let signins = null;
+    try {
+      const since = new Date(Date.now() - 30 * 86400e3).toISOString();
+      const sR = await fetch(
+        `${SB_URL}/rest/v1/co_sessions?select=method,app_id&created_at=gte.${encodeURIComponent(since)}&limit=5000`,
+        { headers: h }
+      );
+      const eR = await fetch(
+        `${SB_URL}/rest/v1/co_auth_events?select=kind&ok=is.false&at=gte.${encodeURIComponent(new Date(Date.now() - 86400e3).toISOString())}&limit=5000`,
+        { headers: h }
+      );
+      if (sR.ok) {
+        const rows = await sR.json();
+        signins = {
+          google: rows.filter((r) => r.method === "google").length,
+          email_code: rows.filter((r) => r.method === "email_code").length,
+          people: new Set(rows.map((r) => r.app_id)).size,
+          errors24h: eR.ok ? (await eR.json()).length : null,
+        };
+      }
+    } catch {
+      /* the dashboard still works without this */
+    }
     const counts = { total: apps.length, paid: 0, submitted: 0, other: 0 };
     apps.forEach((a) => {
       if (a.status === "paid") counts.paid++;
       else if (a.status === "submitted") counts.submitted++;
       else counts.other++;
     });
-    return res.status(200).json({ counts, apps, promos });
+    return res.status(200).json({ counts, apps, promos, signins });
   } catch {
     return res.status(500).json({ error: "Could not load the data." });
   }

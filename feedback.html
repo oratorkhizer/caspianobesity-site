@@ -287,6 +287,16 @@ footer a{color:#c9d3a8}
   var params = new URLSearchParams(window.location.search);
   var m = parseInt(params.get("m"), 10);
   if (m >= 1 && m <= 12) document.getElementById("module").value = String(m);
+  // A signed-in doctor on /me can choose to put their name on the feedback.
+  // It is handed over in this tab only, never in the address.
+  try {
+    var fbName = sessionStorage.getItem("caspian_fb_name");
+    if (fbName) {
+      sessionStorage.removeItem("caspian_fb_name");
+      var rn = document.getElementById("respondent_name");
+      if (rn && !rn.value) rn.value = fbName.slice(0, 120);
+    }
+  } catch (e) {}
 
   var errBox = document.getElementById("error");
   function showError(msg) {

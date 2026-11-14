@@ -22,12 +22,14 @@ Source for **caspianobesity.com**, the CASPIAN Certificate in Obesity Medicine c
 | `api/create-order.js` | Creates a Razorpay order. **Server owns the price.** Promo codes looked up in Supabase (single-use). |
 | `api/verify-payment.js` | HMAC-verifies payment; marks promo used; marks application paid |
 | `api/credentials.js` | Public: verify a certificate (GET ?id=), a doctor's own referral code. Admin (ADMIN_KEY): issue/revoke certificates, Kahoot top scorers, referral counts |
+| `me.html` (`/me`) + `api/me.js` | My course: sign in with Google or a 6-digit email code; seat status, next module, attendance, feedback, course material (table `course_materials`), sign out per device or everywhere. Tables `co_sessions`, `co_signin_codes`, `co_auth_events`, `co_rate_hits`. |
 | `api/redeem-free.js` | Atomically claims a 100%-off code and confirms a complimentary seat |
 
 ## Environment variables (Vercel)
 
 - `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, payments (never commit)
 - `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, applications + promo codes (never commit)
+- `SIGNIN_PEPPER` (secret salt for /me codes and sessions), `RESEND_API_KEY`, optional `RESEND_FROM` / `RESEND_FROM_FALLBACK`, `GOOGLE_CLIENT_ID` (Google button hidden until set), `SIGNIN_ENABLED` (`off` switches /me sign-in off)
 - `FOUNDING_FEE_PAISE`, optional price override (default `299900` = Rs 2,999)
 
 ## Conventions
