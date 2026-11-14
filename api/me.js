@@ -287,11 +287,16 @@ async function verifyGoogle(credential) {
 // sessions
 // ---------------------------------------------------------------------------
 
-async function startSession(req, res, appId, method) {
+// provedEmail: the email this device has just proved it owns (the code went
+// there, or Google verified it). A session only ever shows applications with
+// this exact email. It is never widened by phone number, because the phone on
+// an application is typed by the applicant and never checked.
+async function startSession(req, res, appId, method, provedEmail) {
   const token = crypto.randomBytes(32).toString("base64url"); // 43 chars
   await sbInsert("co_sessions", {
     token_hash: tokenHash(token),
     app_id: appId,
+    proved_email: cleanEmail(provedEmail) || null,
     method,
     user_agent: String(req.headers["user-agent"] || "").slice(0, 200) || null,
   });
@@ -303,7 +308,7 @@ async function currentSession(req) {
   const token = cookieToken(req);
   if (!token) return null;
   const th = tokenHash(token);
-  const rows = await sbGet(`co_sessions?token_hash=eq.${th}&revoked_at=is.null&select=id,app_id,method,created_at,last_seen_at&limit=1`);
+  const rows = await sbGet(`co_sessions?token_hash=eq.${th}&revoked_at=is.null&select=id,app_id,method,created_at,last_seen_at,proved_email&limit=1`);
   const s = rows[0];
   if (!s) return null;
   if (Date.now() - new Date(s.last_seen_at).getTime() > SESSION_DAYS * 86400e3) return null;
@@ -312,12 +317,14 @@ async function currentSession(req) {
   }
   // The application the session was opened on may since have been superseded
   // or joined by a paid one: always show the person's best live application.
-  const a = (await sbGet(`applications?id=eq.${s.app_id}&select=id,status,phone,email&limit=1`))[0];
-  if (!a) return null;
-  const people = await personRows(normaliseMobile(a.phone), cleanEmail(a.email));
+  // Only applications with the email this device proved. Sessions made before
+  // proved_email existed are refused, so the person simply signs in again.
+  const proved = cleanEmail(s.proved_email);
+  if (!proved) return null;
+  const people = (await personRows(null, proved)).filter((p) => cleanEmail(p.email) === proved);
   const best = people[0];
   if (!best) return null;
-  return { session: s, appId: best.id, allIds: Array.from(new Set([s.app_id, ...people.map((p) => p.id)])) };
+  return { session: s, appId: best.id, allIds: Array.from(new Set(people.map((p) => p.id))) };
 }
 
 // ---------------------------------------------------------------------------
@@ -493,7 +500,7 @@ export default async function handler(req, res) {
         await logEvent("bad_code", false, result);
         return res.status(400).json({ ok: false, field: "code", message: MSG_WRONG });
       }
-      await startSession(req, res, best.id, "email_code");
+      await startSession(req, res, best.id, "email_code", best.email);
       return res.status(200).json({ ok: true });
     }
 
@@ -512,8 +519,15 @@ export default async function handler(req, res) {
       // A Google account already linked to an application wins; otherwise match the email.
       let best = null;
       const linked = await sbGet(`applications?google_sub=eq.${encodeURIComponent(g.sub)}&status=in.(paid,submitted)&select=id,phone,email&limit=1`);
-      if (linked[0]) best = (await personRows(normaliseMobile(linked[0].phone), cleanEmail(linked[0].email)))[0] || null;
-      if (!best) best = (await personRows(null, g.email))[0] || null;
+      let proved = g.email;
+      if (linked[0] && cleanEmail(linked[0].email)) {
+        proved = cleanEmail(linked[0].email);
+        best = (await personRows(null, proved))[0] || null;
+      }
+      if (!best) {
+        proved = g.email;
+        best = (await personRows(null, g.email))[0] || null;
+      }
       if (!best) {
         await logEvent("google_no_match", true, null);
         return res.status(200).json({
@@ -525,7 +539,7 @@ export default async function handler(req, res) {
       if (!best.google_sub) {
         await sbPatch(`applications?id=eq.${best.id}&google_sub=is.null`, { google_sub: g.sub }).catch(() => {});
       }
-      await startSession(req, res, best.id, "google");
+      await startSession(req, res, best.id, "google", proved);
       return res.status(200).json({ ok: true });
     }
 
