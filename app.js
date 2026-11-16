@@ -46,7 +46,7 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
     var when=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()];
     var soon=d===0?'is today':d===1?'is tomorrow':'is in '+d+' days';
     // Only a doctor joining after Module 1 has run needs the catch-up promise.
-    var catchup=row.module_no>1?' Join before it starts and sit Module 1 with the next batch.':'';
+    var catchup='';
     var p=document.getElementById('pillDays');
     if(p){p.hidden=false;p.textContent='Module '+row.module_no+' '+soon;}
     var f=document.getElementById('feeCountdown');
@@ -94,7 +94,7 @@ window.addEventListener('load',function(){document.querySelectorAll('.reveal').f
   var btn=document.getElementById('shareVideo'); if(!btn) return;
   var url='https://caspianobesity.com/#director-message';
   var title='CASPIAN Certificate in Obesity Medicine';
-  var text="A short message from Dr Khizer Hussain Junaidy on the CASPIAN Certificate in Obesity Medicine, 12 monthly modules for Indian physicians. The founding batch is under way in Hyderabad.";
+  var text="A short message from Dr Khizer Hussain Junaidy on the CASPIAN Certificate in Obesity Medicine, 12 case-based modules for Indian physicians. The founding batch is under way in Hyderabad.";
   var msg=document.getElementById('shareMsg');
   function say(t){ if(msg){ msg.textContent=t; msg.style.display='block'; } }
   btn.addEventListener('click',function(){
