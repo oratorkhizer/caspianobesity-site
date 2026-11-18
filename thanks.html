@@ -46,6 +46,8 @@ textarea{resize:vertical;min-height:70px}
 .err{color:#c0554f;font-size:.84rem;margin-top:10px;min-height:1em}
 .ok{color:#2e7d52;font-weight:600;font-size:.9rem;margin-top:10px}
 .later{font-size:.82rem;color:#5a6b7a;margin-top:10px}
+.rounds{font-size:.92rem;color:#5a6b7a;margin:4px 0 14px}
+.rounds a{color:#a8432a;font-weight:600;text-decoration:underline}
 footer{background:#2c3419;color:#c9d3a8;font-size:.85rem}
 footer .f{max-width:820px;margin:0 auto;padding:26px 24px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 footer a{color:#c9d3a8}
@@ -102,6 +104,7 @@ footer a{color:#c9d3a8}
 </ol>
 <a class="cal" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcaspianobesity.com%2Fcalendar.ics">Add all twelve dates to Google Calendar</a>
 
+<p class="rounds"><span id="rounds-asked" hidden>Check your inbox to confirm Diabesity Rounds. </span>New diabetes and obesity research, checked against the source. <a href="https://www.diabesityrounds.com/?utm_source=caspianobesity&amp;utm_medium=referral&amp;utm_campaign=crosslink" target="_blank" rel="noopener">Read today's research report</a></p>
 <p style="margin-top:18px">For anything urgent, WhatsApp <a href="https://wa.me/918978454547">+91 89784 54547</a> or email <a href="mailto:drkhizer@caspianobesity.com">drkhizer@caspianobesity.com</a>.</p>
 <p><a href="/">&larr; Back to the course home page</a></p>
 <script>
@@ -111,6 +114,12 @@ footer a{color:#c9d3a8}
   var wab='<div style="margin-top:14px"><a href="https://chat.whatsapp.com/H3XmvEyB49N081olfP2fg0" target="_blank" rel="noopener" style="display:inline-block;background:#1daa61;color:#fff;font-weight:700;border-radius:9px;padding:12px 22px;text-decoration:none">Join your cohort\'s WhatsApp group &rarr;</a><div style="font-size:.82rem;color:#5a6b7a;margin-top:8px">"CASPIAN Obesity Medicine Founding Batch": say hello when you join.</div></div>';
   if(q.indexOf('paid=1')>-1){m.innerHTML='<b>Payment received &amp; verified ✅</b> Your founding-batch seat is reserved. A receipt will follow by email. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
   else if(q.indexOf('free=1')>-1){m.innerHTML='<b>Complimentary seat confirmed ✅</b> Your code has been accepted and your founding-batch seat is reserved. Welcome to the CASPIAN Certificate in Obesity Medicine!'+wab;}
+  // The doctor ticked the Diabesity Rounds box on /apply: its confirmation email is on the way,
+  // so the sign-up box at the bottom is not needed.
+  if(/[?&]rounds=1(&|$)/.test(q)){
+    document.getElementById('rounds-asked').hidden=false;
+    var box=document.querySelector('[data-diabesity-rounds]'); if(box) box.removeAttribute('data-diabesity-rounds');
+  }
 })();
 
 // Next session, read from the live schedule rather than typed in here, so this

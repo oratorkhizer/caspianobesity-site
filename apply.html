@@ -187,6 +187,7 @@
      <label class="check"><input type="checkbox" id="consent_data"/> <span>I consent to Caspian Healthcare Foundation processing my details for this course, per the <a href="/privacy" target="_blank">Privacy Policy</a>. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="attendance_ack"/> <span>I understand the attendance (at least 80%), assessment and feedback requirements for certification. <span class="req">*</span></span></label>
      <label class="check"><input type="checkbox" id="consent_comms"/> <span>I'm happy to receive course updates and alumni communications.</span></label>
+     <label class="check"><input type="checkbox" id="rounds"/> <span>Also send me Diabesity Rounds: one short, checked research report email a day for doctors. Unsubscribe anytime.</span></label>
     </div>
     <div style="margin-top:16px" class="field"><label>Promo or referral code (optional)</label><input id="promo" placeholder="If you have one" style="text-transform:uppercase"/></div>
     <div class="fee"><span class="a">₹2,999</span><s>₹9,999</s><span style="color:var(--muted);font-size:.85rem">founding-batch fee</span></div>
@@ -356,7 +357,20 @@ function setMsg(t,kind){ var m=el('pmsg'); m.textContent=t||''; m.style.display=
 function busy(on){ el('next').disabled=on; el('back').disabled=on; el('next').textContent=on?'Please wait…':'Pay ₹2,999 & reserve my seat'; }
 // The photo and the goals questions are asked on /thanks, after payment, so the
 // application id travels there in the URL.
-function thanksUrl(kind){ return '/thanks?'+kind+'=1'+(appId?'&app='+encodeURIComponent(appId):''); }
+function thanksUrl(kind){ return '/thanks?'+kind+'=1'+(appId?'&app='+encodeURIComponent(appId):'')+(roundsAsked?'&rounds=1':''); }
+
+// Diabesity Rounds: only when the doctor ticked the (unticked) box, and only after the
+// application is saved. Diabesity Rounds emails a confirmation link and adds nobody until it
+// is tapped. Never blocks the application or the payment.
+var roundsAsked=false;
+function askRounds(){
+ if(roundsAsked || !el('rounds') || !el('rounds').checked) return;
+ roundsAsked=true;
+ try{
+  fetch('https://www.diabesityrounds.com/api/subscribe/partner',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,
+   body:JSON.stringify({email:val('email'),name:val('full_name'),src:'caspianobesity',consent:true,website:''})}).catch(function(){});
+ }catch(e){}
+}
 
 function submitAll(){
  busy(true); setMsg('Saving your application…','ok'); el('e5').textContent='';
@@ -369,6 +383,7 @@ function submitAll(){
   .then(function(res){
    if(!res||res.error||!res.id){ busy(false); el('e5').textContent=(res&&res.error)||'Could not save your application. Please try again.'; setMsg(''); return; }
    appId=res.id;
+   askRounds();
    if(res.paidBefore){
     // Stop rather than open checkout: this address already has a paid seat, and a
     // doctor re-filling the form is far more likely to be repeating themselves than

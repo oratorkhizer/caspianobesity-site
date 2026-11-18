@@ -64,6 +64,10 @@ input:focus,select:focus{outline:none;border-color:#4f5d2f;box-shadow:0 0 0 3px 
 footer{background:#2c3419;color:#c9d3a8;font-size:.82rem}
 footer .f{max-width:720px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 footer a{color:#c9d3a8}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:15px;font-size:.9rem;color:#3f4a28;line-height:1.5;cursor:pointer}
+.check input{width:auto;margin-top:4px;flex:none}
+.rounds{color:#5a6b7a;font-size:.9rem;max-width:44ch;margin:18px auto 0;padding-top:16px;border-top:1px solid #e3e9f0}
+.rounds a{color:#4f5d2f;font-weight:600;text-decoration:underline}
 [hidden]{display:none!important}
 </style></head><body>
 
@@ -124,6 +128,8 @@ footer a{color:#c9d3a8}
         </div>
       </div>
 
+      <label class="check"><input type="checkbox" id="rounds"/> <span>Also send me Diabesity Rounds: one short, checked research report email a day for doctors. Unsubscribe anytime.</span></label>
+
       <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website" name="website" tabindex="-1" autocomplete="off"/></label></div>
       <div id="tsbox"></div>
       <div id="tsbox2"></div>
@@ -144,6 +150,7 @@ footer a{color:#c9d3a8}
       <p>You will get the Batch 2 dates, the fee and the enrolment link before they go public. Nothing else, and nothing to pay now.</p>
       <p><a class="wa" href="https://wa.me/918978454547?text=I%20have%20joined%20the%20Batch%202%20list" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
       <p class="small" style="margin-top:16px"><a href="/">Read about the course</a> &middot; <a href="/schedule">Module calendar</a></p>
+      <p class="rounds"><span id="rounds-asked" hidden>Check your inbox to confirm Diabesity Rounds. </span>New diabetes and obesity research, checked against the source. <a href="https://www.diabesityrounds.com/?utm_source=caspianobesity&amp;utm_medium=referral&amp;utm_campaign=crosslink" target="_blank" rel="noopener">Read today's research report</a></p>
     </div>
   </div>
 </div>
@@ -160,6 +167,7 @@ footer a{color:#c9d3a8}
   var guard = window.CaspianGuard ? CaspianGuard.attach(document.getElementById("tsbox")) : null;
   var guard2 = window.CaspianGuard ? CaspianGuard.attach(document.getElementById("tsbox2")) : null;
   var CENTRAL = "https://gjpbiiqkvzysmdpioexk.supabase.co/functions/v1/subscribe";
+  var ROUNDS = "https://www.diabesityrounds.com/api/subscribe/partner";
 
   var $ = function(id){ return document.getElementById(id); };
   var errBox = $("error");
@@ -187,6 +195,8 @@ footer a{color:#c9d3a8}
     if (!city) { showError("Please tell us your city."); $("city").focus(); return; }
     var email = val("email");
     if (email && !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) { showError("That email address does not look right."); $("email").focus(); return; }
+    var wantsRounds = $("rounds").checked;
+    if (wantsRounds && !email) { showError("Add your email to get Diabesity Rounds, or untick that box."); $("email").focus(); return; }
 
     var row = {
       name: name,
@@ -237,6 +247,17 @@ footer a{color:#c9d3a8}
             })
         }).catch(function(){});
       } catch (e) {}
+      // Diabesity Rounds, only when the doctor ticked the box. Diabesity Rounds emails a
+      // confirmation link and adds nobody until it is tapped. Never blocks the doctor.
+      if (wantsRounds && email) {
+        try {
+          fetch(ROUNDS, {
+            method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+            body: JSON.stringify({ email: email, name: name, src: "caspianobesity", consent: true, website: "" })
+          }).catch(function(){});
+        } catch (e) {}
+        $("rounds-asked").hidden = false;
+      }
       $("formview").hidden = true;
       $("doneview").hidden = false;
       window.scrollTo(0, 0);
