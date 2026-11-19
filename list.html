@@ -34,6 +34,8 @@ th{color:#7b8b9c;font-weight:600;font-size:.72rem;letter-spacing:.06em;text-tran
 .tag.on{background:#e8f1fb;color:#5d6c3a}.tag.off{background:#eef3ee;color:#2f5d3a}.tag.done{background:#f1f3f5;color:#5a6b7a}
 .muted{color:#7b8b9c}
 a.wa{color:#0f8440;font-weight:600;white-space:nowrap}
+a.msg{display:inline-block;padding:5px 10px;border-radius:6px;background:#1f7a45;color:#fff;font-size:.8rem;font-weight:600;text-decoration:none;white-space:nowrap;margin-right:6px}
+.tag.dup{background:#fbf1e8;color:#8a5a2b}
 [hidden]{display:none!important}
 </style></head><body>
 <header><nav><b>CASPIAN</b><span class="sp"></span><a href="/admin">Applications</a><a href="/results">Feedback</a><a href="/schedule">Schedule</a></nav></header>
@@ -113,13 +115,42 @@ a.wa{color:#0f8440;font-weight:600;white-space:nowrap}
     });
   }
 
+  // Personal WhatsApp message for each person on the list (19 Nov 2026). Named, short, honest:
+  // no price and no Sunday date until he fixes them. Online askers are told the online batch is
+  // still being shaped, never promised a date or recordings. Opening the message marks the row contacted.
+  function cleanName(n){
+    var t = String(n || "").replace(/^\s*\.+/, "").replace(/^\s*dr\.?\s*/i, "").replace(/\s+/g, " ").trim();
+    t = t.split(" ").map(function(w){ return w.length > 2 && w === w.toUpperCase() ? w.charAt(0) + w.slice(1).toLowerCase() : w; }).join(" ");
+    if (!t) return "";
+    t = t.charAt(0).toUpperCase() + t.slice(1);
+    return /^\s*\.?\s*dr\b/i.test(String(n || "")) ? "Dr " + t : t; // keep "Dr" only where they wrote it
+  }
+  function message(r){
+    var name = cleanName(r.name);
+    var hi = "Hello" + (name ? " " + name : "") + ",";
+    var me = "this is Dr Khizer Hussain Junaidy. You asked to be told about Batch 2 of the CASPIAN Certificate in Obesity Medicine, so you are hearing it from me first.";
+    var proof = "In Batch 1, the doctors rated the teaching 4.95 out of 5. A psychiatrist in the room wrote: \"Obesity management is not only about willpower, it's more to do with biology and the underlying process.\"";
+    if (r.mode === "Online live batch") {
+      return hi + " " + me + "\n\nBatch 2 begins in January 2027 in Hyderabad. You asked for the online batch: it is being shaped by Batch 1's feedback, and I will message you myself as soon as its dates are fixed." +
+        "\n\n" + proof + "\n\nIf you could come to Hyderabad for one Sunday a month instead, reply \"offline\" and I will keep you a place in the January batch.";
+    }
+    return hi + " " + me + "\n\nBatch 2 begins in January 2027 in Hyderabad. From this batch, all 12 modules finish in 6 months: two modules on one Sunday each month." +
+      "\n\n" + proof + "\n\nRegistration opens in December. Shall I keep a place for you? Just reply \"yes\".";
+  }
+  function phoneKey(p){ return String(p || "").replace(/\D/g, "").slice(-10); }
+
   function render(){
+    var seen = {};
+    ALL.slice().sort(function(a, b){ return new Date(a.created_at) - new Date(b.created_at); }).forEach(function(r){
+      var k = phoneKey(r.phone); r._dup = !!(k && seen[k]); if (k) seen[k] = true;
+    });
+    var unique = ALL.filter(function(r){ return !r._dup; }).length;
     var week = ALL.filter(function(r){ return Date.now() - new Date(r.created_at).getTime() < 7 * 864e5; }).length;
     var online = ALL.filter(function(r){ return r.mode === "Online live batch"; }).length;
     var jan = ALL.filter(function(r){ return r.timing === "Batch 2, January 2027"; }).length;
     var outside = ALL.filter(function(r){ return (r.city || "").toLowerCase().indexOf("hyderabad") < 0; }).length;
     $("tiles").innerHTML =
-      '<div class="tile"><b>' + ALL.length + '</b><span>on the list</span></div>' +
+      '<div class="tile"><b>' + unique + '</b><span>people on the list' + (unique < ALL.length ? ' (' + (ALL.length - unique) + ' repeat sign-ups)' : '') + '</span></div>' +
       '<div class="tile"><b>' + week + '</b><span>added in the last 7 days</span></div>' +
       '<div class="tile"><b>' + jan + '</b><span>want January 2027</span></div>' +
       '<div class="tile"><b>' + online + '</b><span>want the online batch</span></div>' +
@@ -131,11 +162,12 @@ a.wa{color:#0f8440;font-weight:600;white-space:nowrap}
       var dt = d.toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
       var wa = '<a class="wa" target="_blank" rel="noopener" href="https://wa.me/91' + esc(r.phone) + '">' + esc(r.phone) + '</a>';
       var mode = r.mode === "Online live batch" ? '<span class="tag on">online</span>' : (r.mode === "Either is fine" ? '<span class="tag">either</span>' : '<span class="tag off">offline</span>');
-      var st = r.status === "contacted" ? '<span class="tag done">contacted</span>' : '<span class="tag">new</span>';
+      var st = r._dup ? '<span class="tag dup">repeat sign-up</span>' : (r.status === "contacted" ? '<span class="tag done">contacted</span>' : '<span class="tag">new</span>');
+      var msg = r._dup ? '' : '<a class="msg" target="_blank" rel="noopener" data-mark="' + esc(r.id) + '" href="https://wa.me/91' + esc(phoneKey(r.phone)) + '?text=' + encodeURIComponent(message(r)) + '">Message</a>';
       var next = r.status === "contacted" ? "new" : "contacted";
       return '<tr><td class="muted">' + dt + '</td><td>' + esc(r.name) + (r.email ? '<div class="muted" style="font-size:.78rem">' + esc(r.email) + '</div>' : '') +
         '</td><td>' + wa + '</td><td>' + esc(r.city) + '</td><td>' + mode + '</td><td class="muted">' + esc(r.timing) + '</td><td>' + st +
-        '</td><td><button class="ghost small" data-id="' + esc(r.id) + '" data-to="' + next + '">Mark ' + next + '</button></td></tr>';
+        '</td><td>' + msg + '<button class="ghost small" data-id="' + esc(r.id) + '" data-to="' + next + '">Mark ' + next + '</button></td></tr>';
     }).join("") || '<tr><td colspan="8" class="muted">Nobody on the list yet.</td></tr>';
     $("count").textContent = rows.length + " shown of " + ALL.length + " total";
   }
@@ -145,6 +177,10 @@ a.wa{color:#0f8440;font-weight:600;white-space:nowrap}
   ["q","fmode","ftime"].forEach(function(id){ $(id).addEventListener("input", render); });
   $("refresh").addEventListener("click", function(){ load(true); });
   $("rows").addEventListener("click", function(e){
+    var m = e.target.closest("a[data-mark]");
+    if (m) { var row = ALL.filter(function(r){ return String(r.id) === m.getAttribute("data-mark"); })[0];
+      if (row && row.status !== "contacted") api({ action: "status", id: row.id, status: "contacted" }).then(function(){ load(true); });
+      return; }
     var b = e.target.closest("button[data-id]");
     if (!b) return;
     api({ action: "status", id: b.getAttribute("data-id"), status: b.getAttribute("data-to") }).then(function(){ load(true); });
