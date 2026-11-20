@@ -446,7 +446,7 @@
 (function(){
   var f=document.getElementById('wlform'),m=document.getElementById('wlmsg'),b=document.getElementById('wlbtn');
   if(!f)return;
-  var EP='/sbx/gjpbiiqkvzysmdpioexk/functions/v1/subscribe'; // through this site: some networks block supabase.co
+  var EP='https://gjpbiiqkvzysmdpioexk.supabase.co/functions/v1/subscribe'; // through this site: some networks block supabase.co
   var guard=window.CaspianGuard?CaspianGuard.attach(f.querySelector('.tsbox')):null;
   var HUMAN=window.CaspianGuard?CaspianGuard.MSG:'';
   // One token per call: the email and the WhatsApp opt-ins are separate requests,
