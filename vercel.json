@@ -36,6 +36,8 @@
     { "source": "/video-poster.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }] }
   ],
   "rewrites": [
+    { "source": "/sbx/gjpbiiqkvzysmdpioexk/:path*", "destination": "https://gjpbiiqkvzysmdpioexk.supabase.co/:path*" },
+    { "source": "/sbx/itqxfypvrvwplzeeldaz/:path*", "destination": "https://itqxfypvrvwplzeeldaz.supabase.co/:path*" },
     { "source": "/calendar.ics", "destination": "/api/calendar" }
   ],
   "redirects": [

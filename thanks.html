@@ -189,7 +189,20 @@ footer a{color:#c9d3a8}
      .then(function(j){
        if(!j||!j.ok){ throw new Error((j&&j.error)||'Could not save.'); }
        if(photoFile && j.uploadUrl){
-         return fetch(j.uploadUrl,{method:'PUT',headers:{'Content-Type':photoFile.type,'x-upsert':'true'},body:photoFile});
+         // through caspianobesity.com/sbx: some Indian networks block supabase.co. Vercel caps one
+         // request at about 4.5 MB, so a photo over 4 MB goes to /api/photo-part in 4 MB parts.
+         var CH=4*1024*1024;
+         if(photoFile.size<=CH){
+           return fetch(String(j.uploadUrl).replace(/^https:\/\/([a-z0-9]{20})\.supabase\.co\//,'/sbx/$1/'),{method:'PUT',headers:{'Content-Type':photoFile.type,'x-upsert':'true'},body:photoFile})
+             .then(function(r){ if(!r.ok) throw new Error('We could not upload the photo. Please try again.'); });
+         }
+         var of=Math.ceil(photoFile.size/CH), n=0;
+         var next=function(){
+           return fetch('/api/photo-part?app='+encodeURIComponent(appId)+'&n='+n+'&of='+of+'&type='+encodeURIComponent(photoFile.type),
+             {method:'POST',headers:{'Content-Type':'application/octet-stream'},body:photoFile.slice(n*CH,(n+1)*CH)})
+             .then(function(r){ return r.json().catch(function(){return {};}).then(function(k){ if(!r.ok||!k.ok) throw new Error(k.error||'We could not upload the photo. Please try again.'); if(++n<of) return next(); }); });
+         };
+         return next();
        }
      })
      .then(function(){ document.getElementById('pok').hidden=false; btn.textContent='Saved'; })

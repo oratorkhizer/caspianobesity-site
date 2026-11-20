@@ -23,6 +23,7 @@ Source for **caspianobesity.com**, the CASPIAN Certificate in Obesity Medicine c
 | `api/verify-payment.js` | HMAC-verifies payment; marks promo used; marks application paid |
 | `api/credentials.js` | Public: verify a certificate (GET ?id=), a doctor's own referral code. Admin (ADMIN_KEY): issue/revoke certificates, Kahoot top scorers, referral counts |
 | `me.html` (`/me`) + `api/me.js` | My course: sign in with Google or a 6-digit email code; seat status, next module, attendance, feedback, course material (table `course_materials`), sign out per device or everywhere. Tables `co_sessions`, `co_signin_codes`, `co_auth_events`, `co_rate_hits`. |
+| `api/photo-part.js` | Course ID photo over 4 MB from /thanks, in 4 MB parts joined byte for byte (Vercel caps a request at about 4.5 MB). Smaller photos and the opt-in calls go through `/sbx/<project ref>`, a rewrite to Supabase, because some Indian networks block supabase.co |
 | `api/redeem-free.js` | Atomically claims a 100%-off code and confirms a complimentary seat |
 
 ## Environment variables (Vercel)

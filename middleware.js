@@ -6,7 +6,7 @@
 
 export const config = {
   runtime: 'nodejs', // Vercel's recommended runtime; the old edge default is deprecated
-  matcher: '/((?!_next/|_vercel/|api/|\\.well-known/).*)',
+  matcher: '/((?!_next/|_vercel/|api/|sbx/|\\.well-known/).*)',
 };
 
 const CHECK_HEADER = 'x-case-check';
