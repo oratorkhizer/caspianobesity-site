@@ -227,6 +227,7 @@ footer a{color:#c9d3a8}
   var mode="mobile", identifier="", timer=null;
 
   function show(id){ ["loading","off","out","in"].forEach(function(s){ $(s).hidden=(s!==id); }); }
+  function sbx(u){return String(u==null?"":u).replace(/^https:\/\/(gjpbiiqkvzysmdpioexk|itqxfypvrvwplzeeldaz)\.supabase\.co\//,"/sbx/$1/");} /* pictures and files through this site: some networks block supabase.co */
   function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
   function api(action,opts){
     opts=opts||{};
@@ -428,7 +429,7 @@ footer a{color:#c9d3a8}
     // materials
     var ul=$("mats"), html="";
     (d.materials||[]).forEach(function(m){
-      html+='<li><a href="'+esc(m.url)+'" target="_blank" rel="noopener">'+esc(m.title)+'</a><span class="tag">'+(m.module_no?"Module "+m.module_no:(m.paid_only?"Students":"Open to all"))+'</span></li>';
+      html+='<li><a href="'+esc(sbx(m.url))+'" target="_blank" rel="noopener">'+esc(m.title)+'</a><span class="tag">'+(m.module_no?"Module "+m.module_no:(m.paid_only?"Students":"Open to all"))+'</span></li>';
     });
     ul.innerHTML=html;
     $("matNote").textContent=paid?"Module handouts are added here as the course goes on.":"Module handouts appear here once your seat is confirmed.";

@@ -87,6 +87,7 @@
 </div>
 <script>
  var CERT_BASE = '/certs/';
+ function sbx(u){return String(u==null?"":u).replace(/^https:\/\/(gjpbiiqkvzysmdpioexk|itqxfypvrvwplzeeldaz)\.supabase\.co\//,"/sbx/$1/");} /* pictures and files through this site: some networks block supabase.co */
  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
  function normId(v){return String(v||'').trim().toUpperCase().replace(/\s+/g,'');}
  function getParam(name){return new URLSearchParams(location.search).get(name);}
@@ -126,7 +127,7 @@
    rows+='<dt>Awards</dt><dd>'+r.top_scorer_modules.map(function(n){return 'Top Kahoot scorer, Module '+esc(n);}).join('<br/>')+'</dd>';
   }
   rows+='<dt>Issued by</dt><dd>Caspian Healthcare Foundation, Hyderabad</dd>';
-  var thumb = r.image ? '<div class="certthumb"><img src="'+esc(r.image)+'" alt="Certificate"/></div>' : '';
+  var thumb = r.image ? '<div class="certthumb"><img src="'+esc(sbx(r.image))+'" alt="Certificate"/></div>' : '';
   var note = revoked ? '<p class="hint">This certificate has been withdrawn by Caspian Healthcare Foundation and is no longer valid.</p>' : specimen ? '<p class="hint">This is a sample record used to demonstrate verification. It does not represent a real graduate.</p>' : '';
   resultEl.innerHTML='<div class="status">'+badge+'</div>'+'<dl>'+rows+'</dl>'+thumb+note;
   showLookup('');
